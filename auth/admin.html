@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIT 2026 — Admin</title>
+    <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Font Awesome 7 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- ════════ LOGIN ════════ -->
+    <div id="login-wrapper" class="login-wrapper">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1>FIT <span>2026</span></h1>
+                <p>Painel Administrativo</p>
+            </div>
+
+            <div id="login-error" class="login-error"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="admin@fit.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" id="login-btn" class="btn-login">Entrar</button>
+            </form>
+
+            <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+                <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+                <span style="font-size:0.75rem;color:#52525b;text-transform:uppercase;letter-spacing:1px;">ou</span>
+                <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+            </div>
+
+            <button id="google-btn" type="button"
+                style="width:100%;padding:14px;font-size:0.95rem;font-weight:600;font-family:'Inter',sans-serif;color:#e4e4e7;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;gap:10px;">
+                <svg width="18" height="18" viewBox="0 0 48 48">
+                    <path fill="#EA4335"
+                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                    <path fill="#4285F4"
+                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                    <path fill="#FBBC05"
+                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                    <path fill="#34A853"
+                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                </svg>
+                Entrar com Google
+            </button>
+        </div>
+    </div>
+
+    <!-- ════════ ADMIN PANEL ════════ -->
+    <div id="admin-wrapper" class="admin-wrapper">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-header-inner">
+                <h1 class="admin-title">FIT <span>Admin</span></h1>
+                <div class="admin-user">
+                    <span id="user-email"></span>
+                    <button id="logout-btn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-section="section-palestrantes">
+                    <i class="fas fa-user"></i> Palestrantes
+                </button>
+                <button class="admin-tab" data-section="section-patrocinadores">
+                    <i class="fas fa-handshake"></i> Patrocinadores
+                </button>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="admin-content">
+
+            <!-- ── Palestrantes ── -->
+            <div id="section-palestrantes" class="admin-section active">
+                <div class="section-top">
+                    <h2>Palestrantes</h2>
+                    <button id="btn-add-speaker" class="btn-add">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Tema</th>
+                            <th>Ordem</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="speakers-table-body">
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Carregando...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ── Patrocinadores ── -->
+            <div id="section-patrocinadores" class="admin-section">
+                <div class="section-top">
+                    <h2>Patrocinadores</h2>
+                    <button id="btn-add-sponsor" class="btn-add">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Ordem</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sponsors-table-body">
+                        <tr>
+                            <td colspan="4" class="empty-state">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Carregando...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ════════ MODALS ════════ -->
+
+    <!-- Speaker Modal -->
+    <div id="speaker-modal" class="modal-overlay">
+        <div class="modal">
+            <h3>Adicionar Palestrante</h3>
+            <form id="speaker-form">
+                <div class="form-group">
+                    <label for="sp-nome">Nome *</label>
+                    <input type="text" id="sp-nome" placeholder="Nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="sp-cargo">Cargo / Função</label>
+                    <input type="text" id="sp-cargo" placeholder="Ex: Professor, Pesquisador...">
+                </div>
+                <div class="form-group">
+                    <label for="sp-tema">Tema da Palestra</label>
+                    <input type="text" id="sp-tema" placeholder="Ex: IA Generativa e o Futuro">
+                </div>
+                <div class="form-group">
+                    <label for="sp-foto">URL da Foto</label>
+                    <input type="url" id="sp-foto" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label for="sp-ordem">Ordem de Exibição</label>
+                    <input type="number" id="sp-ordem" value="0" min="0">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sponsor Modal -->
+    <div id="sponsor-modal" class="modal-overlay">
+        <div class="modal">
+            <h3>Adicionar Patrocinador</h3>
+            <form id="sponsor-form">
+                <div class="form-group">
+                    <label for="pat-nome">Nome *</label>
+                    <input type="text" id="pat-nome" placeholder="Nome do patrocinador" required>
+                </div>
+                <div class="form-group">
+                    <label for="pat-tier">Categoria *</label>
+                    <select id="pat-tier" required>
+                        <option value="diamante">Diamante</option>
+                        <option value="prata">Prata</option>
+                        <option value="midia">Apoio de Mídia</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pat-logo">URL do Logo</label>
+                    <input type="url" id="pat-logo" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label for="pat-ordem">Ordem de Exibição</label>
+                    <input type="number" id="pat-ordem" value="0" min="0">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Admin JS -->
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>
