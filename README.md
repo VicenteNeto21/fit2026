@@ -301,7 +301,6 @@ O site é totalmente responsivo com breakpoints em:
 **Núcleo de Comunicação do FIT — UFC Crateús**
 
 - Vicente Neto
-- Paula Laiz (Francisca Maria)
 
 ---
 
