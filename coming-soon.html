@@ -389,6 +389,59 @@
             font-size: 0.65rem;
         }
 
+        /* ── Tags de Status ── */
+        .badge-closed {
+            border: 1px solid #707070;
+            color: #ffffff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 12px;
+        }
+
+        .btn-disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* ── Botão Gamer (Destaque Principal) ── */
+        .btn-gamer {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #a1a1aa;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 2.3s;
+        }
+
+        .btn-gamer:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-gamer i {
+            font-size: 1rem;
+            color: #a1a1aa;
+            transition: color 0.3s ease;
+        }
+
+        .btn-gamer:hover i {
+            color: #ffffff;
+        }
+
         /* ── Botão Voluntário ── */
         .btn-volunteer {
             display: inline-flex;
@@ -397,30 +450,26 @@
             padding: 12px 28px;
             font-size: 0.9rem;
             font-weight: 600;
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.05);
+            color: #a1a1aa;
+            background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             text-decoration: none;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             transition: all 0.3s ease;
-            margin-top: 48px;
-            margin-bottom: 48px;
             opacity: 0;
             animation: fadeInUp 1s ease forwards 2.4s;
         }
 
         .btn-volunteer:hover {
-            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .btn-volunteer i {
             font-size: 1rem;
-            color: #999999;
+            color: #a1a1aa;
             transition: color 0.3s ease;
         }
 
@@ -431,11 +480,16 @@
         /* ── Grupo de Botões ── */
         .btn-group {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch;
             justify-content: center;
             gap: 16px;
             margin-top: 48px;
             margin-bottom: 48px;
+        }
+
+        .btn-group>a {
+            justify-content: center;
         }
 
         .btn-secondary {
@@ -654,8 +708,13 @@
         </div>
 
         <div class="btn-group">
-            <a href="https://forms.gle/WrNpp3KVtz7iWyfe7" target="_blank" class="btn-volunteer">
-                <i class="fas fa-hands-helping"></i> Seja um Voluntário (Inscrições Encerradas)
+            <a class="btn-gamer btn-disabled">
+                <i class="fas fa-gamepad"></i> Perfil Gamer
+                <span class="badge-closed">Encerradas</span>
+            </a>
+            <a class="btn-volunteer btn-disabled">
+                <i class="fas fa-hands-helping"></i> Seja um Voluntário
+                <span class="badge-closed">Encerradas</span>
             </a>
             <a href="https://fit.crateus.ufc.br/ano/2025" target="_blank" class="btn-secondary">
                 <i class="fas fa-history"></i> Edição 2025

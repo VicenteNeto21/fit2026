@@ -19,7 +19,7 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #0e0a1a;
+    background: #000000;
     color: #e4e4e7;
     line-height: 1.6;
     min-height: 100vh;
@@ -32,7 +32,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 24px;
-    background: linear-gradient(160deg, #1a0533 0%, #0e0a1a 40%, #0d2b3e 100%);
+    background: linear-gradient(160deg, #110098 0%, #000000 40%, #0d2b3e 100%);
 }
 
 .login-box {
@@ -58,7 +58,7 @@ body {
 }
 
 .login-logo h1 span {
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -102,7 +102,7 @@ body {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #ff6b35;
+    border-color: #FF5F17;
 }
 
 .form-group input::placeholder {
@@ -131,7 +131,7 @@ body {
     font-weight: 700;
     font-family: 'Inter', sans-serif;
     color: #ffffff;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -180,7 +180,7 @@ body {
 }
 
 .admin-title span {
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -244,8 +244,8 @@ body {
 }
 
 .admin-tab.active {
-    color: #ff6b35;
-    border-bottom-color: #ff6b35;
+    color: #FF5F17;
+    border-bottom-color: #FF5F17;
 }
 
 /* ── CONTENT ─────────────────────────── */
@@ -299,7 +299,7 @@ body {
     font-weight: 600;
     font-family: 'Inter', sans-serif;
     color: #ffffff;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -426,7 +426,7 @@ body {
     font-weight: 600;
     font-family: 'Inter', sans-serif;
     color: #ffffff;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -485,7 +485,7 @@ body {
 }
 
 .tier-badge.diamante {
-    color: #ff6b35;
+    color: #FF5F17;
     background: rgba(255, 107, 53, 0.1);
     border: 1px solid rgba(255, 107, 53, 0.2);
 }

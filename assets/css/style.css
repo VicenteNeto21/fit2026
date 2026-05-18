@@ -21,7 +21,7 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
-    background: #0e0a1a;
+    background: #000000;
     color: #e4e4e7;
     line-height: 1.6;
     overflow-x: hidden;
@@ -93,7 +93,7 @@ img {
 
 .logo-year {
     font-size: 1.6rem;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -130,7 +130,7 @@ img {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #ff6b35, #e91e8c);
+    background: linear-gradient(90deg, #FF5F17, #FFC800);
     transition: width 0.3s ease;
     border-radius: 2px;
 }
@@ -147,15 +147,18 @@ img {
     font-size: 0.85rem;
     font-weight: 600;
     color: #ffffff;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
+    border: 2px solid transparent;
     border-radius: 8px;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
     margin-left: 32px;
 }
 
 .btn-inscricao:hover {
+    background: transparent;
+    border-color: #FF5F17;
+    color: #FF5F17;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
 }
 
 .mobile-menu-btn {
@@ -196,7 +199,7 @@ img {
 }
 
 .btn-inscricao-mobile {
-    background: linear-gradient(135deg, #ff6b35, #e91e8c) !important;
+    background: linear-gradient(135deg, #FF5F17, #FFC800) !important;
     color: #ffffff !important;
     text-align: center;
     border-radius: 8px;
@@ -210,7 +213,7 @@ img {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(160deg, #1a0533 0%, #0e0a1a 40%, #0d2b3e 100%);
+    background: linear-gradient(160deg, #110098 0%, #000000 40%, #0d2b3e 100%);
     overflow: hidden;
     padding-top: 72px;
 }
@@ -245,7 +248,7 @@ img {
     padding: 6px 16px;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #ff6b35;
+    color: #FF5F17;
     background: rgba(255, 107, 53, 0.1);
     border: 1px solid rgba(255, 107, 53, 0.2);
     border-radius: 20px;
@@ -264,7 +267,7 @@ img {
 }
 
 .hero-title-year {
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -293,7 +296,7 @@ img {
 }
 
 .hero-info i {
-    color: #ff6b35;
+    color: #FF5F17;
 }
 
 .hero-actions {
@@ -319,13 +322,15 @@ img {
 
 .btn-primary {
     color: #ffffff;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
-    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.25);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
+    border: 2px solid transparent;
 }
 
 .btn-primary:hover {
+    background: transparent;
+    border-color: #FF5F17;
+    color: #FF5F17;
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.35);
 }
 
 .btn-outline {
@@ -388,7 +393,7 @@ img {
 .chip-label {
     font-size: 1.6rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -410,7 +415,7 @@ img {
 /* Pinos do chip */
 .chip-pin {
     position: absolute;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     border-radius: 2px;
     opacity: 0.6;
 }
@@ -557,7 +562,7 @@ img {
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    color: #ff6b35;
+    color: #FF5F17;
     backdrop-filter: blur(6px);
     z-index: 2;
 }
@@ -565,21 +570,21 @@ img {
 .fi-1 {
     top: 8%;
     left: 15%;
-    color: #ff6b35;
+    color: #FF5F17;
     animation: floatIcon 5s ease-in-out infinite;
 }
 
 .fi-2 {
     top: 12%;
     right: 10%;
-    color: #8b5cf6;
+    color: #1C00FF;
     animation: floatIcon 6s ease-in-out infinite 1s;
 }
 
 .fi-3 {
     bottom: 15%;
     left: 8%;
-    color: #e91e8c;
+    color: #FFC800;
     animation: floatIcon 5.5s ease-in-out infinite 0.5s;
 }
 
@@ -693,7 +698,7 @@ img {
 /* ── PROGRAMAÇÃO ─────────────────────────── */
 .section-programacao {
     padding: 80px 0;
-    background: linear-gradient(180deg, #0e0a1a 0%, #130e24 100%);
+    background: linear-gradient(180deg, #000000 0%, #130e24 100%);
 }
 
 .schedule-loading {
@@ -726,7 +731,7 @@ img {
 }
 
 .schedule-tab.active {
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     color: #ffffff;
     border-color: transparent;
     box-shadow: 0 4px 16px rgba(255, 107, 53, 0.25);
@@ -784,7 +789,7 @@ img {
 .schedule-time {
     font-size: 0.85rem;
     font-weight: 700;
-    color: #ff6b35;
+    color: #FF5F17;
     white-space: nowrap;
     min-width: 120px;
 }
@@ -825,13 +830,13 @@ img {
 
 .tag-palestra {
     background: rgba(255, 107, 53, 0.12);
-    color: #ff6b35;
+    color: #FF5F17;
     border: 1px solid rgba(255, 107, 53, 0.2);
 }
 
 .tag-minicurso {
     background: rgba(233, 30, 140, 0.12);
-    color: #e91e8c;
+    color: #FFC800;
     border: 1px solid rgba(233, 30, 140, 0.2);
 }
 
@@ -849,14 +854,14 @@ img {
 
 .tag-abertura {
     background: rgba(139, 92, 246, 0.12);
-    color: #8b5cf6;
+    color: #1C00FF;
     border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 /* ── PALESTRANTES ────────────────────────── */
 .section-palestrantes {
     padding: 80px 0;
-    background: linear-gradient(180deg, #130e24 0%, #0e0a1a 100%);
+    background: linear-gradient(180deg, #130e24 0%, #000000 100%);
 }
 
 .speakers-grid {
@@ -906,7 +911,7 @@ img {
 
 .speaker-role {
     font-size: 0.8rem;
-    color: #ff6b35;
+    color: #FF5F17;
     font-weight: 600;
     margin-bottom: 8px;
 }
@@ -920,7 +925,7 @@ img {
 /* ── PATROCINADORES ──────────────────────── */
 .section-patrocinadores {
     padding: 80px 0;
-    background: #0e0a1a;
+    background: #000000;
 }
 
 .sponsor-tier {
@@ -939,7 +944,7 @@ img {
 }
 
 .tier-diamante {
-    color: #ff6b35;
+    color: #FF5F17;
 }
 
 .tier-prata {
@@ -1011,7 +1016,7 @@ img {
 /* ── SOBRE O EVENTO ──────────────────────── */
 .section-evento {
     padding: 80px 0;
-    background: linear-gradient(180deg, #0e0a1a 0%, #130e24 100%);
+    background: linear-gradient(180deg, #000000 0%, #130e24 100%);
 }
 
 .evento-content {
@@ -1068,7 +1073,7 @@ img {
 }
 
 .edicao-item i {
-    color: #ff6b35;
+    color: #FF5F17;
     font-size: 0.85rem;
 }
 
@@ -1087,7 +1092,7 @@ img {
 .edition-badge {
     font-size: 6rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1106,7 +1111,7 @@ img {
 /* ── ORGANIZADORES ───────────────────────── */
 .section-organizadores {
     padding: 80px 0;
-    background: #0e0a1a;
+    background: #000000;
 }
 
 .organizers-grid {
@@ -1165,7 +1170,7 @@ img {
 }
 
 .footer-col p i {
-    color: #ff6b35;
+    color: #FF5F17;
     width: 16px;
     text-align: center;
 }
@@ -1192,7 +1197,7 @@ img {
 
 .footer-social a:hover {
     color: #ffffff;
-    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    background: linear-gradient(135deg, #FF5F17, #FFC800);
     border-color: transparent;
     transform: translateY(-2px);
 }
@@ -1215,7 +1220,7 @@ img {
 }
 
 .footer-bottom a:hover {
-    color: #ff6b35;
+    color: #FF5F17;
 }
 
 /* ── RESPONSIVO ──────────────────────────── */

@@ -296,6 +296,42 @@ O site é totalmente responsivo com breakpoints em:
 
 ---
 
+## Pendências e Tarefas
+
+### Design/UI
+- [ ] **Atualizar tema visual**: Aplicar nova paleta de cores (`#FF6A00`, `#FF3700`, `#00FF09`, `#009405`, `#021031`, `#00C7F8`, `#000000`)
+- [ ] **Logo na Hero**: Substituir ilustração SVG do chip de IA pela logo oficial (`assets/img/logo-fit-2026.svg`)
+- [ ] **OG Image**: Criar imagem Open Graph (1200x630px)
+- [ ] **Favicon SVG**: Atualizar favicon com nova identidade visual
+
+### Funcionalidades
+- [ ] **Link de Inscrição**: Configurar URL real do formulário de inscrição
+- [ ] **Formulário Voluntários**: Atualizar link do Google Forms
+- [ ] **Contagem Regressiva**: Data correta configurada (04/10/2026)
+
+### Dados
+- [ ] **Cadastrar Palestrantes**: Adicionar dados reais dos palestrantes no Firebase
+- [ ] **Cadastrar Patrocinadores**: Adicionar empresas e logos no Firebase
+- [ ] **Verificar Programação**: Confirmar atividades e horários do JSON
+
+### Administrativo
+- [ ] **Criar usuários admin**: Configurar contas no Firebase Auth
+- [ ] **Regras Firestore**: Proteger escrita (apenas admins autenticados)
+- [ ] **Validação de conteúdo**: Adicionar validações nos formulários do admin
+
+### Imagens
+- [ ] **Logos Organizadores**: Adicionar logos de:
+  - [ ] FIT Crateús
+  - [ ] UFC
+  - [ ] Sebra
+  - [ ] GSIPP
+  - [ ] EngineLab
+  - [ ] SPARC
+- [ ] **Fotos Palestrantes**: Adquirir fotos profissionais
+- [ ] **Logo Sponsor Placeholder**: Criar placeholder para patrocinadores sem logo
+
+---
+
 ## Equipe de Desenvolvimento
 
 **Núcleo de Comunicação do FIT — UFC Crateús**

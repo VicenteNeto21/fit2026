@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIT 2026 — Links Úteis</title>
+    <meta name="description" content="Acesse todos os links oficiais do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ── Reset & Base ── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ── Background Glows & Particles ── */
+        .ambient-glow {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(28, 0, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 95, 23, 0.08) 0%, transparent 40%);
+        }
+
+        .particles {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ── Container Principal ── */
+        .links-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ── Header / Perfil ── */
+        .profile {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 2px solid #FF5F17;
+            padding: 4px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: rotate(5deg) scale(1.05);
+            border-color: #FFC800;
+        }
+
+        .profile-avatar svg {
+            width: 48px;
+            height: 48px;
+            fill: #ffffff;
+        }
+
+        .profile-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .profile-title span {
+            background: linear-gradient(135deg, #FFC800, #FF5F17);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profile-desc {
+            font-size: 0.9rem;
+            color: #888888;
+            font-weight: 500;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        /* ── Grid de Links ── */
+        .links-grid {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        /* ── Botão de Link Flat Premium ── */
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .link-icon {
+            font-size: 1.25rem;
+            margin-right: 16px;
+            width: 24px;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .link-text {
+            flex-grow: 1;
+        }
+
+        .link-arrow {
+            font-size: 0.85rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* ── Variantes de Cores Flat (Sem Sombras) ── */
+        
+        /* 1. Amarelo (Perfil Gamer - Destaque Principal) */
+        .link-gamer {
+            border: 2px solid #FFC800;
+            color: #FFC800;
+        }
+        .link-gamer:hover {
+            background-color: #FFC800;
+            color: #000000;
+            transform: translateY(-3px);
+        }
+        .link-gamer:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 2. Laranja (Inscrições) */
+        .link-orange {
+            border: 2px solid #FF5F17;
+            color: #FF5F17;
+        }
+        .link-orange:hover {
+            background-color: #FF5F17;
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+        .link-orange:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 3. Azul (Site Oficial) */
+        .link-blue {
+            border: 2px solid #1C00FF;
+            color: #1C00FF;
+        }
+        .link-blue:hover {
+            background-color: #1C00FF;
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+        .link-blue:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* 4. Cinza (Secundário/Encerrado) */
+        .link-gray {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888888;
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .link-gray:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+        .link-gray:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ── Redes Sociais no Rodapé ── */
+        .social {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .social a {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            color: #666666;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social a:hover {
+            color: #FF5F17;
+            border-color: #FF5F17;
+            transform: translateY(-3px);
+        }
+
+        /* ── Footer / Copyright ── */
+        .footer {
+            font-size: 0.75rem;
+            color: #444444;
+            text-align: center;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer a {
+            color: #666666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="ambient-glow"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="links-container">
+        <!-- Header -->
+        <header class="profile">
+            <div class="profile-avatar">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Circuit Neural/Brain Outline Icon -->
+                    <circle cx="50" cy="50" r="42" stroke="url(#logo-grad)" stroke-width="3" fill="none" />
+                    <path d="M30 45 C35 30, 65 30, 70 45 C75 55, 65 75, 50 75 C35 75, 25 55, 30 45 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+                    <circle cx="50" cy="40" r="5" fill="#FFC800" />
+                    <circle cx="40" cy="55" r="4" fill="#FF5F17" />
+                    <circle cx="60" cy="55" r="4" fill="#1C00FF" />
+                    <line x1="50" y1="45" x2="40" y2="55" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                    <line x1="50" y1="45" x2="60" y2="55" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                    <defs>
+                        <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFC800" />
+                            <stop offset="100%" stop-color="#FF5F17" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1 class="profile-title">FIT <span>2026</span></h1>
+            <p class="profile-desc">XIII Fórum de Inovação e Tecnologia — Conecte-se com o Futuro da IA</p>
+        </header>
+
+        <!-- Links Grid -->
+        <main class="links-grid">
+            <!-- 1. Perfil Gamer -->
+            <a href="https://forms.gle/perfil-gamer-fit2026" target="_blank" class="link-item link-gamer">
+                <i class="fas fa-gamepad link-icon"></i>
+                <span class="link-text">Formulário: Perfil Gamer</span>
+                <i class="fas fa-arrow-right link-arrow"></i>
+            </a>
+
+            <!-- 2. Inscrições -->
+            <a href="https://fit.crateus.ufc.br/#inscricoes" target="_blank" class="link-item link-orange">
+                <i class="fas fa-ticket-alt link-icon"></i>
+                <span class="link-text">Garantir Minha Inscrição</span>
+                <i class="fas fa-arrow-right link-arrow"></i>
+            </a>
+
+            <!-- 3. Site Oficial -->
+            <a href="index.html" class="link-item link-blue">
+                <i class="fas fa-globe link-icon"></i>
+                <span class="link-text">Site Oficial FIT 2026</span>
+                <i class="fas fa-arrow-right link-arrow"></i>
+            </a>
+
+            <!-- 4. Seja um Voluntário -->
+            <a href="https://forms.gle/WrNpp3KVtz7iWyfe7" target="_blank" class="link-item link-gray">
+                <i class="fas fa-hands-helping link-icon"></i>
+                <span class="link-text">Voluntários (Inscrições Encerradas)</span>
+                <i class="fas fa-arrow-right link-arrow"></i>
+            </a>
+
+            <!-- 5. Edição 2025 -->
+            <a href="https://fit.crateus.ufc.br/ano/2025" target="_blank" class="link-item link-gray">
+                <i class="fas fa-history link-icon"></i>
+                <span class="link-text">Edição FIT 2025</span>
+                <i class="fas fa-arrow-right link-arrow"></i>
+            </a>
+        </main>
+
+        <!-- Social Icons -->
+        <div class="social">
+            <a href="https://www.instagram.com/fitcrateus/" target="_blank" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 | Núcleo de Comunicação <a href="index.html">FIT</a></p>
+        </footer>
+    </div>
+
+    <!-- Background Particles Script -->
+    <script>
+        (function () {
+            const container = document.getElementById('particles');
+            const colors = ['#FFC800', '#FF5F17', '#1C00FF'];
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 3 + 1.5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                p.style.cssText = `
+                    left: ${Math.random() * 100}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    animation-duration: ${Math.random() * 10 + 6}s;
+                    animation-delay: ${Math.random() * -10}s;
+                `;
+                container.appendChild(p);
+            }
+        })();
+    </script>
+</body>
+
+</html>

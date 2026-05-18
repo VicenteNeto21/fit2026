@@ -1,0 +1,30 @@
+# Agent config & rules
+.agent/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+[Dd]esktop.ini
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node dependencies (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
