@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIT 2026 — Links Úteis</title>
     <meta name="description" content="Acesse todos os links oficiais do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         /* ── Reset & Base ── */
@@ -21,62 +23,85 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --color-yellow: #FFC800;
+            --color-orange: #FF5F17;
+            --color-blue: #1C00FF;
+            --color-gray: #888888;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover-border: rgba(255, 255, 255, 0.2);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000;
+            background-color: #030303;
             color: #ffffff;
-            line-height: 1.5;
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 40px 20px;
+            padding: 60px 20px;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* ── Background Glows & Particles ── */
+        /* ── Ambient Background Glows ── */
         .ambient-glow {
             position: absolute;
             inset: 0;
             z-index: 1;
             pointer-events: none;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(28, 0, 255, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 95, 23, 0.08) 0%, transparent 40%);
-        }
-
-        .particles {
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            pointer-events: none;
             overflow: hidden;
         }
 
-        .particle {
+        .glow-sphere {
             position: absolute;
             border-radius: 50%;
-            opacity: 0;
-            animation: floatUp linear infinite;
+            filter: blur(140px);
+            opacity: 0.15;
+            mix-blend-mode: screen;
+            animation: pulseGlow 12s infinite alternate ease-in-out;
         }
 
-        @keyframes floatUp {
+        .glow-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--color-blue) 0%, transparent 70%);
+        }
+
+        .glow-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--color-orange) 0%, transparent 70%);
+            animation-delay: -6s;
+        }
+
+        @keyframes pulseGlow {
             0% {
-                transform: translateY(100vh) scale(0.5);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
+                transform: scale(1) translate(0, 0);
+                opacity: 0.12;
             }
             100% {
-                transform: translateY(-10vh) scale(1);
-                opacity: 0;
+                transform: scale(1.2) translate(5%, 5%);
+                opacity: 0.20;
             }
+        }
+
+        /* ── Particles Canvas ── */
+        #particles-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
         }
 
         /* ── Container Principal ── */
@@ -91,39 +116,92 @@
             align-items: center;
         }
 
-        /* ── Header / Perfil ── */
-        .profile {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .profile-avatar {
-            width: 96px;
-            height: 96px;
+        /* ── Floating Settings Cog ── */
+        .settings-trigger {
+            position: absolute;
+            top: -30px;
+            right: 0;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            border: 2px solid #FF5F17;
-            padding: 4px;
-            margin: 0 auto 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.6);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        .profile-avatar:hover {
-            transform: rotate(5deg) scale(1.05);
-            border-color: #FFC800;
+        .settings-trigger:hover {
+            color: #ffffff;
+            border-color: var(--glass-hover-border);
+            transform: rotate(45deg) scale(1.1);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* ── Header / Perfil ── */
+        .profile {
+            text-align: center;
+            margin-bottom: 35px;
+            animation: fadeInDown 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            width: 106px;
+            height: 106px;
+            margin: 0 auto 16px;
+        }
+
+        .profile-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--glass-border);
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .profile-avatar-glow {
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-yellow), var(--color-orange), var(--color-blue));
+            z-index: 1;
+            opacity: 0.5;
+            filter: blur(6px);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .profile-avatar-container:hover .profile-avatar {
+            transform: scale(1.04) rotate(5deg);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-avatar-container:hover .profile-avatar-glow {
+            filter: blur(12px);
+            opacity: 0.9;
         }
 
         .profile-avatar svg {
-            width: 48px;
-            height: 48px;
-            fill: #ffffff;
+            width: 52px;
+            height: 52px;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
         }
 
         .profile-title {
-            font-size: 1.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
             font-weight: 900;
             letter-spacing: -0.5px;
             margin-bottom: 8px;
@@ -134,18 +212,70 @@
         }
 
         .profile-title span {
-            background: linear-gradient(135deg, #FFC800, #FF5F17);
+            background: linear-gradient(135deg, var(--color-yellow), var(--color-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .profile-desc {
-            font-size: 0.9rem;
-            color: #888888;
+            font-size: 0.92rem;
+            color: #b0b0b0;
             font-weight: 500;
-            max-width: 320px;
+            max-width: 340px;
             margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* ── Connection Status Badge ── */
+        .status-badge {
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            color: #888888;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--color-gray);
+        }
+
+        .status-badge.connected {
+            border-color: rgba(0, 230, 115, 0.2);
+            color: #00e673;
+            background: rgba(0, 230, 115, 0.05);
+        }
+
+        .status-badge.connected .status-dot {
+            background: #00e673;
+            box-shadow: 0 0 8px #00e673;
+            animation: pulseDot 2s infinite alternate;
+        }
+
+        .status-badge.local {
+            border-color: rgba(255, 180, 0, 0.2);
+            color: #ffb400;
+            background: rgba(255, 180, 0, 0.05);
+        }
+
+        .status-badge.local .status-dot {
+            background: #ffb400;
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.3); opacity: 1; }
         }
 
         /* ── Grid de Links ── */
@@ -154,105 +284,299 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
-        /* ── Botão de Link Flat Premium ── */
+        /* ── Botão de Link Premium (Glassmorphism) ── */
         .link-item {
             display: flex;
             align-items: center;
             justify-content: flex-start;
             width: 100%;
             padding: 16px 24px;
-            font-size: 0.95rem;
+            font-size: 0.98rem;
             font-weight: 700;
             text-decoration: none;
-            border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 14px;
             position: relative;
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #ffffff;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            animation: fadeInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+        }
+
+        .link-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
         }
 
         .link-icon {
-            font-size: 1.25rem;
-            margin-right: 16px;
+            font-size: 1.35rem;
+            margin-right: 18px;
             width: 24px;
             text-align: center;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .link-text {
             flex-grow: 1;
+            position: relative;
+            z-index: 2;
+            letter-spacing: -0.2px;
+            transition: transform 0.3s ease;
         }
 
         .link-arrow {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            opacity: 0.4;
+            transform: translateX(-5px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ── Hover General State ── */
+        .link-item:hover {
+            transform: translateY(-4px) scale(1.015);
+            border-color: var(--glass-hover-border);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .link-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .link-item:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .link-item:hover .link-icon {
+            transform: scale(1.15);
+        }
+
+        /* ── Color Variations (Tactile Hover Glows) ── */
+        .link-gamer:hover {
+            border-color: rgba(255, 200, 0, 0.4);
+            box-shadow: 0 12px 30px -10px rgba(255, 200, 0, 0.25);
+            color: var(--color-yellow);
+        }
+        .link-gamer:hover .link-icon {
+            color: var(--color-yellow);
+            filter: drop-shadow(0 0 8px rgba(255, 200, 0, 0.6));
+        }
+
+        .link-orange:hover {
+            border-color: rgba(255, 95, 23, 0.4);
+            box-shadow: 0 12px 30px -10px rgba(255, 95, 23, 0.25);
+            color: var(--color-orange);
+        }
+        .link-orange:hover .link-icon {
+            color: var(--color-orange);
+            filter: drop-shadow(0 0 8px rgba(255, 95, 23, 0.6));
+        }
+
+        .link-blue:hover {
+            border-color: rgba(28, 0, 255, 0.4);
+            box-shadow: 0 12px 30px -10px rgba(28, 0, 255, 0.25);
+            color: #6d5bff;
+        }
+        .link-blue:hover .link-icon {
+            color: #6d5bff;
+            filter: drop-shadow(0 0 8px rgba(28, 0, 255, 0.6));
+        }
+
+        .link-gray:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 30px -10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* ── Skeleton / Shimmer Loader ── */
+        .skeleton-item {
+            height: 60px;
+            width: 100%;
+            border-radius: 14px;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.03) 25%,
+                rgba(255, 255, 255, 0.08) 50%,
+                rgba(255, 255, 255, 0.03) 75%
+            );
+            background-size: 200% 100%;
+            border: 1px solid var(--glass-border);
+            animation: shimmer 1.6s infinite ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* ── Settings Glass Modal ── */
+        .settings-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0;
-            transform: translateX(-10px);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding: 20px;
+        }
+
+        .settings-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .settings-modal {
+            background: rgba(10, 10, 10, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            transform: scale(0.9);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .settings-backdrop.open .settings-modal {
+            transform: scale(1);
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .settings-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .settings-close {
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.2s ease;
+        }
+
+        .settings-close:hover {
+            color: #ffffff;
+        }
+
+        .settings-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .settings-description {
+            font-size: 0.82rem;
+            color: #888888;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .settings-description a {
+            color: var(--color-orange);
+            text-decoration: none;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #b0b0b0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
             transition: all 0.3s ease;
         }
 
-        /* ── Variantes de Cores Flat (Sem Sombras) ── */
-        
-        /* 1. Amarelo (Perfil Gamer - Destaque Principal) */
-        .link-gamer {
-            border: 2px solid #FFC800;
-            color: #FFC800;
+        .form-group input:focus {
+            outline: none;
+            border-color: rgba(255, 95, 23, 0.5);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 10px rgba(255, 95, 23, 0.15);
         }
-        .link-gamer:hover {
-            background-color: #FFC800;
+
+        .settings-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-yellow), var(--color-orange));
+            border: none;
             color: #000000;
-            transform: translateY(-3px);
-        }
-        .link-gamer:hover .link-arrow {
-            opacity: 1;
-            transform: translateX(0);
         }
 
-        /* 2. Laranja (Inscrições) */
-        .link-orange {
-            border: 2px solid #FF5F17;
-            color: #FF5F17;
-        }
-        .link-orange:hover {
-            background-color: #FF5F17;
-            color: #ffffff;
-            transform: translateY(-3px);
-        }
-        .link-orange:hover .link-arrow {
-            opacity: 1;
-            transform: translateX(0);
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 95, 23, 0.3);
         }
 
-        /* 3. Azul (Site Oficial) */
-        .link-blue {
-            border: 2px solid #1C00FF;
-            color: #1C00FF;
-        }
-        .link-blue:hover {
-            background-color: #1C00FF;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
             color: #ffffff;
-            transform: translateY(-3px);
-        }
-        .link-blue:hover .link-arrow {
-            opacity: 1;
-            transform: translateX(0);
         }
 
-        /* 4. Cinza (Secundário/Encerrado) */
-        .link-gray {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #888888;
-            background: rgba(255, 255, 255, 0.01);
-        }
-        .link-gray:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            transform: translateY(-3px);
-        }
-        .link-gray:hover .link-arrow {
-            opacity: 1;
-            transform: translateX(0);
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         /* ── Redes Sociais no Rodapé ── */
@@ -260,41 +584,48 @@
             display: flex;
             justify-content: center;
             gap: 16px;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+            animation-delay: 0.3s;
         }
 
         .social a {
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            font-size: 1.2rem;
-            color: #666666;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.25rem;
+            color: #888888;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .social a:hover {
-            color: #FF5F17;
-            border-color: #FF5F17;
-            transform: translateY(-3px);
+            color: #ffffff;
+            border-color: var(--color-orange);
+            background: rgba(255, 95, 23, 0.1);
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 95, 23, 0.2);
         }
 
-        /* ── Footer / Copyright ── */
+        /* ── Footer ── */
         .footer {
-            font-size: 0.75rem;
-            color: #444444;
+            font-size: 0.74rem;
+            color: #555555;
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+            animation-delay: 0.4s;
         }
 
         .footer a {
-            color: #666666;
+            color: #777777;
             text-decoration: none;
             transition: color 0.3s ease;
         }
@@ -302,75 +633,87 @@
         .footer a:hover {
             color: #ffffff;
         }
+
+        /* ── Keyframe Animations ── */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
 <body>
-    <!-- Background Elements -->
-    <div class="ambient-glow"></div>
-    <div class="particles" id="particles"></div>
+    <!-- Background Canvas for Particles -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Ambient Glowing Spots -->
+    <div class="ambient-glow">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
 
     <div class="links-container">
-        <!-- Header -->
+        <!-- Floating Settings Cog -->
+        <div class="settings-trigger" id="settings-trigger" title="Configurar Supabase">
+            <i class="fas fa-cog"></i>
+        </div>
+
+        <!-- Header / Perfil -->
         <header class="profile">
-            <div class="profile-avatar">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Circuit Neural/Brain Outline Icon -->
-                    <circle cx="50" cy="50" r="42" stroke="url(#logo-grad)" stroke-width="3" fill="none" />
-                    <path d="M30 45 C35 30, 65 30, 70 45 C75 55, 65 75, 50 75 C35 75, 25 55, 30 45 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
-                    <circle cx="50" cy="40" r="5" fill="#FFC800" />
-                    <circle cx="40" cy="55" r="4" fill="#FF5F17" />
-                    <circle cx="60" cy="55" r="4" fill="#1C00FF" />
-                    <line x1="50" y1="45" x2="40" y2="55" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
-                    <line x1="50" y1="45" x2="60" y2="55" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
-                    <defs>
-                        <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#FFC800" />
-                            <stop offset="100%" stop-color="#FF5F17" />
-                        </linearGradient>
-                    </defs>
-                </svg>
+            <div class="profile-avatar-container">
+                <div class="profile-avatar-glow"></div>
+                <div class="profile-avatar">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="42" stroke="url(#logo-grad)" stroke-width="3.5" fill="none" />
+                        <path d="M30 45 C35 30, 65 30, 70 45 C75 55, 65 75, 50 75 C35 75, 25 55, 30 45 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+                        <circle cx="50" cy="40" r="5.5" fill="#FFC800" />
+                        <circle cx="41" cy="54" r="4.5" fill="#FF5F17" />
+                        <circle cx="59" cy="54" r="4.5" fill="#1C00FF" />
+                        <line x1="50" y1="45" x2="41" y2="54" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                        <line x1="50" y1="45" x2="59" y2="54" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+                        <defs>
+                            <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FFC800" />
+                                <stop offset="100%" stop-color="#FF5F17" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
             </div>
             <h1 class="profile-title">FIT <span>2026</span></h1>
             <p class="profile-desc">XIII Fórum de Inovação e Tecnologia — Conecte-se com o Futuro da IA</p>
+            
+            <!-- Badge de Status de Conexão -->
+            <div class="status-badge" id="status-badge">
+                <div class="status-dot"></div>
+                <span id="status-text">Verificando...</span>
+            </div>
         </header>
 
-        <!-- Links Grid -->
-        <main class="links-grid">
-            <!-- 1. Perfil Gamer -->
-            <a href="https://forms.gle/perfil-gamer-fit2026" target="_blank" class="link-item link-gamer">
-                <i class="fas fa-gamepad link-icon"></i>
-                <span class="link-text">Formulário: Perfil Gamer</span>
-                <i class="fas fa-arrow-right link-arrow"></i>
-            </a>
-
-            <!-- 2. Inscrições -->
-            <a href="https://fit.crateus.ufc.br/#inscricoes" target="_blank" class="link-item link-orange">
-                <i class="fas fa-ticket-alt link-icon"></i>
-                <span class="link-text">Garantir Minha Inscrição</span>
-                <i class="fas fa-arrow-right link-arrow"></i>
-            </a>
-
-            <!-- 3. Site Oficial -->
-            <a href="index.html" class="link-item link-blue">
-                <i class="fas fa-globe link-icon"></i>
-                <span class="link-text">Site Oficial FIT 2026</span>
-                <i class="fas fa-arrow-right link-arrow"></i>
-            </a>
-
-            <!-- 4. Seja um Voluntário -->
-            <a href="https://forms.gle/WrNpp3KVtz7iWyfe7" target="_blank" class="link-item link-gray">
-                <i class="fas fa-hands-helping link-icon"></i>
-                <span class="link-text">Voluntários (Inscrições Encerradas)</span>
-                <i class="fas fa-arrow-right link-arrow"></i>
-            </a>
-
-            <!-- 5. Edição 2025 -->
-            <a href="https://fit.crateus.ufc.br/ano/2025" target="_blank" class="link-item link-gray">
-                <i class="fas fa-history link-icon"></i>
-                <span class="link-text">Edição FIT 2025</span>
-                <i class="fas fa-arrow-right link-arrow"></i>
-            </a>
+        <!-- Links Grid (Conteúdo Dinâmico) -->
+        <main class="links-grid" id="links-grid">
+            <!-- Skeletons são mostrados por padrão enquanto carrega -->
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
         </main>
 
         <!-- Social Icons -->
@@ -386,27 +729,297 @@
         </footer>
     </div>
 
-    <!-- Background Particles Script -->
+    <!-- Settings Backdrop / Modal -->
+    <div class="settings-backdrop" id="settings-backdrop">
+        <div class="settings-modal">
+            <div class="settings-header">
+                <h3 class="settings-title"><i class="fas fa-database" style="color: var(--color-orange); margin-right: 8px;"></i>Conectar Supabase</h3>
+                <i class="fas fa-times settings-close" id="settings-close"></i>
+            </div>
+            <div class="settings-body">
+                <p class="settings-description">
+                    Cole as chaves de API do seu projeto Supabase abaixo. As informações ficam salvas apenas no seu navegador de forma 100% segura (`localStorage`).
+                    <br><br>
+                    Para criar a tabela no seu banco de dados, execute o script <a href="supabase-schema.sql" target="_blank">supabase-schema.sql</a> no seu painel.
+                </p>
+                <div class="form-group">
+                    <label for="sb-url">Supabase Project URL</label>
+                    <input type="url" id="sb-url" placeholder="https://xxxx.supabase.co" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="sb-key">Supabase Anon Key</label>
+                    <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." autocomplete="off">
+                </div>
+                <div class="settings-actions">
+                    <button class="btn btn-secondary" id="btn-clear">Limpar</button>
+                    <button class="btn btn-primary" id="btn-save">Salvar e Conectar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── SCRIPTS DE COMPORTAMENTO E INTEGRAÇÃO ── -->
     <script>
-        (function () {
-            const container = document.getElementById('particles');
-            const colors = ['#FFC800', '#FF5F17', '#1C00FF'];
-            for (let i = 0; i < 20; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                const size = Math.random() * 3 + 1.5;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                p.style.cssText = `
-                    left: ${Math.random() * 100}%;
-                    width: ${size}px;
-                    height: ${size}px;
-                    background: ${color};
-                    animation-duration: ${Math.random() * 10 + 6}s;
-                    animation-delay: ${Math.random() * -10}s;
-                `;
-                container.appendChild(p);
+        // ── 1. Links Padrão (Fallback Estático) ──
+        const DEFAULT_LINKS = [
+            {
+                title: 'Formulário: Perfil Gamer',
+                url: 'https://forms.gle/perfil-gamer-fit2026',
+                icon: 'fas fa-gamepad',
+                style_class: 'link-gamer'
+            },
+            {
+                title: 'Garantir Minha Inscrição',
+                url: 'https://fit.crateus.ufc.br/#inscricoes',
+                icon: 'fas fa-ticket-alt',
+                style_class: 'link-orange'
+            },
+            {
+                title: 'Site Oficial FIT 2026',
+                url: 'index.html',
+                icon: 'fas fa-globe',
+                style_class: 'link-blue'
+            },
+            {
+                title: 'Voluntários (Inscrições Encerradas)',
+                url: 'https://forms.gle/WrNpp3KVtz7iWyfe7',
+                icon: 'fas fa-hands-helping',
+                style_class: 'link-gray'
+            },
+            {
+                title: 'Edição FIT 2025',
+                url: 'https://fit.crateus.ufc.br/ano/2025',
+                icon: 'fas fa-history',
+                style_class: 'link-gray'
             }
+        ];
+
+        // ── 2. Elementos do DOM ──
+        const linksGrid = document.getElementById('links-grid');
+        const statusBadge = document.getElementById('status-badge');
+        const statusText = document.getElementById('status-text');
+        const settingsBackdrop = document.getElementById('settings-backdrop');
+        const settingsTrigger = document.getElementById('settings-trigger');
+        const settingsClose = document.getElementById('settings-close');
+        const btnSave = document.getElementById('btn-save');
+        const btnClear = document.getElementById('btn-clear');
+        const inputUrl = document.getElementById('sb-url');
+        const inputKey = document.getElementById('sb-key');
+
+        // ── 3. Renderizar Cartões de Link ──
+        function renderLinks(links) {
+            linksGrid.innerHTML = '';
+            links.forEach((link, index) => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.className = `link-item ${link.style_class || 'link-gray'}`;
+                // Link externo ou interno
+                if (link.url.startsWith('http')) {
+                    a.target = '_blank';
+                }
+                // Animação stagger (atraso sequencial de fade-in)
+                a.style.animationDelay = `${index * 0.1}s`;
+
+                a.innerHTML = `
+                    <i class="${link.icon || 'fas fa-link'} link-icon"></i>
+                    <span class="link-text">${link.title}</span>
+                    <i class="fas fa-arrow-right link-arrow"></i>
+                `;
+                linksGrid.appendChild(a);
+            });
+        }
+
+        // ── 4. Carregar Configurações Salvas no Modal ──
+        function loadSavedCredentials() {
+            inputUrl.value = localStorage.getItem('supabase_url') || '';
+            inputKey.value = localStorage.getItem('supabase_anon_key') || '';
+        }
+
+        // ── 5. Inicialização e Busca Dinâmica (Supabase) ──
+        async function initPage() {
+            const url = localStorage.getItem('supabase_url');
+            const key = localStorage.getItem('supabase_anon_key');
+
+            // Se não houver configurações, carrega o fallback local instantaneamente
+            if (!url || !key) {
+                console.log("Supabase não configurado. Exibindo links estáticos.");
+                setTimeout(() => {
+                    renderLinks(DEFAULT_LINKS);
+                    statusBadge.className = "status-badge local";
+                    statusText.textContent = "Links locais (estático)";
+                }, 600); // Pequeno atraso para o efeito visual de carregamento
+                return;
+            }
+
+            try {
+                // Cria o cliente Supabase dinamicamente
+                const supabaseClient = supabase.createClient(url, key);
+
+                // Race Promise: busca dados ou estoura timeout em 3 segundos
+                const fetchPromise = supabaseClient
+                    .from('fit_links')
+                    .select('*')
+                    .eq('active', true)
+                    .order('order_index', { ascending: true });
+
+                const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error("Timeout de conexão")), 3000)
+                );
+
+                const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
+
+                if (error) throw error;
+
+                if (data && data.length > 0) {
+                    renderLinks(data);
+                    statusBadge.className = "status-badge connected";
+                    statusText.textContent = "Conectado ao Supabase";
+                    console.log("Links carregados com sucesso do Supabase!");
+                } else {
+                    // Tabela vazia
+                    console.log("Nenhum link ativo retornado. Usando fallback.");
+                    renderLinks(DEFAULT_LINKS);
+                    statusBadge.className = "status-badge local";
+                    statusText.textContent = "Links locais (Sem dados)";
+                }
+
+            } catch (err) {
+                console.error("Erro ao conectar com Supabase:", err.message);
+                // Fallback de segurança em caso de falha de rede ou dados
+                renderLinks(DEFAULT_LINKS);
+                statusBadge.className = "status-badge local";
+                statusText.textContent = "Offline (Links locais)";
+            }
+        }
+
+        // ── 6. Event Listeners do Painel de Configurações ──
+        settingsTrigger.addEventListener('click', () => {
+            loadSavedCredentials();
+            settingsBackdrop.classList.add('open');
+        });
+
+        settingsClose.addEventListener('click', () => {
+            settingsBackdrop.classList.remove('open');
+        });
+
+        settingsBackdrop.addEventListener('click', (e) => {
+            if (e.target === settingsBackdrop) {
+                settingsBackdrop.classList.remove('open');
+            }
+        });
+
+        btnSave.addEventListener('click', () => {
+            const urlVal = inputUrl.value.trim();
+            const keyVal = inputKey.value.trim();
+
+            if (!urlVal || !keyVal) {
+                alert("Por favor, preencha a URL e a Anon Key!");
+                return;
+            }
+
+            localStorage.setItem('supabase_url', urlVal);
+            localStorage.setItem('supabase_anon_key', keyVal);
+            settingsBackdrop.classList.remove('open');
+            
+            // Recarregar os links com a nova credencial
+            linksGrid.innerHTML = `
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+            `;
+            statusBadge.className = "status-badge";
+            statusText.textContent = "Conectando...";
+            initPage();
+        });
+
+        btnClear.addEventListener('click', () => {
+            if (confirm("Deseja realmente limpar as credenciais do Supabase e usar os links locais padrão?")) {
+                localStorage.removeItem('supabase_url');
+                localStorage.removeItem('supabase_anon_key');
+                inputUrl.value = '';
+                inputKey.value = '';
+                settingsBackdrop.classList.remove('open');
+                
+                linksGrid.innerHTML = `
+                    <div class="skeleton-item"></div>
+                    <div class="skeleton-item"></div>
+                    <div class="skeleton-item"></div>
+                `;
+                statusBadge.className = "status-badge";
+                statusText.textContent = "Conectando...";
+                initPage();
+            }
+        });
+
+        // ── 7. Canvas Background Particles (Premium Fluid Canvas Animation) ──
+        (function () {
+            const canvas = document.getElementById('particles-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const particleColors = ['#FFC800', '#FF5F17', '#1C00FF'];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height + canvas.height;
+                    this.size = Math.random() * 2 + 1;
+                    this.speedY = -(Math.random() * 0.8 + 0.3);
+                    this.speedX = (Math.random() * 0.4 - 0.2);
+                    this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+                    this.alpha = Math.random() * 0.5 + 0.2;
+                }
+
+                update() {
+                    this.y += this.speedY;
+                    this.x += this.speedX;
+                    if (this.y < -10) {
+                        this.y = canvas.height + 10;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                const particleCount = Math.min(40, Math.floor(canvas.width / 20));
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            initParticles();
+            animate();
         })();
+
+        // Inicializar página
+        initPage();
     </script>
 </body>
 
