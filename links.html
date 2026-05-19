@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIT 2026 — Links Úteis</title>
     <meta name="description" content="Acesse todos os links oficiais do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
-    <!-- Google Fonts: Inter & Outfit -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Supabase JS Client SDK -->
@@ -27,420 +27,412 @@
             --color-yellow: #FFC800;
             --color-orange: #FF5F17;
             --color-blue: #1C00FF;
-            --color-gray: #888888;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-hover-border: rgba(255, 255, 255, 0.2);
+            --color-bg: #F4F4F6;
+            --color-card-bg: #ffffff;
+            
+            /* Tons Pastéis FIT */
+            --pastel-yellow-bg: #FFFBE6;
+            --pastel-yellow-border: #FFE58F;
+            --pastel-yellow-text: #B78103;
+
+            --pastel-orange-bg: #FFF2E8;
+            --pastel-orange-border: #FFD8BF;
+            --pastel-orange-text: #D4380D;
+
+            --pastel-blue-bg: #E6F7FF;
+            --pastel-blue-border: #BAE7FF;
+            --pastel-blue-text: #096DD9;
+
+            --pastel-gray-bg: #F9F9FB;
+            --pastel-gray-border: #E5E7EB;
+            --pastel-gray-text: #4B5563;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #030303;
-            color: #ffffff;
-            line-height: 1.6;
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--color-bg);
+            color: #1F2937;
+            line-height: 1.5;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 60px 20px;
+            justify-content: center;
+            padding: 40px 20px;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* ── Ambient Background Glows ── */
-        .ambient-glow {
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .glow-sphere {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(140px);
-            opacity: 0.15;
-            mix-blend-mode: screen;
-            animation: pulseGlow 12s infinite alternate ease-in-out;
-        }
-
-        .glow-1 {
-            top: -10%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, var(--color-blue) 0%, transparent 70%);
-        }
-
-        .glow-2 {
-            bottom: -10%;
-            right: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, var(--color-orange) 0%, transparent 70%);
-            animation-delay: -6s;
-        }
-
-        @keyframes pulseGlow {
-            0% {
-                transform: scale(1) translate(0, 0);
-                opacity: 0.12;
-            }
-            100% {
-                transform: scale(1.2) translate(5%, 5%);
-                opacity: 0.20;
-            }
-        }
-
-        /* ── Particles Canvas ── */
+        /* ── Soft Particle Canvas Background ── */
         #particles-canvas {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            z-index: 2;
+            z-index: 1;
             pointer-events: none;
         }
 
-        /* ── Container Principal ── */
-        .links-container {
+        /* ── Main Premium Card Container ── */
+        .viewport-card {
             width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
+            max-width: 430px;
+            background-color: var(--color-card-bg);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 32px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
             position: relative;
             z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding-bottom: 30px;
         }
 
-        /* ── Floating Settings Cog ── */
-        .settings-trigger {
+        /* ── Diagonal Split Header (Sunset Gradient) ── */
+        .card-header-gradient {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, var(--color-orange), var(--color-yellow));
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+        }
+
+        /* Diagonal visual line divider */
+        .card-header-gradient::after {
+            content: '';
             position: absolute;
-            top: -30px;
-            right: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.6);
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewY(-4deg);
+        }
+
+        /* ── Settings Brackets Toggle ── */
+        .settings-trigger {
+            display: none !important;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65rem;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 4px 10px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 15;
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
         }
 
         .settings-trigger:hover {
+            background: #ffffff;
+            color: var(--color-orange);
+            border-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* ── Connection Status Badge ── */
+        .connection-badge {
+            display: none !important;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.62rem;
             color: #ffffff;
-            border-color: var(--glass-hover-border);
-            transform: rotate(45deg) scale(1.1);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-        }
-
-        /* ── Header / Perfil ── */
-        .profile {
-            text-align: center;
-            margin-bottom: 35px;
-            animation: fadeInDown 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .profile-avatar-container {
-            position: relative;
-            width: 106px;
-            height: 106px;
-            margin: 0 auto 16px;
-        }
-
-        .profile-avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--glass-border);
-            padding: 6px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 4px 10px;
+            z-index: 15;
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 2;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            gap: 6px;
         }
 
-        .profile-avatar-glow {
-            position: absolute;
-            inset: -3px;
+        .badge-dot {
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--color-yellow), var(--color-orange), var(--color-blue));
-            z-index: 1;
-            opacity: 0.5;
-            filter: blur(6px);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: #ffffff;
         }
 
-        .profile-avatar-container:hover .profile-avatar {
-            transform: scale(1.04) rotate(5deg);
+        /* Badge States */
+        .connection-badge.connected {
+            background: rgba(0, 180, 80, 0.85);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .connection-badge.connected .badge-dot {
+            background: #ffffff;
+            box-shadow: 0 0 6px #ffffff;
+            animation: pulseDot 1.5s infinite alternate;
+        }
+
+        .connection-badge.local {
+            background: rgba(230, 150, 0, 0.85);
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .profile-avatar-container:hover .profile-avatar-glow {
-            filter: blur(12px);
-            opacity: 0.9;
+        @keyframes pulseDot {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
-        .profile-avatar svg {
-            width: 52px;
-            height: 52px;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+        /* ── Avatar Redondo Sobreposto ── */
+        .avatar-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 5px solid #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            margin-top: -50px;
+            z-index: 20;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-container:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ── Perfil Info ── */
+        .profile-info {
+            text-align: center;
+            margin-top: 16px;
+            padding: 0 24px;
         }
 
         .profile-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 2px;
+        }
+
+        .profile-username {
+            font-size: 0.95rem;
+            color: #9CA3AF;
+            font-weight: 500;
             margin-bottom: 8px;
+        }
+
+        .profile-bio {
+            font-size: 0.88rem;
+            color: #4B5563;
+            max-width: 320px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* ── Redes Sociais ── */
+        .social-row {
+            display: flex;
+            gap: 16px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .social-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid #E5E7EB;
+            color: #4B5563;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            background: #ffffff;
         }
 
-        .profile-title span {
-            background: linear-gradient(135deg, var(--color-yellow), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .social-btn:hover {
+            color: var(--color-orange);
+            border-color: var(--color-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 95, 23, 0.1);
         }
 
-        .profile-desc {
-            font-size: 0.92rem;
-            color: #b0b0b0;
-            font-weight: 500;
-            max-width: 340px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
-        /* ── Connection Status Badge ── */
-        .status-badge {
-            margin-top: 10px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.72rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            color: #888888;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--color-gray);
-        }
-
-        .status-badge.connected {
-            border-color: rgba(0, 230, 115, 0.2);
-            color: #00e673;
-            background: rgba(0, 230, 115, 0.05);
-        }
-
-        .status-badge.connected .status-dot {
-            background: #00e673;
-            box-shadow: 0 0 8px #00e673;
-            animation: pulseDot 2s infinite alternate;
-        }
-
-        .status-badge.local {
-            border-color: rgba(255, 180, 0, 0.2);
-            color: #ffb400;
-            background: rgba(255, 180, 0, 0.05);
-        }
-
-        .status-badge.local .status-dot {
-            background: #ffb400;
-        }
-
-        @keyframes pulseDot {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(1.3); opacity: 1; }
-        }
-
-        /* ── Grid de Links ── */
+        /* ── Links Grid ── */
         .links-grid {
             width: 100%;
+            padding: 0 24px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 35px;
+            gap: 14px;
         }
 
-        /* ── Botão de Link Premium (Glassmorphism) ── */
+        /* ── Asymmetric Leaf-shaped Button (O Foco do Mockup) ── */
         .link-item {
+            width: 100%;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            padding: 16px 24px;
-            font-size: 0.98rem;
-            font-weight: 700;
             text-decoration: none;
-            border-radius: 14px;
+            padding: 14px 18px;
+            min-height: 56px;
+            
+            /* CANTOS ASSIMÉTRICOS DE FOLHA EXATAMENTE COMO NO MOCKUP */
+            border-radius: 20px 4px 20px 4px;
+            
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            color: #ffffff;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            animation: fadeInUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
-        .link-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        .link-icon {
-            font-size: 1.35rem;
-            margin-right: 18px;
-            width: 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .link-text {
+        /* Textos Internos do Link */
+        .link-details {
+            display: flex;
+            flex-direction: column;
             flex-grow: 1;
-            position: relative;
-            z-index: 2;
-            letter-spacing: -0.2px;
-            transition: transform 0.3s ease;
+            text-align: center; /* Mantém centralizado por padrão caso seja link simples */
         }
 
-        .link-arrow {
-            font-size: 0.9rem;
-            opacity: 0.4;
-            transform: translateX(-5px);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            z-index: 2;
+        .link-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: -0.1px;
         }
 
-        /* ── Hover General State ── */
-        .link-item:hover {
-            transform: translateY(-4px) scale(1.015);
-            border-color: var(--glass-hover-border);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+        .link-desc {
+            font-size: 0.78rem;
+            opacity: 0.8;
+            margin-top: 2px;
+            font-weight: 400;
+            line-height: 1.3;
         }
 
-        .link-item:hover::before {
-            transform: translateX(100%);
+        /* Layout Especial com Imagem no Card (ex: smoothie no mockup) */
+        .link-item.has-image {
+            padding: 0; /* zera padding para a imagem colar */
         }
 
-        .link-item:hover .link-arrow {
-            opacity: 1;
-            transform: translateX(0);
+        .link-image-container {
+            width: 80px;
+            height: 100%;
+            min-height: 80px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 20px 0 0 4px;
         }
 
-        .link-item:hover .link-icon {
-            transform: scale(1.15);
-        }
-
-        /* ── Color Variations (Tactile Hover Glows) ── */
-        .link-gamer:hover {
-            border-color: rgba(255, 200, 0, 0.4);
-            box-shadow: 0 12px 30px -10px rgba(255, 200, 0, 0.25);
-            color: var(--color-yellow);
-        }
-        .link-gamer:hover .link-icon {
-            color: var(--color-yellow);
-            filter: drop-shadow(0 0 8px rgba(255, 200, 0, 0.6));
-        }
-
-        .link-orange:hover {
-            border-color: rgba(255, 95, 23, 0.4);
-            box-shadow: 0 12px 30px -10px rgba(255, 95, 23, 0.25);
-            color: var(--color-orange);
-        }
-        .link-orange:hover .link-icon {
-            color: var(--color-orange);
-            filter: drop-shadow(0 0 8px rgba(255, 95, 23, 0.6));
-        }
-
-        .link-blue:hover {
-            border-color: rgba(28, 0, 255, 0.4);
-            box-shadow: 0 12px 30px -10px rgba(28, 0, 255, 0.25);
-            color: #6d5bff;
-        }
-        .link-blue:hover .link-icon {
-            color: #6d5bff;
-            filter: drop-shadow(0 0 8px rgba(28, 0, 255, 0.6));
-        }
-
-        .link-gray:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 12px 30px -10px rgba(255, 255, 255, 0.1);
-        }
-
-        /* ── Skeleton / Shimmer Loader ── */
-        .skeleton-item {
-            height: 60px;
+        .link-image {
             width: 100%;
-            border-radius: 14px;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .link-item.has-image .link-details {
+            padding: 14px 18px;
+            text-align: left; /* Alinha à esquerda quando tem imagem do lado */
+        }
+
+        /* ── Estilos de Cores Pastéis Oficiais do FIT ── */
+        
+        /* 1. Amarelo Pastel (Gamer) */
+        .link-gamer {
+            background-color: var(--pastel-yellow-bg);
+            border: 1.5px solid var(--pastel-yellow-border);
+            color: var(--pastel-yellow-text);
+        }
+        .link-gamer:hover {
+            background-color: #FFF2B2;
+            border-color: #FADB14;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(212, 136, 6, 0.08);
+        }
+
+        /* 2. Laranja Pastel (Inscrições) */
+        .link-orange {
+            background-color: var(--pastel-orange-bg);
+            border: 1.5px solid var(--pastel-orange-border);
+            color: var(--pastel-orange-text);
+        }
+        .link-orange:hover {
+            background-color: #FFD8BF;
+            border-color: #FF9C6E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(212, 56, 13, 0.08);
+        }
+
+        /* 3. Azul Pastel (Site) */
+        .link-blue {
+            background-color: var(--pastel-blue-bg);
+            border: 1.5px solid var(--pastel-blue-border);
+            color: var(--pastel-blue-text);
+        }
+        .link-blue:hover {
+            background-color: #BAE7FF;
+            border-color: #69C0FF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(9, 109, 217, 0.08);
+        }
+
+        /* 4. Cinza Pastel (Outros) */
+        .link-gray {
+            background-color: var(--pastel-gray-bg);
+            border: 1.5px solid var(--pastel-gray-border);
+            color: var(--pastel-gray-text);
+        }
+        .link-gray:hover {
+            background-color: #E5E7EB;
+            border-color: #D1D5DB;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        /* ── Skeleton Shimmers para carregamento ── */
+        .skeleton-item {
+            height: 56px;
+            width: 100%;
             background: linear-gradient(
                 90deg,
-                rgba(255, 255, 255, 0.03) 25%,
-                rgba(255, 255, 255, 0.08) 50%,
-                rgba(255, 255, 255, 0.03) 75%
+                #F3F4F6 25%,
+                #E5E7EB 50%,
+                #F3F4F6 75%
             );
             background-size: 200% 100%;
-            border: 1px solid var(--glass-border);
-            animation: shimmer 1.6s infinite ease-in-out;
+            border-radius: 20px 4px 20px 4px;
+            border: 1px solid #E5E7EB;
+            animation: shimmer 1.5s infinite linear;
         }
 
         @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
-        /* ── Settings Glass Modal ── */
+        /* ── Settings Light HUD Modal ── */
         .settings-backdrop {
             position: fixed;
             inset: 0;
             z-index: 100;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 20px;
         }
 
@@ -450,19 +442,20 @@
         }
 
         .settings-modal {
-            background: rgba(10, 10, 10, 0.85);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: #ffffff;
+            border: 1px solid rgba(0,0,0,0.08);
+            border-radius: 24px;
             padding: 30px;
             width: 100%;
             max-width: 440px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-            transform: scale(0.9);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
 
         .settings-backdrop.open .settings-modal {
-            transform: scale(1);
+            transform: translateY(0);
         }
 
         .settings-header {
@@ -470,23 +463,26 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 20px;
+            border-bottom: 1px solid #F3F4F6;
+            padding-bottom: 12px;
         }
 
         .settings-title {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 800;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
         }
 
         .settings-close {
-            color: rgba(255, 255, 255, 0.5);
+            color: #9CA3AF;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: color 0.2s ease;
         }
 
         .settings-close:hover {
-            color: #ffffff;
+            color: #111827;
         }
 
         .settings-body {
@@ -497,14 +493,13 @@
 
         .settings-description {
             font-size: 0.82rem;
-            color: #888888;
-            margin-bottom: 5px;
-            line-height: 1.4;
+            color: #6B7280;
+            line-height: 1.5;
         }
 
         .settings-description a {
             color: var(--color-orange);
-            text-decoration: none;
+            text-decoration: underline;
         }
 
         .form-group {
@@ -514,29 +509,29 @@
         }
 
         .form-group label {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: #b0b0b0;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #4B5563;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .form-group input {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 12px 16px;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 12px;
+            color: #111827;
+            font-family: inherit;
             font-size: 0.88rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: rgba(255, 95, 23, 0.5);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 0 10px rgba(255, 95, 23, 0.15);
+            border-color: var(--color-orange);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(255, 95, 23, 0.12);
         }
 
         .settings-actions {
@@ -548,108 +543,60 @@
         .btn {
             flex: 1;
             padding: 12px;
-            border-radius: 10px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
-            font-family: 'Inter', sans-serif;
+            border-radius: 12px;
             transition: all 0.2s ease;
             text-align: center;
+            border: none;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--color-yellow), var(--color-orange));
-            border: none;
-            color: #000000;
+            background: var(--color-orange);
+            color: #ffffff;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 95, 23, 0.3);
+            background: #e04e10;
+            box-shadow: 0 4px 12px rgba(255, 95, 23, 0.2);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            color: #ffffff;
+            background: #F3F4F6;
+            color: #4B5563;
+            border: 1px solid #E5E7EB;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* ── Redes Sociais no Rodapé ── */
-        .social {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 35px;
-            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) both;
-            animation-delay: 0.3s;
-        }
-
-        .social a {
-            width: 46px;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 1.25rem;
-            color: #888888;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .social a:hover {
-            color: #ffffff;
-            border-color: var(--color-orange);
-            background: rgba(255, 95, 23, 0.1);
-            transform: translateY(-4px) scale(1.1);
-            box-shadow: 0 5px 15px rgba(255, 95, 23, 0.2);
+            background: #E5E7EB;
+            color: #111827;
         }
 
         /* ── Footer ── */
-        .footer {
-            font-size: 0.74rem;
-            color: #555555;
+        .footer-text {
+            font-size: 0.72rem;
+            color: #9CA3AF;
+            margin-top: 24px;
             text-align: center;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) both;
-            animation-delay: 0.4s;
         }
 
-        .footer a {
-            color: #777777;
+        .footer-text a {
+            color: #6B7280;
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-weight: 500;
         }
 
-        .footer a:hover {
-            color: #ffffff;
+        .footer-text a:hover {
+            color: var(--color-orange);
+            text-decoration: underline;
         }
 
-        /* ── Keyframe Animations ── */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* ── Animations ── */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(25px);
+                transform: translateY(12px);
             }
             to {
                 opacity: 1;
@@ -660,144 +607,129 @@
 </head>
 
 <body>
-    <!-- Background Canvas for Particles -->
+    <!-- Soft Dynamic Floating Background Particles -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- Ambient Glowing Spots -->
-    <div class="ambient-glow">
-        <div class="glow-sphere glow-1"></div>
-        <div class="glow-sphere glow-2"></div>
-    </div>
+    <div class="viewport-card">
+        <!-- Diagonal Header Gradient -->
+        <div class="card-header-gradient"></div>
 
-    <div class="links-container">
-        <!-- Floating Settings Cog -->
-        <div class="settings-trigger" id="settings-trigger" title="Configurar Supabase">
-            <i class="fas fa-cog"></i>
+        <!-- Float Config Toggle -->
+        <div class="settings-trigger" id="settings-trigger" title="Conectar Supabase">[⚙ CONFIG]</div>
+
+        <!-- Connection Status Indicator -->
+        <div class="connection-badge" id="connection-badge">
+            <div class="badge-dot"></div>
+            <span id="connection-text">VERIFICANDO...</span>
         </div>
 
-        <!-- Header / Perfil -->
-        <header class="profile">
-            <div class="profile-avatar-container">
-                <div class="profile-avatar-glow"></div>
-                <div class="profile-avatar">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="42" stroke="url(#logo-grad)" stroke-width="3.5" fill="none" />
-                        <path d="M30 45 C35 30, 65 30, 70 45 C75 55, 65 75, 50 75 C35 75, 25 55, 30 45 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
-                        <circle cx="50" cy="40" r="5.5" fill="#FFC800" />
-                        <circle cx="41" cy="54" r="4.5" fill="#FF5F17" />
-                        <circle cx="59" cy="54" r="4.5" fill="#1C00FF" />
-                        <line x1="50" y1="45" x2="41" y2="54" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
-                        <line x1="50" y1="45" x2="59" y2="54" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
-                        <defs>
-                            <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#FFC800" />
-                                <stop offset="100%" stop-color="#FF5F17" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
-            <h1 class="profile-title">FIT <span>2026</span></h1>
-            <p class="profile-desc">XIII Fórum de Inovação e Tecnologia — Conecte-se com o Futuro da IA</p>
-            
-            <!-- Badge de Status de Conexão -->
-            <div class="status-badge" id="status-badge">
-                <div class="status-dot"></div>
-                <span id="status-text">Verificando...</span>
-            </div>
-        </header>
+        <!-- Avatar Circular Sobreposto -->
+        <div class="avatar-container">
+            <img class="avatar-img" src="fit_2026_avatar.png" alt="FIT 2026 Avatar">
+        </div>
 
-        <!-- Links Grid (Conteúdo Dinâmico) -->
+        <!-- Perfil Info -->
+        <div class="profile-info">
+            <h1 class="profile-title">FIT 2026</h1>
+            <p class="profile-username">@fitcrateus</p>
+            <p class="profile-bio">XIII Fórum de Inovação e Tecnologia — UFC Crateús. Conecte-se com o Futuro da IA.</p>
+        </div>
+
+        <!-- Redes Sociais -->
+        <div class="social-row">
+            <a href="https://www.instagram.com/fitcrateus/" target="_blank" class="social-btn" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="index.html" class="social-btn" aria-label="Site Oficial">
+                <i class="fas fa-globe"></i>
+            </a>
+        </div>
+
+        <!-- Grid de Links pastéis e assimétricos -->
         <main class="links-grid" id="links-grid">
-            <!-- Skeletons são mostrados por padrão enquanto carrega -->
+            <!-- Loader Skeletons por padrão -->
             <div class="skeleton-item"></div>
             <div class="skeleton-item"></div>
             <div class="skeleton-item"></div>
             <div class="skeleton-item"></div>
         </main>
 
-        <!-- Social Icons -->
-        <div class="social">
-            <a href="https://www.instagram.com/fitcrateus/" target="_blank" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
-
         <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2026 | Núcleo de Comunicação <a href="index.html">FIT</a></p>
-        </footer>
+        <p class="footer-text">&copy; 2026 | Núcleo de Comunicação & TI <a href="index.html">FIT</a></p>
     </div>
 
-    <!-- Settings Backdrop / Modal -->
+    <!-- Settings Backdrop & Modal -->
     <div class="settings-backdrop" id="settings-backdrop">
         <div class="settings-modal">
             <div class="settings-header">
-                <h3 class="settings-title"><i class="fas fa-database" style="color: var(--color-orange); margin-right: 8px;"></i>Conectar Supabase</h3>
+                <h3 class="settings-title">Conectar Banco Supabase</h3>
                 <i class="fas fa-times settings-close" id="settings-close"></i>
             </div>
             <div class="settings-body">
                 <p class="settings-description">
-                    Cole as chaves de API do seu projeto Supabase abaixo. As informações ficam salvas apenas no seu navegador de forma 100% segura (`localStorage`).
+                    Insira as credenciais do seu Supabase para sincronizar os links dinamicamente. Os dados ficam salvos de forma estritamente local (`localStorage`).
                     <br><br>
-                    Para criar a tabela no seu banco de dados, execute o script <a href="supabase-schema.sql" target="_blank">supabase-schema.sql</a> no seu painel.
+                    Não se esqueça de rodar o script <a href="supabase-schema.sql" target="_blank">supabase-schema.sql</a> no console do Supabase para criar a tabela.
                 </p>
                 <div class="form-group">
-                    <label for="sb-url">Supabase Project URL</label>
-                    <input type="url" id="sb-url" placeholder="https://xxxx.supabase.co" autocomplete="off">
+                    <label for="sb-url">Supabase URL</label>
+                    <input type="url" id="sb-url" placeholder="https://xxxxxxxxxxxxxx.supabase.co" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="sb-key">Supabase Anon Key</label>
                     <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." autocomplete="off">
                 </div>
                 <div class="settings-actions">
-                    <button class="btn btn-secondary" id="btn-clear">Limpar</button>
+                    <button class="btn btn-secondary" id="btn-clear">Desconectar</button>
                     <button class="btn btn-primary" id="btn-save">Salvar e Conectar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ── SCRIPTS DE COMPORTAMENTO E INTEGRAÇÃO ── -->
+    <!-- ── LÓGICA E COMPORTAMENTO DE DADOS ── -->
+    <script src="assets/js/supabase-config.js"></script>
     <script>
         // ── 1. Links Padrão (Fallback Estático) ──
         const DEFAULT_LINKS = [
             {
                 title: 'Formulário: Perfil Gamer',
+                description: 'Inscreva-se no campeonato e monte sua equipe',
                 url: 'https://forms.gle/perfil-gamer-fit2026',
                 icon: 'fas fa-gamepad',
-                style_class: 'link-gamer'
+                style_class: 'link-gamer',
+                thumbnail_url: null
             },
             {
                 title: 'Garantir Minha Inscrição',
+                description: 'Acesse a área de inscrições do fórum',
                 url: 'https://fit.crateus.ufc.br/#inscricoes',
                 icon: 'fas fa-ticket-alt',
-                style_class: 'link-orange'
+                style_class: 'link-orange',
+                thumbnail_url: null
             },
             {
                 title: 'Site Oficial FIT 2026',
+                description: 'Acesse o site principal, programação e palestrantes',
                 url: 'index.html',
                 icon: 'fas fa-globe',
-                style_class: 'link-blue'
+                style_class: 'link-blue',
+                thumbnail_url: 'fit_2026_avatar.png' // Exemplo de card complexo com imagem lateral idêntico ao mockup
             },
             {
-                title: 'Voluntários (Inscrições Encerradas)',
+                title: 'Inscrições para Voluntários',
+                description: 'Processo encerrado. Obrigado a todos!',
                 url: 'https://forms.gle/WrNpp3KVtz7iWyfe7',
                 icon: 'fas fa-hands-helping',
-                style_class: 'link-gray'
-            },
-            {
-                title: 'Edição FIT 2025',
-                url: 'https://fit.crateus.ufc.br/ano/2025',
-                icon: 'fas fa-history',
-                style_class: 'link-gray'
+                style_class: 'link-gray',
+                thumbnail_url: null
             }
         ];
 
-        // ── 2. Elementos do DOM ──
+        // ── 2. Elementos DOM ──
         const linksGrid = document.getElementById('links-grid');
-        const statusBadge = document.getElementById('status-badge');
-        const statusText = document.getElementById('status-text');
+        const badge = document.getElementById('connection-badge');
+        const badgeText = document.getElementById('connection-text');
         const settingsBackdrop = document.getElementById('settings-backdrop');
         const settingsTrigger = document.getElementById('settings-trigger');
         const settingsClose = document.getElementById('settings-close');
@@ -806,30 +738,45 @@
         const inputUrl = document.getElementById('sb-url');
         const inputKey = document.getElementById('sb-key');
 
-        // ── 3. Renderizar Cartões de Link ──
+        // ── 3. Renderizar Cartões Conforme Mockup Asymmetric ──
         function renderLinks(links) {
             linksGrid.innerHTML = '';
             links.forEach((link, index) => {
                 const a = document.createElement('a');
                 a.href = link.url;
-                a.className = `link-item ${link.style_class || 'link-gray'}`;
-                // Link externo ou interno
                 if (link.url.startsWith('http')) {
                     a.target = '_blank';
                 }
-                // Animação stagger (atraso sequencial de fade-in)
-                a.style.animationDelay = `${index * 0.1}s`;
+                
+                a.style.animationDelay = `${index * 0.06}s`;
 
-                a.innerHTML = `
-                    <i class="${link.icon || 'fas fa-link'} link-icon"></i>
-                    <span class="link-text">${link.title}</span>
-                    <i class="fas fa-arrow-right link-arrow"></i>
-                `;
+                // Layout condicional dependendo se tem thumbnail/imagem na esquerda ou não
+                if (link.thumbnail_url) {
+                    a.className = `link-item has-image ${link.style_class || 'link-gray'}`;
+                    a.innerHTML = `
+                        <div class="link-image-container">
+                            <img class="link-image" src="${link.thumbnail_url}" alt="${link.title}">
+                        </div>
+                        <div class="link-details">
+                            <span class="link-title">${link.title}</span>
+                            <span class="link-desc">${link.description || ''}</span>
+                        </div>
+                    `;
+                } else {
+                    a.className = `link-item ${link.style_class || 'link-gray'}`;
+                    a.innerHTML = `
+                        <div class="link-details">
+                            <span class="link-title">${link.title}</span>
+                            ${link.description ? `<span class="link-desc">${link.description}</span>` : ''}
+                        </div>
+                    `;
+                }
+
                 linksGrid.appendChild(a);
             });
         }
 
-        // ── 4. Carregar Configurações Salvas no Modal ──
+        // ── 4. Carregar Credenciais do LocalStorage ──
         function loadSavedCredentials() {
             inputUrl.value = localStorage.getItem('supabase_url') || '';
             inputKey.value = localStorage.getItem('supabase_anon_key') || '';
@@ -837,22 +784,20 @@
 
         // ── 5. Inicialização e Busca Dinâmica (Supabase) ──
         async function initPage() {
-            const url = localStorage.getItem('supabase_url');
-            const key = localStorage.getItem('supabase_anon_key');
+            const url = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
+            const key = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
 
-            // Se não houver configurações, carrega o fallback local instantaneamente
             if (!url || !key) {
-                console.log("Supabase não configurado. Exibindo links estáticos.");
+                console.log("Supabase não configurado. Utilizando fallback local.");
                 setTimeout(() => {
                     renderLinks(DEFAULT_LINKS);
-                    statusBadge.className = "status-badge local";
-                    statusText.textContent = "Links locais (estático)";
-                }, 600); // Pequeno atraso para o efeito visual de carregamento
+                    badge.className = "connection-badge local";
+                    badgeText.textContent = "OFFLINE // LINKS LOCAIS";
+                }, 400);
                 return;
             }
 
             try {
-                // Cria o cliente Supabase dinamicamente
                 const supabaseClient = supabase.createClient(url, key);
 
                 // Race Promise: busca dados ou estoura timeout em 3 segundos
@@ -863,7 +808,7 @@
                     .order('order_index', { ascending: true });
 
                 const timeoutPromise = new Promise((_, reject) => 
-                    setTimeout(() => reject(new Error("Timeout de conexão")), 3000)
+                    setTimeout(() => reject(new Error("Timeout")), 3000)
                 );
 
                 const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
@@ -872,27 +817,24 @@
 
                 if (data && data.length > 0) {
                     renderLinks(data);
-                    statusBadge.className = "status-badge connected";
-                    statusText.textContent = "Conectado ao Supabase";
-                    console.log("Links carregados com sucesso do Supabase!");
+                    badge.className = "connection-badge connected";
+                    badgeText.textContent = "ONLINE // SUPABASE";
+                    console.log("Dados sincronizados com o Supabase com sucesso.");
                 } else {
-                    // Tabela vazia
-                    console.log("Nenhum link ativo retornado. Usando fallback.");
                     renderLinks(DEFAULT_LINKS);
-                    statusBadge.className = "status-badge local";
-                    statusText.textContent = "Links locais (Sem dados)";
+                    badge.className = "connection-badge local";
+                    badgeText.textContent = "OFFLINE // TABELA VAZIA";
                 }
 
             } catch (err) {
-                console.error("Erro ao conectar com Supabase:", err.message);
-                // Fallback de segurança em caso de falha de rede ou dados
+                console.error("Erro na busca de links:", err.message);
                 renderLinks(DEFAULT_LINKS);
-                statusBadge.className = "status-badge local";
-                statusText.textContent = "Offline (Links locais)";
+                badge.className = "connection-badge local";
+                badgeText.textContent = "OFFLINE // TIMEOUT";
             }
         }
 
-        // ── 6. Event Listeners do Painel de Configurações ──
+        // ── 6. Event Listeners do Painel ──
         settingsTrigger.addEventListener('click', () => {
             loadSavedCredentials();
             settingsBackdrop.classList.add('open');
@@ -913,7 +855,7 @@
             const keyVal = inputKey.value.trim();
 
             if (!urlVal || !keyVal) {
-                alert("Por favor, preencha a URL e a Anon Key!");
+                alert("Preencha todos os campos do banco!");
                 return;
             }
 
@@ -921,19 +863,18 @@
             localStorage.setItem('supabase_anon_key', keyVal);
             settingsBackdrop.classList.remove('open');
             
-            // Recarregar os links com a nova credencial
+            // Ativa loaders
             linksGrid.innerHTML = `
                 <div class="skeleton-item"></div>
                 <div class="skeleton-item"></div>
-                <div class="skeleton-item"></div>
             `;
-            statusBadge.className = "status-badge";
-            statusText.textContent = "Conectando...";
+            badge.className = "connection-badge";
+            badgeText.textContent = "SINCRONIZANDO...";
             initPage();
         });
 
         btnClear.addEventListener('click', () => {
-            if (confirm("Deseja realmente limpar as credenciais do Supabase e usar os links locais padrão?")) {
+            if (confirm("Deseja realmente desconectar e usar os links locais?")) {
                 localStorage.removeItem('supabase_url');
                 localStorage.removeItem('supabase_anon_key');
                 inputUrl.value = '';
@@ -943,82 +884,72 @@
                 linksGrid.innerHTML = `
                     <div class="skeleton-item"></div>
                     <div class="skeleton-item"></div>
-                    <div class="skeleton-item"></div>
                 `;
-                statusBadge.className = "status-badge";
-                statusText.textContent = "Conectando...";
+                badge.className = "connection-badge";
+                badgeText.textContent = "DESCONECTANDO...";
                 initPage();
             }
         });
 
-        // ── 7. Canvas Background Particles (Premium Fluid Canvas Animation) ──
+        // ── 7. Soft Dynamic Floating Warm Particles Background ──
         (function () {
             const canvas = document.getElementById('particles-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
-            const particleColors = ['#FFC800', '#FF5F17', '#1C00FF'];
+            const colors = ['rgba(255, 95, 23, 0.08)', 'rgba(255, 200, 0, 0.08)', 'rgba(28, 0, 255, 0.04)'];
 
-            function resizeCanvas() {
+            function resize() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
             }
-
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
+            window.addEventListener('resize', resize);
+            resize();
 
             class Particle {
                 constructor() {
+                    this.reset();
+                }
+
+                reset() {
                     this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height + canvas.height;
-                    this.size = Math.random() * 2 + 1;
-                    this.speedY = -(Math.random() * 0.8 + 0.3);
-                    this.speedX = (Math.random() * 0.4 - 0.2);
-                    this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
-                    this.alpha = Math.random() * 0.5 + 0.2;
+                    this.y = Math.random() * canvas.height + canvas.height * 0.2;
+                    this.radius = Math.random() * 80 + 40;
+                    this.vx = Math.random() * 0.4 - 0.2;
+                    this.vy = -(Math.random() * 0.5 + 0.1);
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
                 }
 
                 update() {
-                    this.y += this.speedY;
-                    this.x += this.speedX;
-                    if (this.y < -10) {
-                        this.y = canvas.height + 10;
-                        this.x = Math.random() * canvas.width;
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.y + this.radius < 0) {
+                        this.reset();
                     }
                 }
 
                 draw() {
-                    ctx.save();
-                    ctx.globalAlpha = this.alpha;
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     ctx.fillStyle = this.color;
                     ctx.fill();
-                    ctx.restore();
                 }
             }
 
-            function initParticles() {
-                particles = [];
-                const particleCount = Math.min(40, Math.floor(canvas.width / 20));
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
+            for (let i = 0; i < 8; i++) {
+                particles.push(new Particle());
             }
 
-            function animate() {
+            function loop() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 particles.forEach(p => {
                     p.update();
                     p.draw();
                 });
-                requestAnimationFrame(animate);
+                requestAnimationFrame(loop);
             }
-
-            initParticles();
-            animate();
+            loop();
         })();
 
-        // Inicializar página
         initPage();
     </script>
 </body>
