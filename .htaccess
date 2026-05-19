@@ -7,9 +7,9 @@ RewriteEngine On
 RewriteBase /
 
 # 1. Forçar a remoção da extensão .html da barra de endereços (Redirecionamento 301)
-# Se alguém digitar diretamente '/links.html', será redirecionado para '/links'
+# Suporta qualquer subdiretório automaticamente capturando o caminho original
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^.]+)\.html\ HTTP
-RewriteRule ^([^.]+)\.html$ /$1 [R=301,L]
+RewriteRule ^([^.]+)\.html$ /%1 [R=301,L]
 
 # 2. Servir silenciosamente o arquivo .html correspondente se a URL digitada não tiver extensão
 # Exemplo: Acessar '/links' serve o conteúdo de '/links.html'
