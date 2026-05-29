@@ -20,7 +20,6 @@ html {
 }
 
 body {
-<<<<<<< HEAD
     background:
 
     radial-gradient(
@@ -37,19 +36,13 @@ body {
 
 /*
 body {
-=======
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
     font-family: 'Inter', sans-serif;
     background: #0e0a1a;
     color: #e4e4e7;
     line-height: 1.6;
     overflow-x: hidden;
 }
-<<<<<<< HEAD
 */
-=======
-
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
 a {
     text-decoration: none;
     color: inherit;
@@ -228,7 +221,6 @@ img {
 }
 
 /* ── HERO ────────────────────────────────── */
-<<<<<<< HEAD
 
 .hero {
     background-image: url(../img/fundo.png);
@@ -237,22 +229,11 @@ img {
     overflow: hidden;
 
     padding: 80px 0 120px;
-=======
-.hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(160deg, #1a0533 0%, #0e0a1a 40%, #0d2b3e 100%);
-    overflow: hidden;
-    padding-top: 72px;
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
 }
 
 .hero-bg-pattern {
     position: absolute;
     inset: 0;
-<<<<<<< HEAD
 
     background-image:
         radial-gradient(
@@ -290,15 +271,12 @@ img {
 /* .hero-bg-pattern {
     position: absolute;
     inset: 0;
-=======
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
     background-image:
         radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.06) 0%, transparent 50%),
         radial-gradient(circle at 80% 30%, rgba(233, 30, 140, 0.05) 0%, transparent 50%),
         radial-gradient(circle at 60% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 40%);
     pointer-events: none;
 }
-<<<<<<< HEAD
 */
 
 .hero-content {
@@ -314,11 +292,6 @@ img {
 
 /*.hero-content muidei em cima{
     display: flex;
-=======
-
-.hero-content {
-    display: flex;
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
     align-items: center;
     justify-content: space-between;
     gap: 60px;
@@ -326,18 +299,11 @@ img {
     z-index: 2;
     padding: 80px 0;
 }
-<<<<<<< HEAD
     e aqui em baixo no text, tava 600 coloquei 700*/
 
 .hero-text {
     width: 55%;
     max-width: 55%;
-=======
-
-.hero-text {
-    flex: 1;
-    max-width: 600px;
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
 }
 
 .hero-badge {
@@ -402,7 +368,6 @@ img {
     flex-wrap: wrap;
 }
 
-<<<<<<< HEAD
 /* RAPOSA  AQUIIIII*/
 /* RAPOSA */
 
@@ -421,8 +386,6 @@ img {
     height: auto;
 }
 
-=======
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
 /* Buttons */
 .btn {
     display: inline-flex;
@@ -724,7 +687,6 @@ img {
 }
 
 /* ── COUNTDOWN ───────────────────────────── */
-<<<<<<< HEAD
 
 .countdown-section {
     background: #021031;
@@ -735,18 +697,12 @@ img {
 
 
 /*.countdown-section {
-=======
-.countdown-section {
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
     background: linear-gradient(135deg, #13082a 0%, #0d1f2d 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.04);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     padding: 48px 0;
 }
-<<<<<<< HEAD
 */
-=======
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
 
 .countdown-container {
     display: flex;
@@ -992,7 +948,6 @@ img {
 }
 
 /* ── PALESTRANTES ────────────────────────── */
-<<<<<<< HEAD
 
 .section-palestrantes {
     padding: 80px 0;
@@ -1010,13 +965,6 @@ img {
     background: linear-gradient(180deg, #130e24 0%, #0e0a1a 100%);
 }
 */
-=======
-.section-palestrantes {
-    padding: 80px 0;
-    background: linear-gradient(180deg, #130e24 0%, #0e0a1a 100%);
-}
-
->>>>>>> f5db901f212f7b164a7740f742f53978a7e6ca35
 .speakers-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
