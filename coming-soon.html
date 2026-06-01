@@ -621,17 +621,37 @@
             margin: 0 auto;
         }
 
+        .organizer-box {
+            width: 20vh;
+            height: auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            transition: all 0.4s ease;
+        }
+
+        .organizer-box:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.1);
+        }
+
         .organizer-logo {
-            height: 80px;
-            width: auto;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             filter: grayscale(1) brightness(0.8) opacity(0.5);
             transition: all 0.4s ease;
         }
 
-        .organizer-logo:hover {
+        .organizer-box:hover .organizer-logo {
             filter: grayscale(0) brightness(1) opacity(1);
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         /* ———— Animações ———— */
@@ -802,12 +822,23 @@
         <div class="organizers-section">
             <h4 class="organizers-title">Realização</h4>
             <div class="organizers-grid">
-                <img src="assets/img/organizers/logo-fit-oficial.svg" alt="FIT Crateús" class="organizer-logo" />
-                <img src="assets/img/organizers/logo-ufc.png" alt="UFC" class="organizer-logo" />
-                <!-- <img src="assets/img/organizers/sebrae.svg" alt="Sebrae" class="organizer-logo"> -->
-                <img src="assets/img/organizers/gsipp.png" alt="GSIPP" class="organizer-logo" />
-                <img src="assets/img/organizers/enginelab.png" alt="EngineLab" class="organizer-logo" />
-                <img src="assets/img/organizers/sparc.png" alt="SPARC" class="organizer-logo" />
+                <div class="organizer-box">
+                    <img src="assets/img/organizers/update-logo/fit-assinatura.png" alt="FIT Crateús"
+                        class="organizer-logo" />
+                </div>
+                <div class="organizer-box">
+                    <img src="assets/img/organizers/update-logo/engine.png" alt="EngineLab" class="organizer-logo" />
+                </div>
+                <div class="organizer-box">
+                    <img src="assets/img/organizers/update-logo/ufc-logo.png" alt="UFC" class="organizer-logo" />
+                </div>
+                <!-- <div class="organizer-box"><img src="assets/img/organizers/sebrae.svg" alt="Sebrae" class="organizer-logo"></div> -->
+                <div class="organizer-box">
+                    <img src="assets/img/organizers/update-logo/gsipp.png" alt="GSIPP" class="organizer-logo" />
+                </div>
+                <div class="organizer-box">
+                    <img src="assets/img/organizers/update-logo/sparc.png" alt="SPARC" class="organizer-logo" />
+                </div>
             </div>
         </div>
 

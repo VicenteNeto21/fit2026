@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIT 2026 — Admin</title>
-    <meta name="description" content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <meta name="description"
+        content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fit.crateus.ufc.br/auth/admin.html">
     <meta property="og:title" content="FIT 2026 — Admin">
-    <meta property="og:description" content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <meta property="og:description"
+        content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
     <meta property="og:image" content="https://fit.crateus.ufc.br/fit_2026_avatar.png">
     <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
     <meta name="robots" content="noindex, nofollow">
@@ -50,7 +52,10 @@
     <link rel="stylesheet" href="admin.css">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f0f0f0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f0f0;
+        }
 
         /* ── Blobs decorativos do fundo ── */
         .bg-blob {
@@ -65,11 +70,13 @@
             transition: all 0.25s ease;
             border-bottom: 2px solid transparent;
         }
+
         .admin-tab.active {
             color: #FF5F17 !important;
             border-bottom-color: #FF5F17 !important;
             font-weight: 700;
         }
+
         .admin-tab:hover:not(.active) {
             color: #374151;
             border-bottom-color: #e5e7eb;
@@ -88,84 +95,167 @@
             transition: border-color 0.2s, box-shadow 0.2s;
             font-family: 'Inter', sans-serif;
         }
+
         .fit-input:focus {
             border-color: #FF5F17;
             box-shadow: 0 0 0 3px rgba(255, 95, 23, 0.1);
             background: #fff;
         }
-        .fit-input::placeholder { color: #9ca3af; }
 
-        select.fit-input { cursor: pointer; }
+        .fit-input::placeholder {
+            color: #9ca3af;
+        }
+
+        select.fit-input {
+            cursor: pointer;
+        }
 
         /* ── Botão primário ── */
         .fit-btn-primary {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             padding: 10px 18px;
             background: linear-gradient(135deg, #FF5F17, #FFC800);
-            color: #fff; font-weight: 700; font-size: 0.8rem;
-            border: none; border-radius: 10px; cursor: pointer;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
-            letter-spacing: 0.02em; text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
         }
+
         .fit-btn-primary:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(255, 95, 23, 0.28);
         }
-        .fit-btn-primary:active { transform: translateY(0); }
+
+        .fit-btn-primary:active {
+            transform: translateY(0);
+        }
 
         /* ── Botão secundário ── */
         .fit-btn-secondary {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             padding: 9px 16px;
-            background: #fff; color: #374151;
-            font-weight: 600; font-size: 0.78rem;
-            border: 1.5px solid #e5e7eb; border-radius: 10px; cursor: pointer;
+            background: #fff;
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.78rem;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
             transition: border-color 0.2s, background 0.2s;
-            text-transform: uppercase; letter-spacing: 0.04em;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        .fit-btn-secondary:hover { border-color: #d1d5db; background: #f9fafb; }
+
+        .fit-btn-secondary:hover {
+            border-color: #d1d5db;
+            background: #f9fafb;
+        }
 
         /* ── Botão de perigo (vermelho) ── */
         .fit-btn-danger {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             padding: 9px 16px;
-            background: #fef2f2; color: #ef4444;
-            font-weight: 600; font-size: 0.78rem;
-            border: 1.5px solid #fecaca; border-radius: 10px; cursor: pointer;
+            background: #fef2f2;
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 0.78rem;
+            border: 1.5px solid #fecaca;
+            border-radius: 10px;
+            cursor: pointer;
             transition: all 0.2s;
-            text-transform: uppercase; letter-spacing: 0.04em;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        .fit-btn-danger:hover { background: #fee2e2; border-color: #f87171; }
+
+        .fit-btn-danger:hover {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
 
         /* ── Tabela ── */
-        .admin-table { width: 100%; border-collapse: collapse; }
-        .admin-table thead tr { background: #f9fafb; }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table thead tr {
+            background: #f9fafb;
+        }
+
         .admin-table th {
             text-align: left;
-            font-size: 0.7rem; font-weight: 700;
-            color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
             padding: 13px 16px;
             border-bottom: 1px solid #f3f4f6;
         }
+
         .admin-table tbody tr {
             border-bottom: 1px solid #f3f4f6;
             transition: background 0.15s;
         }
-        .admin-table tbody tr:hover { background: #fafafa; }
-        .admin-table td { padding: 13px 16px; font-size: 0.875rem; color: #374151; vertical-align: middle; }
-        .admin-table td:last-child { color: #6b7280; }
+
+        .admin-table tbody tr:hover {
+            background: #fafafa;
+        }
+
+        .admin-table td {
+            padding: 13px 16px;
+            font-size: 0.875rem;
+            color: #374151;
+            vertical-align: middle;
+        }
+
+        .admin-table td:last-child {
+            color: #6b7280;
+        }
 
         /* ── Action buttons nas rows ── */
         .row-btn {
             padding: 5px 10px;
-            font-size: 0.72rem; font-weight: 600;
-            border-radius: 7px; cursor: pointer;
-            transition: all 0.15s; border: 1.5px solid;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1.5px solid;
         }
-        .row-btn-edit { color: #FF5F17; border-color: #fed7aa; background: #fff7ed; }
-        .row-btn-edit:hover { background: #ffedd5; border-color: #fdba74; }
-        .row-btn-delete { color: #ef4444; border-color: #fecaca; background: #fef2f2; }
-        .row-btn-delete:hover { background: #fee2e2; border-color: #f87171; }
+
+        .row-btn-edit {
+            color: #FF5F17;
+            border-color: #fed7aa;
+            background: #fff7ed;
+        }
+
+        .row-btn-edit:hover {
+            background: #ffedd5;
+            border-color: #fdba74;
+        }
+
+        .row-btn-delete {
+            color: #ef4444;
+            border-color: #fecaca;
+            background: #fef2f2;
+        }
+
+        .row-btn-delete:hover {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
 
         /* ── Upload Zone ── */
         .upload-zone {
@@ -176,18 +266,26 @@
             cursor: pointer;
             background: #fafafa;
             transition: all 0.2s;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
-        .upload-zone:hover, .upload-zone.drag-active {
+
+        .upload-zone:hover,
+        .upload-zone.drag-active {
             border-color: #FF5F17;
             background: rgba(255, 95, 23, 0.03);
         }
+
         .upload-preview {
             border: 1.5px solid #e5e7eb;
             border-radius: 10px;
             background: #fafafa;
             height: 120px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
         }
 
@@ -195,14 +293,20 @@
         .modal-card {
             background: #fff;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
             padding: 28px;
-            width: 100%; max-width: 500px;
-            max-height: 90vh; overflow-y: auto;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
+
         .modal-title {
-            font-size: 0.9rem; font-weight: 800;
-            color: #111827; text-transform: uppercase; letter-spacing: 0.06em;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
             margin-bottom: 20px;
             padding-bottom: 14px;
             border-bottom: 1px solid #f3f4f6;
@@ -211,57 +315,90 @@
         /* ── Label para campos do modal ── */
         .field-label {
             display: block;
-            font-size: 0.72rem; font-weight: 700;
-            color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
             margin-bottom: 6px;
         }
-        .field-label.accent { color: #FF5F17; }
+
+        .field-label.accent {
+            color: #FF5F17;
+        }
 
         /* ── Toggle URL/Upload ── */
         .btn-toggle-input {
-            font-size: 0.7rem; padding: 3px 10px;
-            background: #f3f4f6; border: 1px solid #e5e7eb;
-            border-radius: 6px; color: #6b7280; cursor: pointer;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            color: #6b7280;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-toggle-input:hover { border-color: #FF5F17; color: #FF5F17; }
+
+        .btn-toggle-input:hover {
+            border-color: #FF5F17;
+            color: #FF5F17;
+        }
 
         /* ── Status badge ── */
         .badge {
-            display: inline-flex; align-items: center;
-            padding: 3px 10px; border-radius: 999px;
-            font-size: 0.7rem; font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
-        .badge-green { background: #d1fae5; color: #065f46; }
-        .badge-gray  { background: #f3f4f6; color: #6b7280; }
+
+        .badge-green {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-gray {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
 
         /* ── DB Connection Panel ── */
         .db-panel {
-            background: #fff; border: 1.5px solid #f3f4f6;
-            border-radius: 14px; padding: 16px 20px;
-            display: flex; flex-wrap: wrap;
-            justify-content: space-between; align-items: center;
-            gap: 12px; margin-bottom: 24px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            background: #fff;
+            border: 1.5px solid #f3f4f6;
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
         }
 
         @media (prefers-reduced-motion: reduce) {
-            * { animation: none !important; transition: none !important; }
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
         }
     </style>
 
     <!-- Script de Segurança: Redirecionamento Prévio de Sessão -->
     <script>
-        (async function () {
-            const url = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
-            const key = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
-            if (!url || !key) { window.location.href = 'login.html'; return; }
-            try {
-                const supabase = window.supabase.createClient(url, key);
-                const { data: { session } } = await supabase.auth.getSession();
-                if (!session) window.location.href = 'login.html';
-            } catch (e) { window.location.href = 'login.html'; }
-        })();
+            (async function () {
+                const url = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
+                const key = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
+                if (!url || !key) { window.location.href = 'login.html'; return; }
+                try {
+                    const supabase = window.supabase.createClient(url, key);
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session) window.location.href = 'login.html';
+                } catch (e) { window.location.href = 'login.html'; }
+            })();
     </script>
 </head>
 
@@ -283,11 +420,14 @@
             <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex items-center justify-between h-[60px]">
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full overflow-hidden border-2 border-orange-200 flex items-center justify-center bg-orange-50">
+                    <div
+                        class="w-8 h-8 rounded-full overflow-hidden border-2 border-orange-200 flex items-center justify-center bg-orange-50">
                         <img src="../assets/img/favicon.svg" alt="FIT" class="w-5 h-5 object-contain"
                             onerror="this.style.display='none'">
                     </div>
-                    <h1 class="text-base font-extrabold text-gray-900">FIT <span class="bg-gradient-to-r from-fit-orange to-fit-yellow bg-clip-text text-transparent">Admin</span></h1>
+                    <h1 class="text-base font-extrabold text-gray-900">FIT <span
+                            class="bg-gradient-to-r from-fit-orange to-fit-yellow bg-clip-text text-transparent">Admin</span>
+                    </h1>
                 </div>
 
                 <!-- Right side -->
@@ -302,15 +442,18 @@
 
             <!-- Tabs -->
             <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex gap-0 overflow-x-auto">
-                <button class="admin-tab active flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                <button
+                    class="admin-tab active flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
                     data-section="section-palestrantes">
                     <i class="fas fa-user"></i> Palestrantes
                 </button>
-                <button class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
                     data-section="section-patrocinadores">
                     <i class="fas fa-handshake"></i> Patrocinadores
                 </button>
-                <button class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
                     data-section="section-links">
                     <i class="fas fa-link"></i> Links Úteis (Supabase)
                 </button>
@@ -325,14 +468,17 @@
                 <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
                     <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Palestrantes</h2>
                     <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
-                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="speakers" placeholder="Buscar palestrante..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="speakers"
+                            placeholder="Buscar palestrante..."
+                            style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
                         <button id="btn-add-speaker" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
                             <i class="fas fa-plus"></i> Adicionar
                         </button>
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
-                    <div id="speakers-loading" class="table-loading-overlay" style="display:none;"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div id="speakers-loading" class="table-loading-overlay" style="display:none;"><i
+                            class="fas fa-spinner fa-spin"></i></div>
                     <div class="overflow-x-auto">
                         <table class="admin-table">
                             <thead>
@@ -362,14 +508,17 @@
                 <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
                     <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Patrocinadores</h2>
                     <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
-                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="sponsors" placeholder="Buscar patrocinador..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="sponsors"
+                            placeholder="Buscar patrocinador..."
+                            style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
                         <button id="btn-add-sponsor" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
                             <i class="fas fa-plus"></i> Adicionar
                         </button>
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
-                    <div id="sponsors-loading" class="table-loading-overlay" style="display:none;"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div id="sponsors-loading" class="table-loading-overlay" style="display:none;"><i
+                            class="fas fa-spinner fa-spin"></i></div>
                     <div class="overflow-x-auto">
                         <table class="admin-table">
                             <thead>
@@ -400,7 +549,8 @@
                 <div class="db-panel">
                     <div>
                         <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2">
-                            <span id="sb-status-dot" class="w-2.5 h-2.5 rounded-full bg-red-400 inline-block flex-shrink-0"></span>
+                            <span id="sb-status-dot"
+                                class="w-2.5 h-2.5 rounded-full bg-red-400 inline-block flex-shrink-0"></span>
                             Supabase: <span id="sb-status-text" class="text-red-500 font-semibold">Desconectado</span>
                         </h3>
                         <p class="text-xs text-gray-400 mt-0.5">Autenticado via banco conectado.</p>
@@ -413,14 +563,16 @@
                 <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
                     <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Links Úteis</h2>
                     <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
-                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="links" placeholder="Buscar link..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="links"
+                            placeholder="Buscar link..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
                         <button id="btn-add-link" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
                             <i class="fas fa-plus"></i> Adicionar Link
                         </button>
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
-                    <div id="links-loading" class="table-loading-overlay" style="display:none;"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div id="links-loading" class="table-loading-overlay" style="display:none;"><i
+                            class="fas fa-spinner fa-spin"></i></div>
                     <div class="overflow-x-auto">
                         <table class="admin-table">
                             <thead>
@@ -453,7 +605,8 @@
     <!-- ════════ MODALS ════════ -->
 
     <!-- Speaker Modal -->
-    <div id="speaker-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+    <div id="speaker-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
         <div class="modal-card">
             <h3 class="modal-title">Adicionar Palestrante</h3>
             <form id="speaker-form" class="space-y-4">
@@ -472,7 +625,8 @@
                 <div>
                     <div class="flex justify-between items-center mb-1.5">
                         <label class="field-label accent mb-0">Foto de Perfil</label>
-                        <button type="button" class="btn-toggle-input" id="sp-btn-toggle" data-mode="upload">Usar URL</button>
+                        <button type="button" class="btn-toggle-input" id="sp-btn-toggle" data-mode="upload">Usar
+                            URL</button>
                     </div>
                     <div class="upload-zone" id="sp-upload-zone">
                         <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
@@ -481,11 +635,14 @@
                     </div>
                     <div class="upload-preview" id="sp-upload-preview" style="display:none;">
                         <img id="sp-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
-                        <button type="button" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs" id="sp-btn-remove-file">
+                        <button type="button"
+                            class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs"
+                            id="sp-btn-remove-file">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <input type="text" id="sp-foto" placeholder="Ex: assets/img/... ou https://..." class="fit-input" style="display:none;">
+                    <input type="text" id="sp-foto" placeholder="Ex: assets/img/... ou https://..." class="fit-input"
+                        style="display:none;">
                 </div>
                 <div>
                     <label for="sp-ordem" class="field-label">Ordem de Exibição</label>
@@ -500,7 +657,8 @@
     </div>
 
     <!-- Sponsor Modal -->
-    <div id="sponsor-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+    <div id="sponsor-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
         <div class="modal-card">
             <h3 class="modal-title">Adicionar Patrocinador</h3>
             <form id="sponsor-form" class="space-y-4">
@@ -519,7 +677,8 @@
                 <div>
                     <div class="flex justify-between items-center mb-1.5">
                         <label class="field-label accent mb-0">Logotipo</label>
-                        <button type="button" class="btn-toggle-input" id="pat-btn-toggle" data-mode="upload">Usar URL</button>
+                        <button type="button" class="btn-toggle-input" id="pat-btn-toggle" data-mode="upload">Usar
+                            URL</button>
                     </div>
                     <div class="upload-zone" id="pat-upload-zone">
                         <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
@@ -528,11 +687,14 @@
                     </div>
                     <div class="upload-preview" id="pat-upload-preview" style="display:none;">
                         <img id="pat-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
-                        <button type="button" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs" id="pat-btn-remove-file">
+                        <button type="button"
+                            class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs"
+                            id="pat-btn-remove-file">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <input type="text" id="pat-logo" placeholder="Ex: assets/img/... ou https://..." class="fit-input" style="display:none;">
+                    <input type="text" id="pat-logo" placeholder="Ex: assets/img/... ou https://..." class="fit-input"
+                        style="display:none;">
                 </div>
                 <div>
                     <label for="pat-ordem" class="field-label">Ordem de Exibição</label>
@@ -547,17 +709,20 @@
     </div>
 
     <!-- Supabase Config Modal -->
-    <div id="supabase-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+    <div id="supabase-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
         <div class="modal-card">
             <h3 class="modal-title">Configurar Conexão Supabase</h3>
             <form id="supabase-config-form" class="space-y-4">
                 <div>
                     <label for="sb-url" class="field-label accent">Supabase URL</label>
-                    <input type="url" id="sb-url" placeholder="https://xxxxxxxxxxxxxx.supabase.co" class="fit-input" required>
+                    <input type="url" id="sb-url" placeholder="https://xxxxxxxxxxxxxx.supabase.co" class="fit-input"
+                        required>
                 </div>
                 <div>
                     <label for="sb-key" class="field-label accent">Supabase Anon Key</label>
-                    <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." class="fit-input" required>
+                    <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." class="fit-input"
+                        required>
                 </div>
                 <div class="flex items-center justify-between gap-3 pt-4 border-t border-gray-100">
                     <button type="button" class="fit-btn-danger" id="btn-disconnect-sb">
@@ -573,7 +738,8 @@
     </div>
 
     <!-- Link Supabase Modal -->
-    <div id="link-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+    <div id="link-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
         <div class="modal-card">
             <h3 id="link-modal-title" class="modal-title">Adicionar Link (Supabase)</h3>
             <form id="link-form" class="space-y-4">
@@ -583,16 +749,19 @@
                 </div>
                 <div>
                     <label for="lk-desc" class="field-label">Descrição</label>
-                    <input type="text" id="lk-desc" placeholder="Ex: Acesse o site principal e programação" class="fit-input">
+                    <input type="text" id="lk-desc" placeholder="Ex: Acesse o site principal e programação"
+                        class="fit-input">
                 </div>
                 <div>
                     <label for="lk-url" class="field-label accent">URL de Destino *</label>
-                    <input type="text" id="lk-url" placeholder="Ex: index.html ou https://..." class="fit-input" required>
+                    <input type="text" id="lk-url" placeholder="Ex: index.html ou https://..." class="fit-input"
+                        required>
                 </div>
                 <div>
                     <div class="flex justify-between items-center mb-1.5">
                         <label class="field-label accent mb-0">Miniatura / Imagem Lateral</label>
-                        <button type="button" class="btn-toggle-input" id="lk-btn-toggle" data-mode="upload">Usar URL</button>
+                        <button type="button" class="btn-toggle-input" id="lk-btn-toggle" data-mode="upload">Usar
+                            URL</button>
                     </div>
                     <div class="upload-zone" id="lk-upload-zone">
                         <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
@@ -601,11 +770,14 @@
                     </div>
                     <div class="upload-preview" id="lk-upload-preview" style="display:none;">
                         <img id="lk-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
-                        <button type="button" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs" id="lk-btn-remove-file">
+                        <button type="button"
+                            class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs"
+                            id="lk-btn-remove-file">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <input type="text" id="lk-thumb" placeholder="Ex: fit_2026_avatar.png ou https://..." class="fit-input" style="display:none;">
+                    <input type="text" id="lk-thumb" placeholder="Ex: fit_2026_avatar.png ou https://..."
+                        class="fit-input" style="display:none;">
                 </div>
                 <div>
                     <label for="lk-style" class="field-label accent">Estilo Visual Pastel *</label>
@@ -621,8 +793,10 @@
                     <input type="number" id="lk-order" value="0" min="0" class="fit-input">
                 </div>
                 <div class="flex items-center gap-2.5 mt-1">
-                    <input type="checkbox" id="lk-active" checked class="w-4 h-4 cursor-pointer accent-orange-500 rounded">
-                    <label for="lk-active" class="cursor-pointer text-xs text-gray-500 uppercase tracking-wide">Ativo (exibir na listagem pública)</label>
+                    <input type="checkbox" id="lk-active" checked
+                        class="w-4 h-4 cursor-pointer accent-orange-500 rounded">
+                    <label for="lk-active" class="cursor-pointer text-xs text-gray-500 uppercase tracking-wide">Ativo
+                        (exibir na listagem pública)</label>
                 </div>
                 <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
                     <button type="button" class="fit-btn-secondary btn-cancel" id="btn-cancel-lk">Cancelar</button>
@@ -633,7 +807,8 @@
     </div>
 
     <!-- Confirm Modal -->
-    <div id="confirm-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+    <div id="confirm-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
         <div class="modal-card" style="max-width: 420px;">
             <h3 class="modal-title">Confirmar</h3>
             <p id="confirm-message" class="text-sm text-gray-600 leading-relaxed mb-6"></p>
