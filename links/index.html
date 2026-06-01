@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIT 2026 — Links Úteis</title>
+    <meta name="description" content="Acesse todos os links oficiais do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fit.crateus.ufc.br/links.html">
+    <meta property="og:title" content="FIT 2026 — Links Úteis">
+    <meta property="og:description" content="Acesse todos os links oficiais do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <meta property="og:image" content="https://fit.crateus.ufc.br/fit_2026_avatar.png">
+    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        space: ['Space Grotesk', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace']
+                    },
+                    colors: {
+                        fit: {
+                            yellow: '#FFC800',
+                            orange: '#FF5F17',
+                            blue: '#1C00FF',
+                            bg: '#F4F4F6',
+                            card: '#ffffff'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* ── Pseudo-elementos & Comportamentos Especiais ── */
+        .card-header-gradient {
+            clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+        }
+
+        .card-header-gradient::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewY(-4deg);
+        }
+
+        /* Override de visibilidade padrão de desenvolvimento */
+        .settings-trigger {
+            display: none !important;
+        }
+
+        .connection-badge {
+            display: none !important;
+        }
+
+        /* Comportamento dinâmico do Modal gerenciado via classList */
+        .settings-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .settings-backdrop.open .settings-modal {
+            transform: translateY(0);
+        }
+
+        /* Classes dinâmicas de folha assimétrica injetadas pelo Supabase/JS */
+        .link-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 14px 18px;
+            min-height: 56px;
+            border-radius: 20px 4px 20px 4px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .link-details {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .link-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: -0.1px;
+            color: inherit;
+        }
+
+        .link-desc {
+            font-size: 0.78rem;
+            opacity: 0.8;
+            margin-top: 2px;
+            font-weight: 400;
+            line-height: 1.3;
+            color: inherit;
+        }
+
+        .link-item.has-image {
+            padding: 0;
+        }
+
+        .link-image-container {
+            width: 80px;
+            height: 100%;
+            min-height: 80px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 20px 0 0 4px;
+        }
+
+        .link-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .link-item.has-image .link-details {
+            padding: 14px 18px;
+            text-align: left;
+        }
+
+        /* Cores Pastéis FIT Oficiais */
+        .link-gamer {
+            background-color: #FFFBE6;
+            border: 1.5px solid #FFE58F;
+            color: #B78103;
+        }
+        .link-gamer:hover {
+            background-color: #FFF2B2;
+            border-color: #FADB14;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(212, 136, 6, 0.08);
+        }
+
+        .link-orange {
+            background-color: #FFF2E8;
+            border: 1.5px solid #FFD8BF;
+            color: #D4380D;
+        }
+        .link-orange:hover {
+            background-color: #FFD8BF;
+            border-color: #FF9C6E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(212, 56, 13, 0.08);
+        }
+
+        .link-blue {
+            background-color: #E6F7FF;
+            border: 1.5px solid #BAE7FF;
+            color: #096DD9;
+        }
+        .link-blue:hover {
+            background-color: #BAE7FF;
+            border-color: #69C0FF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(9, 109, 217, 0.08);
+        }
+
+        .link-gray {
+            background-color: #F9F9FB;
+            border: 1.5px solid #E5E7EB;
+            color: #4B5563;
+        }
+        .link-gray:hover {
+            background-color: #E5E7EB;
+            border-color: #D1D5DB;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Loaders Skeleton Shimmers */
+        .skeleton-item {
+            height: 56px;
+            width: 100%;
+            background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+            background-size: 200% 100%;
+            border-radius: 20px 4px 20px 4px;
+            border: 1px solid #E5E7EB;
+            animation: shimmer 1.5s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-space bg-fit-bg text-gray-800 min-h-screen flex items-center justify-center p-5 md:p-10 overflow-x-hidden relative">
+    <!-- Soft Dynamic Floating Background Particles -->
+    <canvas id="particles-canvas" class="absolute inset-0 w-full h-full z-1 pointer-events-none"></canvas>
+
+    <div class="viewport-card w-full max-w-[430px] bg-fit-card border border-black/5 rounded-[32px] shadow-[0_16px_40px_rgba(0,0,0,0.04)] overflow-hidden relative z-10 flex flex-col items-center pb-8 animate-[fadeInUp_0.6s_ease-out]">
+        <!-- Diagonal Header Gradient -->
+        <div class="card-header-gradient w-full h-[160px] bg-gradient-to-br from-fit-orange to-fit-yellow relative"></div>
+
+        <!-- Float Config Toggle -->
+        <div class="settings-trigger absolute top-[15px] right-[15px] font-mono text-[0.65rem] text-white bg-black/20 border border-white/30 rounded-full px-2.5 py-1 cursor-pointer z-15 transition-all duration-200 tracking-[0.5px] hover:bg-white hover:text-fit-orange hover:border-white hover:shadow-[0_4px_10px_rgba(0,0,0,0.15)]" id="settings-trigger" title="Conectar Supabase">[⚙ CONFIG]</div>
+
+        <!-- Connection Status Indicator -->
+        <div class="connection-badge absolute top-[15px] left-[15px] font-mono text-[0.62rem] text-white bg-black/25 border border-white/20 rounded-full px-2.5 py-1 z-15 flex items-center gap-1.5" id="connection-badge">
+            <div class="badge-dot w-1.25 h-1.25 rounded-full bg-white"></div>
+            <span id="connection-text">VERIFICANDO...</span>
+        </div>
+
+        <!-- Avatar Circular Sobreposto -->
+        <div class="avatar-container w-[100px] h-[100px] rounded-full bg-white border-[5px] border-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] -mt-[50px] z-20 overflow-hidden flex items-center justify-center transition-transform duration-300 hover:scale-105">
+            <img class="avatar-img w-full h-full object-cover" src="../assets/img/logo-fit-2026.png" alt="FIT 2026 Avatar">
+        </div>
+
+        <!-- Perfil Info -->
+        <div class="profile-info text-center mt-4 px-6">
+            <h1 class="profile-title font-outfit text-[1.65rem] font-bold text-gray-900 mb-0.5">FIT 2026</h1>
+            <p class="profile-username text-[0.95rem] text-gray-400 font-medium mb-2">@fitcrateus</p>
+            <p class="profile-bio text-[0.88rem] text-gray-600 max-w-[320px] mx-auto leading-relaxed">XIII Fórum de Inovação e Tecnologia — UFC Crateús. Conecte-se com o Futuro da IA.</p>
+        </div>
+
+        <!-- Redes Sociais -->
+        <div class="social-row flex gap-4 my-5 justify-center">
+            <a href="https://www.instagram.com/fitcrateus/" target="_blank" class="social-btn w-[38px] h-[38px] rounded-full border border-gray-200 text-gray-600 flex items-center justify-center text-base transition-all duration-250 bg-white hover:text-fit-orange hover:border-fit-orange hover:-translate-y-0.5 hover:shadow-[0_4px_10px_rgba(255,95,23,0.1)]" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="../index.html" class="social-btn w-[38px] h-[38px] rounded-full border border-gray-200 text-gray-600 flex items-center justify-center text-base transition-all duration-250 bg-white hover:text-fit-orange hover:border-fit-orange hover:-translate-y-0.5 hover:shadow-[0_4px_10px_rgba(255,95,23,0.1)]" aria-label="Site Oficial">
+                <i class="fas fa-globe"></i>
+            </a>
+        </div>
+
+        <!-- Grid de Links pastéis e assimétricos -->
+        <main class="links-grid w-full px-6 flex flex-col gap-3.5" id="links-grid">
+            <!-- Loader Skeletons por padrão -->
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+        </main>
+
+        <!-- Footer -->
+        <p class="footer-text text-[0.72rem] text-gray-400 mt-6 text-center">&copy; 2026 | Núcleo de Comunicação & TI <a href="../index.html" class="text-gray-500 no-underline font-medium hover:text-fit-orange hover:underline">FIT</a></p>
+    </div>
+
+    <!-- Settings Backdrop & Modal -->
+    <div class="settings-backdrop fixed inset-0 z-[100] bg-black/40 backdrop-blur-md flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 p-5" id="settings-backdrop">
+        <div class="settings-modal bg-white border border-black/8 rounded-3xl p-8 w-full max-w-[440px] relative translate-y-5 transition-all duration-300 shadow-[0_20px_50px_rgba(0,0,0,0.15)]">
+            <div class="settings-header flex items-center justify-between mb-5 border-b border-gray-100 pb-3">
+                <h3 class="settings-title font-outfit text-[1.1rem] font-bold text-gray-900">Conectar Banco Supabase</h3>
+                <i class="fas fa-times settings-close text-gray-400 cursor-pointer text-[1.1rem] transition-colors duration-200 hover:text-gray-900" id="settings-close"></i>
+            </div>
+            <div class="settings-body flex flex-col gap-4">
+                <p class="settings-description text-[0.82rem] text-gray-500 leading-relaxed">
+                    Insira as credenciais do seu Supabase para sincronizar os links dinamicamente. Os dados ficam salvos de forma estritamente local (<code class="text-gray-600 bg-gray-50 px-1 py-0.5 rounded text-[0.75rem]">localStorage</code>).
+                    <br><br>
+                    Não se esqueça de rodar o script <a href="../supabase-schema.sql" target="_blank" class="text-fit-orange underline font-medium">supabase-schema.sql</a> no console do Supabase para criar a tabela.
+                </p>
+                <div class="form-group flex flex-col gap-1.5">
+                    <label for="sb-url" class="text-[0.72rem] font-bold text-gray-600 uppercase tracking-[0.5px]">Supabase URL</label>
+                    <input type="url" id="sb-url" class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-gray-900 font-inherit text-[0.88rem] transition-all duration-200 focus:outline-none focus:border-fit-orange focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,95,23,0.12)]" placeholder="https://xxxxxxxxxxxxxx.supabase.co" autocomplete="off">
+                </div>
+                <div class="form-group flex flex-col gap-1.5">
+                    <label for="sb-key" class="text-[0.72rem] font-bold text-gray-600 uppercase tracking-[0.5px]">Supabase Anon Key</label>
+                    <input type="password" id="sb-key" class="bg-gray-50 border border-gray-200 rounded-xl p-3 text-gray-900 font-inherit text-[0.88rem] transition-all duration-200 focus:outline-none focus:border-fit-orange focus:bg-white focus:shadow-[0_0_0_3px_rgba(255,95,23,0.12)]" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." autocomplete="off">
+                </div>
+                <div class="settings-actions mt-2.5 flex gap-3">
+                    <button class="btn btn-secondary flex-1 p-3 text-[0.85rem] font-bold cursor-pointer rounded-xl transition-all duration-200 text-center border border-gray-200 bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900" id="btn-clear">Desconectar</button>
+                    <button class="btn btn-primary flex-1 p-3 text-[0.85rem] font-bold cursor-pointer rounded-xl transition-all duration-200 text-center border-none bg-fit-orange text-white hover:bg-[#e04e10] hover:shadow-[0_4px_12px_rgba(255,95,23,0.2)]" id="btn-save">Salvar e Conectar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── LÓGICA E COMPORTAMENTO DE DADOS ── -->
+    <script src="../assets/js/particles.js"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+    <script>
+        // ── 1. Links Padrão (Fallback Estático) ──
+        const DEFAULT_LINKS = [
+            {
+                title: 'Formulário: Perfil Gamer',
+                description: 'Inscreva-se no campeonato e monte sua equipe',
+                url: 'https://forms.gle/perfil-gamer-fit2026',
+                icon: 'fas fa-gamepad',
+                style_class: 'link-gamer',
+                thumbnail_url: null
+            },
+            {
+                title: 'Garantir Minha Inscrição',
+                description: 'Acesse a área de inscrições do fórum',
+                url: 'https://fit.crateus.ufc.br/#inscricoes',
+                icon: 'fas fa-ticket-alt',
+                style_class: 'link-orange',
+                thumbnail_url: null
+            },
+            {
+                title: 'Site Oficial FIT 2026',
+                description: 'Acesse o site principal, programação e palestrantes',
+                url: '../index.html',
+                icon: 'fas fa-globe',
+                style_class: 'link-blue',
+                thumbnail_url: 'fit_2026_avatar.png' // Exemplo de card complexo com imagem lateral idêntico ao mockup
+            },
+            {
+                title: 'Inscrições para Voluntários',
+                description: 'Processo encerrado. Obrigado a todos!',
+                url: 'https://forms.gle/WrNpp3KVtz7iWyfe7',
+                icon: 'fas fa-hands-helping',
+                style_class: 'link-gray',
+                thumbnail_url: null
+            }
+        ];
+
+        // ── 2. Elementos DOM ──
+        const linksGrid = document.getElementById('links-grid');
+        const badge = document.getElementById('connection-badge');
+        const badgeText = document.getElementById('connection-text');
+        const settingsBackdrop = document.getElementById('settings-backdrop');
+        const settingsTrigger = document.getElementById('settings-trigger');
+        const settingsClose = document.getElementById('settings-close');
+        const btnSave = document.getElementById('btn-save');
+        const btnClear = document.getElementById('btn-clear');
+        const inputUrl = document.getElementById('sb-url');
+        const inputKey = document.getElementById('sb-key');
+
+        // ── 3. Renderizar Cartões Conforme Mockup Asymmetric ──
+        function renderLinks(links) {
+            linksGrid.innerHTML = '';
+            links.forEach((link, index) => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                if (link.url.startsWith('http')) {
+                    a.target = '_blank';
+                }
+                
+                a.style.animationDelay = `${index * 0.06}s`;
+
+                // Layout condicional dependendo se tem thumbnail/imagem na esquerda ou não
+                if (link.thumbnail_url) {
+                    a.className = `link-item has-image ${link.style_class || 'link-gray'}`;
+                    a.innerHTML = `
+                        <div class="link-image-container">
+                            <img class="link-image" src="${link.thumbnail_url}" alt="${link.title}">
+                        </div>
+                        <div class="link-details">
+                            <span class="link-title">${link.title}</span>
+                            <span class="link-desc">${link.description || ''}</span>
+                        </div>
+                    `;
+                } else {
+                    a.className = `link-item ${link.style_class || 'link-gray'}`;
+                    a.innerHTML = `
+                        <div class="link-details">
+                            <span class="link-title">${link.title}</span>
+                            ${link.description ? `<span class="link-desc">${link.description}</span>` : ''}
+                        </div>
+                    `;
+                }
+
+                linksGrid.appendChild(a);
+            });
+        }
+
+        // ── 4. Carregar Credenciais do LocalStorage ──
+        function loadSavedCredentials() {
+            inputUrl.value = localStorage.getItem('supabase_url') || '';
+            inputKey.value = localStorage.getItem('supabase_anon_key') || '';
+        }
+
+        // ── 5. Inicialização e Busca Dinâmica (Supabase) ──
+        async function initPage() {
+            const url = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
+            const key = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
+
+            if (!url || !key) {
+                console.log("Supabase não configurado. Utilizando fallback local.");
+                setTimeout(() => {
+                    renderLinks(DEFAULT_LINKS);
+                    badge.className = "connection-badge local";
+                    badgeText.textContent = "OFFLINE // LINKS LOCAIS";
+                }, 400);
+                return;
+            }
+
+            try {
+                const supabaseClient = supabase.createClient(url, key);
+
+                // Race Promise: busca dados ou estoura timeout em 3 segundos
+                const fetchPromise = supabaseClient
+                    .from('fit_links')
+                    .select('*')
+                    .eq('active', true)
+                    .order('order_index', { ascending: true });
+
+                const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error("Timeout")), 10000)
+                );
+
+                const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
+
+                if (error) throw error;
+
+                if (data && data.length > 0) {
+                    renderLinks(data);
+                    badge.className = "connection-badge connected";
+                    badgeText.textContent = "ONLINE // SUPABASE";
+                    console.log("Dados sincronizados com o Supabase com sucesso.");
+                } else {
+                    renderLinks(DEFAULT_LINKS);
+                    badge.className = "connection-badge local";
+                    badgeText.textContent = "OFFLINE // TABELA VAZIA";
+                }
+
+            } catch (err) {
+                console.error("Erro na busca de links:", err.message);
+                renderLinks(DEFAULT_LINKS);
+                badge.className = "connection-badge local";
+                badgeText.textContent = "OFFLINE // TIMEOUT";
+            }
+        }
+
+        // ── 6. Event Listeners do Painel ──
+        settingsTrigger.addEventListener('click', () => {
+            loadSavedCredentials();
+            settingsBackdrop.classList.add('open');
+        });
+
+        settingsClose.addEventListener('click', () => {
+            settingsBackdrop.classList.remove('open');
+        });
+
+        settingsBackdrop.addEventListener('click', (e) => {
+            if (e.target === settingsBackdrop) {
+                settingsBackdrop.classList.remove('open');
+            }
+        });
+
+        btnSave.addEventListener('click', () => {
+            const urlVal = inputUrl.value.trim();
+            const keyVal = inputKey.value.trim();
+
+            if (!urlVal || !keyVal) {
+                alert("Preencha todos os campos do banco!");
+                return;
+            }
+
+            localStorage.setItem('supabase_url', urlVal);
+            localStorage.setItem('supabase_anon_key', keyVal);
+            settingsBackdrop.classList.remove('open');
+            
+            // Ativa loaders
+            linksGrid.innerHTML = `
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+            `;
+            badge.className = "connection-badge";
+            badgeText.textContent = "SINCRONIZANDO...";
+            initPage();
+        });
+
+        btnClear.addEventListener('click', () => {
+            if (confirm("Deseja realmente desconectar e usar os links locais?")) {
+                localStorage.removeItem('supabase_url');
+                localStorage.removeItem('supabase_anon_key');
+                inputUrl.value = '';
+                inputKey.value = '';
+                settingsBackdrop.classList.remove('open');
+                
+                linksGrid.innerHTML = `
+                    <div class="skeleton-item"></div>
+                    <div class="skeleton-item"></div>
+                `;
+                badge.className = "connection-badge";
+                badgeText.textContent = "DESCONECTANDO...";
+                initPage();
+            }
+        });
+
+        // ── 7. Floating Particles Background ──
+        initParticles('particles-canvas', {
+            colors: ['rgba(255, 95, 23, 0.08)', 'rgba(255, 200, 0, 0.08)', 'rgba(28, 0, 255, 0.04)'],
+            count: 8,
+            maxRadius: 80,
+            minRadius: 40,
+            speedX: 0.4,
+            speedY: 0.5
+        });
+
+        initPage();
+    </script>
+</body>
+
+</html>

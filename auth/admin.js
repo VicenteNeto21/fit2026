@@ -43,6 +43,10 @@ const speakerModal = document.getElementById('speaker-modal');
 const sponsorModal = document.getElementById('sponsor-modal');
 const linkModal = document.getElementById('link-modal');
 const supabaseModal = document.getElementById('supabase-modal');
+const confirmModal = document.getElementById('confirm-modal');
+const confirmMessage = document.getElementById('confirm-message');
+const btnConfirmOk = document.getElementById('btn-confirm-ok');
+const btnConfirmCancel = document.getElementById('btn-confirm-cancel');
 
 // Tabelas
 const speakersTable = document.getElementById('speakers-table-body');
@@ -111,15 +115,16 @@ function setupHybridUpload(prefix, onFileSelect, onFileRemove) {
         }
     });
 
-    function handleFile(file) {
-        onFileSelect(file);
+    async function handleFile(file) {
+        const compressed = await compressImage(file);
+        onFileSelect(compressed);
         const reader = new FileReader();
         reader.onload = (e) => {
             previewImg.src = e.target.result;
             uploadZone.style.display = 'none';
             uploadPreview.style.display = 'flex';
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(compressed);
     }
 
     removeBtn.addEventListener('click', (e) => {
@@ -151,11 +156,190 @@ async function uploadImageToStorage(folder, file) {
     return publicUrl;
 }
 
+// ── Client-Side Image Compression ──────────────────────
+async function compressImage(file, maxWidth = 1920, quality = 0.8) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width, h = img.height;
+            if (w > maxWidth) {
+                h = Math.round(h * maxWidth / w);
+                w = maxWidth;
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            canvas.toBlob(blob => {
+                resolve(new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg', lastModified: Date.now() }));
+            }, 'image/jpeg', quality);
+        };
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+    });
+}
+
 // ── Toast Notification ──────────────────────────────────
 function showToast(message, isError = false) {
     toastEl.textContent = message;
     toastEl.className = `toast show${isError ? ' error' : ''}`;
-    setTimeout(() => toastEl.classList.remove('show'), 3000);
+    setTimeout(() => toastEl.classList.remove('show'), isError ? 6000 : 3000);
+}
+
+// ── Confirm Modal (substitui confirm() nativo) ──────────
+function showConfirmModal(message) {
+    return new Promise((resolve) => {
+        confirmMessage.textContent = message;
+        confirmModal.classList.add('show');
+
+        function cleanup() {
+            confirmModal.classList.remove('show');
+            btnConfirmOk.removeEventListener('click', onConfirm);
+            btnConfirmCancel.removeEventListener('click', onCancel);
+            confirmModal.removeEventListener('click', onOverlay);
+        }
+
+        function onConfirm() {
+            cleanup();
+            resolve(true);
+        }
+
+        function onCancel() {
+            cleanup();
+            resolve(false);
+        }
+
+        function onOverlay(e) {
+            if (e.target === confirmModal) onCancel();
+        }
+
+        btnConfirmOk.addEventListener('click', onConfirm);
+        btnConfirmCancel.addEventListener('click', onCancel);
+        confirmModal.addEventListener('click', onOverlay);
+    });
+}
+
+// ── Search & Filter State ──────────────────────────────
+let searchFilters = { speakers: '', sponsors: '', links: '' };
+
+// ── Table Loading Overlay ──────────────────────────────
+function setTableLoading(prefix, loading) {
+    const overlay = document.getElementById(`${prefix}-loading`);
+    if (overlay) overlay.style.display = loading ? 'flex' : 'none';
+}
+
+// ── Render functions with search filter ────────────────
+function renderPalestrantes() {
+    const term = searchFilters.speakers.toLowerCase();
+    const filtered = term
+        ? loadedSpeakers.filter(s =>
+            (s.nome || '').toLowerCase().includes(term) ||
+            (s.cargo || '').toLowerCase().includes(term) ||
+            (s.tema || '').toLowerCase().includes(term))
+        : loadedSpeakers;
+
+    speakersTable.innerHTML = '';
+
+    if (filtered.length === 0) {
+        speakersTable.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-user-slash"></i><p>${loadedSpeakers.length === 0 ? 'Nenhum palestrante cadastrado' : 'Nenhum palestrante encontrado para esta busca'}</p></td></tr>`;
+        return;
+    }
+
+    filtered.forEach(speaker => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td data-label="Nome">${speaker.nome}</td>
+            <td data-label="Cargo">${speaker.cargo || '—'}</td>
+            <td data-label="Tema">${speaker.tema || '—'}</td>
+            <td data-label="Ordem">${speaker.ordem}</td>
+            <td class="actions" data-label="Ações">
+                <button class="row-btn row-btn-edit" onclick="editSpeaker('${speaker.id}')"><i class="fas fa-pen"></i> Editar</button>
+                <button class="row-btn row-btn-delete" onclick="deleteSpeaker('${speaker.id}')"><i class="fas fa-trash"></i></button>
+            </td>`;
+        speakersTable.appendChild(tr);
+    });
+}
+
+function renderPatrocinadores() {
+    const term = searchFilters.sponsors.toLowerCase();
+    const filtered = term
+        ? loadedSponsors.filter(s =>
+            (s.nome || '').toLowerCase().includes(term) ||
+            (s.tier || '').toLowerCase().includes(term))
+        : loadedSponsors;
+
+    sponsorsTable.innerHTML = '';
+
+    if (filtered.length === 0) {
+        sponsorsTable.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-handshake-slash"></i><p>${loadedSponsors.length === 0 ? 'Nenhum patrocinador cadastrado' : 'Nenhum patrocinador encontrado para esta busca'}</p></td></tr>`;
+        return;
+    }
+
+    filtered.forEach(sponsor => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td data-label="Nome">${sponsor.nome}</td>
+            <td data-label="Categoria"><span class="tier-badge ${sponsor.tier}">${sponsor.tier}</span></td>
+            <td data-label="Ordem">${sponsor.ordem}</td>
+            <td class="actions" data-label="Ações">
+                <button class="row-btn row-btn-edit" onclick="editSponsor('${sponsor.id}')"><i class="fas fa-pen"></i> Editar</button>
+                <button class="row-btn row-btn-delete" onclick="deleteSponsor('${sponsor.id}')"><i class="fas fa-trash"></i></button>
+            </td>`;
+        sponsorsTable.appendChild(tr);
+    });
+}
+
+function renderLinks() {
+    const term = searchFilters.links.toLowerCase();
+    const filtered = term
+        ? loadedLinks.filter(l =>
+            (l.title || '').toLowerCase().includes(term) ||
+            (l.description || '').toLowerCase().includes(term) ||
+            (l.url || '').toLowerCase().includes(term))
+        : loadedLinks;
+
+    linksTableBody.innerHTML = '';
+
+    if (filtered.length === 0) {
+        linksTableBody.innerHTML = `<tr><td colspan="7" class="empty-state"><i class="fas fa-link-slash"></i><p>${loadedLinks.length === 0 ? 'Nenhum link cadastrado' : 'Nenhum link encontrado para esta busca'}</p></td></tr>`;
+        return;
+    }
+
+    filtered.forEach(link => {
+        const styleBadge = {
+            'link-gamer': '<span class="tier-badge" style="color: #B78103; background: rgba(255, 200, 0, 0.1); border: 1px solid rgba(255, 200, 0, 0.2);">Amarelo</span>',
+            'link-orange': '<span class="tier-badge" style="color: #D4380D; background: rgba(255, 95, 23, 0.1); border: 1px solid rgba(255, 95, 23, 0.2);">Laranja</span>',
+            'link-blue': '<span class="tier-badge" style="color: #096DD9; background: rgba(28, 0, 255, 0.1); border: 1px solid rgba(28, 0, 255, 0.2);">Azul</span>',
+            'link-gray': '<span class="tier-badge" style="color: #71717a; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">Cinza</span>'
+        }[link.style_class] || `<span class="tier-badge">${link.style_class}</span>`;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td data-label="Título">
+                <div style="font-weight: 700; color: #111827;">${link.title}</div>
+                <div style="font-size: 0.78rem; color: #71717a; margin-top: 2px;">${link.description || '—'}</div>
+            </td>
+            <td data-label="URL" style="font-family: monospace; font-size: 0.8rem; color: #a1a1aa; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                ${link.url}
+            </td>
+            <td data-label="Miniatura" style="font-size: 0.8rem; color: #71717a;">
+                ${link.thumbnail_url ? `<span style="color:#10b981; font-weight:600;"><i class="fas fa-image"></i> Sim</span>` : 'Não'}
+            </td>
+            <td data-label="Estilo">${styleBadge}</td>
+            <td data-label="Ordem">${link.order_index}</td>
+            <td data-label="Status">
+                ${link.active 
+                    ? '<span style="color: #10b981; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-check-circle"></i> Ativo</span>' 
+                    : '<span style="color: #ef4444; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-times-circle"></i> Inativo</span>'
+                }
+            </td>
+            <td class="actions" data-label="Ações">
+                <button class="row-btn row-btn-edit" onclick="editLink('${link.id}')"><i class="fas fa-pen"></i> Editar</button>
+                <button class="row-btn row-btn-delete" onclick="deleteLink('${link.id}')"><i class="fas fa-trash"></i></button>
+            </td>`;
+        linksTableBody.appendChild(tr);
+    });
 }
 
 // ── Fluxo de Inicialização do Supabase & Interface ──────
@@ -197,22 +381,22 @@ async function listenAuthState() {
 
 function handleSessionTransition(session) {
     if (session) {
-        // Exibe o painel administrativo
         adminWrapper.style.display = 'block';
         userEmail.textContent = session.user.email;
         
-        // Atualiza indicadores de conexão no Painel
         sbStatusDot.style.background = '#10b981';
         sbStatusText.textContent = 'Conectado';
         sbStatusText.style.color = '#10b981';
 
-        // Carrega todas as listagens de tabelas do Supabase
         loadPalestrantes();
         loadPatrocinadores();
         loadLinks();
     } else {
-        // Redireciona imediatamente para a tela de login
-        window.location.href = 'login.html';
+        // Sessão expirou — avisa antes de redirecionar
+        showToast('Sessão expirada. Faça login novamente.', true);
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 2000);
     }
 }
 
@@ -247,6 +431,7 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
 // ════════════════════════════════════════════════════════
 async function loadPalestrantes() {
     if (!supabaseClient) return;
+    setTableLoading('speakers', true);
     try {
         speakersTable.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Carregando palestrantes...</p></td></tr>`;
         
@@ -258,29 +443,12 @@ async function loadPalestrantes() {
         if (error) throw error;
 
         loadedSpeakers = data || [];
-        speakersTable.innerHTML = '';
-
-        if (loadedSpeakers.length === 0) {
-            speakersTable.innerHTML = `<tr><td colspan="5" class="empty-state"><i class="fas fa-user-slash"></i><p>Nenhum palestrante cadastrado</p></td></tr>`;
-            return;
-        }
-
-        loadedSpeakers.forEach(speaker => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${speaker.nome}</td>
-                <td>${speaker.cargo || '—'}</td>
-                <td>${speaker.tema || '—'}</td>
-                <td>${speaker.ordem}</td>
-                <td class="actions">
-                    <button class="btn-edit" onclick="editSpeaker('${speaker.id}')"><i class="fas fa-pen"></i> Editar</button>
-                    <button class="btn-delete" onclick="deleteSpeaker('${speaker.id}')"><i class="fas fa-trash"></i></button>
-                </td>`;
-            speakersTable.appendChild(tr);
-        });
+        renderPalestrantes();
     } catch (err) {
         console.error('Erro ao carregar palestrantes:', err.message);
         showToast('Erro ao carregar palestrantes do Supabase', true);
+    } finally {
+        setTableLoading('speakers', false);
     }
 }
 
@@ -413,7 +581,7 @@ window.editSpeaker = function (id) {
 // Excluir Palestrante
 window.deleteSpeaker = async function (id) {
     if (!supabaseClient) return;
-    if (!confirm('Deseja realmente excluir este palestrante do Supabase?')) return;
+    if (!await showConfirmModal('Deseja realmente excluir este palestrante do Supabase?')) return;
 
     try {
         const { error } = await supabaseClient
@@ -437,6 +605,7 @@ window.deleteSpeaker = async function (id) {
 // ════════════════════════════════════════════════════════
 async function loadPatrocinadores() {
     if (!supabaseClient) return;
+    setTableLoading('sponsors', true);
     try {
         sponsorsTable.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Carregando patrocinadores...</p></td></tr>`;
 
@@ -448,28 +617,12 @@ async function loadPatrocinadores() {
         if (error) throw error;
 
         loadedSponsors = data || [];
-        sponsorsTable.innerHTML = '';
-
-        if (loadedSponsors.length === 0) {
-            sponsorsTable.innerHTML = `<tr><td colspan="4" class="empty-state"><i class="fas fa-handshake-slash"></i><p>Nenhum patrocinador cadastrado</p></td></tr>`;
-            return;
-        }
-
-        loadedSponsors.forEach(sponsor => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${sponsor.nome}</td>
-                <td><span class="tier-badge ${sponsor.tier}">${sponsor.tier}</span></td>
-                <td>${sponsor.ordem}</td>
-                <td class="actions">
-                    <button class="btn-edit" onclick="editSponsor('${sponsor.id}')"><i class="fas fa-pen"></i> Editar</button>
-                    <button class="btn-delete" onclick="deleteSponsor('${sponsor.id}')"><i class="fas fa-trash"></i></button>
-                </td>`;
-            sponsorsTable.appendChild(tr);
-        });
+        renderPatrocinadores();
     } catch (err) {
         console.error('Erro ao carregar patrocinadores:', err.message);
         showToast('Erro ao carregar patrocinadores do Supabase', true);
+    } finally {
+        setTableLoading('sponsors', false);
     }
 }
 
@@ -600,7 +753,7 @@ window.editSponsor = function (id) {
 // Excluir Patrocinador
 window.deleteSponsor = async function (id) {
     if (!supabaseClient) return;
-    if (!confirm('Deseja realmente excluir este patrocinador do Supabase?')) return;
+    if (!await showConfirmModal('Deseja realmente excluir este patrocinador do Supabase?')) return;
 
     try {
         const { error } = await supabaseClient
@@ -624,7 +777,7 @@ window.deleteSponsor = async function (id) {
 // ════════════════════════════════════════════════════════
 async function loadLinks() {
     if (!supabaseClient) return;
-
+    setTableLoading('links', true);
     try {
         linksTableBody.innerHTML = `<tr><td colspan="7" class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Carregando links...</p></td></tr>`;
 
@@ -636,54 +789,12 @@ async function loadLinks() {
         if (error) throw error;
 
         loadedLinks = data || [];
-        linksTableBody.innerHTML = '';
-
-        if (loadedLinks.length === 0) {
-            linksTableBody.innerHTML = `<tr><td colspan="7" class="empty-state"><i class="fas fa-link-slash"></i><p>Nenhum link cadastrado</p></td></tr>`;
-            return;
-        }
-
-        loadedLinks.forEach(link => {
-            const tr = document.createElement('tr');
-            
-            // Mapeamento visual dos badges de estilo
-            const styleBadge = {
-                'link-gamer': '<span class="tier-badge" style="color: #B78103; background: rgba(255, 200, 0, 0.1); border: 1px solid rgba(255, 200, 0, 0.2);">Amarelo</span>',
-                'link-orange': '<span class="tier-badge" style="color: #D4380D; background: rgba(255, 95, 23, 0.1); border: 1px solid rgba(255, 95, 23, 0.2);">Laranja</span>',
-                'link-blue': '<span class="tier-badge" style="color: #096DD9; background: rgba(28, 0, 255, 0.1); border: 1px solid rgba(28, 0, 255, 0.2);">Azul</span>',
-                'link-gray': '<span class="tier-badge" style="color: #71717a; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">Cinza</span>'
-            }[link.style_class] || `<span class="tier-badge">${link.style_class}</span>`;
-
-            tr.innerHTML = `
-                <td>
-                    <div style="font-weight: 700; color: #ffffff;">${link.title}</div>
-                    <div style="font-size: 0.78rem; color: #71717a; margin-top: 2px;">${link.description || '—'}</div>
-                </td>
-                <td style="font-family: monospace; font-size: 0.8rem; color: #a1a1aa; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                    ${link.url}
-                </td>
-                <td style="font-size: 0.8rem; color: #71717a;">
-                    ${link.thumbnail_url ? `<span style="color:#10b981; font-weight:600;"><i class="fas fa-image"></i> Sim</span>` : 'Não'}
-                </td>
-                <td>${styleBadge}</td>
-                <td>${link.order_index}</td>
-                <td>
-                    ${link.active 
-                        ? '<span style="color: #10b981; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-check-circle"></i> Ativo</span>' 
-                        : '<span style="color: #ef4444; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-times-circle"></i> Inativo</span>'
-                    }
-                </td>
-                <td class="actions">
-                    <button class="btn-edit" onclick="editLink('${link.id}')"><i class="fas fa-pen"></i> Editar</button>
-                    <button class="btn-delete" onclick="deleteLink('${link.id}')"><i class="fas fa-trash"></i></button>
-                </td>
-            `;
-            linksTableBody.appendChild(tr);
-        });
-
+        renderLinks();
     } catch (err) {
         console.error('Erro ao carregar links do Supabase:', err.message);
         linksTableBody.innerHTML = `<tr><td colspan="7" class="empty-state"><i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i><p style="color: #ef4444;">Erro ao carregar links.</p></td></tr>`;
+    } finally {
+        setTableLoading('links', false);
     }
 }
 
@@ -709,8 +820,8 @@ document.getElementById('supabase-config-form').addEventListener('submit', (e) =
 });
 
 // Desconectar o banco
-document.getElementById('btn-disconnect-sb').addEventListener('click', () => {
-    if (confirm('Deseja realmente desconectar o Supabase? Isso forçará o setup novamente.')) {
+document.getElementById('btn-disconnect-sb').addEventListener('click', async () => {
+    if (await showConfirmModal('Deseja realmente desconectar o Supabase? Isso forçará o setup novamente.')) {
         localStorage.removeItem('supabase_url');
         localStorage.removeItem('supabase_anon_key');
         supabaseModal.classList.remove('show');
@@ -855,15 +966,10 @@ window.editLink = function (id) {
     linkModal.classList.add('show');
 };
 
-// Cancelar Modal de Link
-document.getElementById('btn-cancel-lk').addEventListener('click', () => {
-    linkModal.classList.remove('show');
-});
-
 // Excluir Link
 window.deleteLink = async function (id) {
     if (!supabaseClient) return;
-    if (!confirm('Deseja realmente excluir este link do Supabase?')) return;
+    if (!await showConfirmModal('Deseja realmente excluir este link do Supabase?')) return;
 
     try {
         const { error } = await supabaseClient
@@ -881,18 +987,75 @@ window.deleteLink = async function (id) {
     }
 };
 
+// ── Confirm Cancel Edit (dirty form tracking) ──────────
+const formState = { speaker: false, sponsor: false, link: false };
+
+function trackFormDirty(prefix, stateKey) {
+    const form = document.getElementById(`${prefix}-form`);
+    const inputs = form.querySelectorAll('input, select, textarea');
+    const checkOriginals = () => {
+        formState[stateKey] = Array.from(inputs).some(inp => {
+            if (inp.type === 'checkbox') return inp.checked !== inp.defaultChecked;
+            return inp.value !== inp.defaultValue;
+        });
+    };
+    inputs.forEach(inp => inp.addEventListener('input', checkOriginals));
+    inputs.forEach(inp => inp.addEventListener('change', checkOriginals));
+    // Reset tracking when modal opens
+    const modal = document.getElementById(`${prefix}-modal`);
+    const observer = new MutationObserver(() => {
+        if (modal.classList.contains('show')) {
+            inputs.forEach(inp => {
+                inp.defaultValue = inp.value;
+                if (inp.type === 'checkbox') inp.defaultChecked = inp.checked;
+            });
+            formState[stateKey] = false;
+        }
+    });
+    observer.observe(modal, { attributes: true, attributeFilter: ['class'] });
+}
+
+async function confirmCancelIfDirty(stateKey, modalId) {
+    if (formState[stateKey]) {
+        if (!await showConfirmModal('Há alterações não salvas. Deseja realmente descartá-las?')) return false;
+    }
+    document.getElementById(modalId).classList.remove('show');
+    return true;
+}
+
 // ── Modais Auxiliares: Close Actions ────────────────────
-document.querySelectorAll('.btn-cancel, .modal-overlay').forEach(el => {
+document.querySelectorAll('.modal-overlay').forEach(el => {
     el.addEventListener('click', (e) => {
         if (e.target === el) {
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('show'));
+            const modalId = el.id;
+            // Determine state key from modal id
+            const map = { 'speaker-modal': 'speaker', 'sponsor-modal': 'sponsor', 'link-modal': 'link' };
+            const key = map[modalId];
+            if (key) confirmCancelIfDirty(key, modalId);
+            else el.classList.remove('show');
         }
     });
 });
 
 document.querySelectorAll('.btn-cancel').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('show'));
+    btn.addEventListener('click', (e) => {
+        const modal = btn.closest('.modal-overlay');
+        if (!modal) return;
+        const map = { 'speaker-modal': 'speaker', 'sponsor-modal': 'sponsor', 'link-modal': 'link' };
+        const key = map[modal.id];
+        if (key) confirmCancelIfDirty(key, modal.id);
+        else modal.classList.remove('show');
+    });
+});
+
+// ── Search Input Handlers ──────────────────────────────
+document.querySelectorAll('.search-input').forEach(input => {
+    input.addEventListener('input', () => {
+        const tableId = input.dataset.search;
+        searchFilters[tableId] = input.value;
+        if (tableId === 'speakers') renderPalestrantes();
+        else if (tableId === 'sponsors') renderPatrocinadores();
+        else if (tableId === 'links') renderLinks();
     });
 });
 
@@ -901,6 +1064,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupHybridUpload('sp', (file) => { spSelectedFile = file; }, () => { spSelectedFile = null; });
     setupHybridUpload('pat', (file) => { patSelectedFile = file; }, () => { patSelectedFile = null; });
     setupHybridUpload('lk', (file) => { lkSelectedFile = file; }, () => { lkSelectedFile = null; });
+    trackFormDirty('speaker', 'speaker');
+    trackFormDirty('sponsor', 'sponsor');
+    trackFormDirty('link', 'link');
 });
 
 // ── Inicialização ───────────────────────────────────────

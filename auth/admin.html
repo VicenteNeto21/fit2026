@@ -5,376 +5,661 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIT 2026 — Admin</title>
+    <meta name="description" content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fit.crateus.ufc.br/auth/admin.html">
+    <meta property="og:title" content="FIT 2026 — Admin">
+    <meta property="og:description" content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <meta property="og:image" content="https://fit.crateus.ufc.br/fit_2026_avatar.png">
     <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Google Fonts: Space Grotesk, Outfit & Share Tech Mono -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@600;700;800&family=Share+Tech+Mono&display=swap"
-        rel="stylesheet">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Supabase JS Client SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/particles.js"></script>
     <script src="../assets/js/supabase-config.js"></script>
 
-    <!-- Admin CSS -->
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    colors: {
+                        fit: {
+                            orange: '#FF5F17',
+                            yellow: '#FFC800',
+                            red: '#ef4444',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Admin CSS para Abas, Modais e Toasts Dinâmicos -->
     <link rel="stylesheet" href="admin.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f0f0f0; }
+
+        /* ── Blobs decorativos do fundo ── */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Tabs de navegação ── */
+        .admin-tab {
+            transition: all 0.25s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .admin-tab.active {
+            color: #FF5F17 !important;
+            border-bottom-color: #FF5F17 !important;
+            font-weight: 700;
+        }
+        .admin-tab:hover:not(.active) {
+            color: #374151;
+            border-bottom-color: #e5e7eb;
+        }
+
+        /* ── Input padrão (light) ── */
+        .fit-input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            outline: none;
+            font-size: 0.875rem;
+            color: #1a1a1a;
+            background: #fafafa;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .fit-input:focus {
+            border-color: #FF5F17;
+            box-shadow: 0 0 0 3px rgba(255, 95, 23, 0.1);
+            background: #fff;
+        }
+        .fit-input::placeholder { color: #9ca3af; }
+
+        select.fit-input { cursor: pointer; }
+
+        /* ── Botão primário ── */
+        .fit-btn-primary {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #FF5F17, #FFC800);
+            color: #fff; font-weight: 700; font-size: 0.8rem;
+            border: none; border-radius: 10px; cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            letter-spacing: 0.02em; text-transform: uppercase;
+        }
+        .fit-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 95, 23, 0.28);
+        }
+        .fit-btn-primary:active { transform: translateY(0); }
+
+        /* ── Botão secundário ── */
+        .fit-btn-secondary {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 9px 16px;
+            background: #fff; color: #374151;
+            font-weight: 600; font-size: 0.78rem;
+            border: 1.5px solid #e5e7eb; border-radius: 10px; cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .fit-btn-secondary:hover { border-color: #d1d5db; background: #f9fafb; }
+
+        /* ── Botão de perigo (vermelho) ── */
+        .fit-btn-danger {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 9px 16px;
+            background: #fef2f2; color: #ef4444;
+            font-weight: 600; font-size: 0.78rem;
+            border: 1.5px solid #fecaca; border-radius: 10px; cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .fit-btn-danger:hover { background: #fee2e2; border-color: #f87171; }
+
+        /* ── Tabela ── */
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table thead tr { background: #f9fafb; }
+        .admin-table th {
+            text-align: left;
+            font-size: 0.7rem; font-weight: 700;
+            color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em;
+            padding: 13px 16px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .admin-table tbody tr {
+            border-bottom: 1px solid #f3f4f6;
+            transition: background 0.15s;
+        }
+        .admin-table tbody tr:hover { background: #fafafa; }
+        .admin-table td { padding: 13px 16px; font-size: 0.875rem; color: #374151; vertical-align: middle; }
+        .admin-table td:last-child { color: #6b7280; }
+
+        /* ── Action buttons nas rows ── */
+        .row-btn {
+            padding: 5px 10px;
+            font-size: 0.72rem; font-weight: 600;
+            border-radius: 7px; cursor: pointer;
+            transition: all 0.15s; border: 1.5px solid;
+        }
+        .row-btn-edit { color: #FF5F17; border-color: #fed7aa; background: #fff7ed; }
+        .row-btn-edit:hover { background: #ffedd5; border-color: #fdba74; }
+        .row-btn-delete { color: #ef4444; border-color: #fecaca; background: #fef2f2; }
+        .row-btn-delete:hover { background: #fee2e2; border-color: #f87171; }
+
+        /* ── Upload Zone ── */
+        .upload-zone {
+            border: 2px dashed #e5e7eb;
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            background: #fafafa;
+            transition: all 0.2s;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .upload-zone:hover, .upload-zone.drag-active {
+            border-color: #FF5F17;
+            background: rgba(255, 95, 23, 0.03);
+        }
+        .upload-preview {
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fafafa;
+            height: 120px;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+
+        /* ── Modal ── */
+        .modal-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            padding: 28px;
+            width: 100%; max-width: 500px;
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-title {
+            font-size: 0.9rem; font-weight: 800;
+            color: #111827; text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        /* ── Label para campos do modal ── */
+        .field-label {
+            display: block;
+            font-size: 0.72rem; font-weight: 700;
+            color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+        .field-label.accent { color: #FF5F17; }
+
+        /* ── Toggle URL/Upload ── */
+        .btn-toggle-input {
+            font-size: 0.7rem; padding: 3px 10px;
+            background: #f3f4f6; border: 1px solid #e5e7eb;
+            border-radius: 6px; color: #6b7280; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-toggle-input:hover { border-color: #FF5F17; color: #FF5F17; }
+
+        /* ── Status badge ── */
+        .badge {
+            display: inline-flex; align-items: center;
+            padding: 3px 10px; border-radius: 999px;
+            font-size: 0.7rem; font-weight: 600;
+        }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-gray  { background: #f3f4f6; color: #6b7280; }
+
+        /* ── DB Connection Panel ── */
+        .db-panel {
+            background: #fff; border: 1.5px solid #f3f4f6;
+            border-radius: 14px; padding: 16px 20px;
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center;
+            gap: 12px; margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+    </style>
 
     <!-- Script de Segurança: Redirecionamento Prévio de Sessão -->
     <script>
         (async function () {
             const url = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
             const key = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
-            
-            if (!url || !key) {
-                window.location.href = 'login.html';
-                return;
-            }
+            if (!url || !key) { window.location.href = 'login.html'; return; }
             try {
                 const supabase = window.supabase.createClient(url, key);
                 const { data: { session } } = await supabase.auth.getSession();
-                if (!session) {
-                    window.location.href = 'login.html';
-                }
-            } catch (e) {
-                window.location.href = 'login.html';
-            }
+                if (!session) window.location.href = 'login.html';
+            } catch (e) { window.location.href = 'login.html'; }
         })();
     </script>
 </head>
 
 <body>
+    <!-- Canvas de Partículas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Blobs decorativos do fundo -->
+    <div class="bg-blob w-64 h-64 bg-yellow-200 opacity-40" style="top: 65%; left: 0%;"></div>
+    <div class="bg-blob w-48 h-48 bg-orange-100 opacity-50" style="top: 8%; right: 3%;"></div>
+    <div class="bg-blob w-36 h-36 bg-red-100 opacity-35" style="top: 70%; right: 5%;"></div>
+    <div class="bg-blob w-32 h-32 bg-yellow-100 opacity-45" style="top: 2%; left: 20%;"></div>
+
     <!-- ════════ ADMIN PANEL ════════ -->
-    <div id="admin-wrapper" class="admin-wrapper" style="display: none;">
-        <!-- Header -->
-        <header class="admin-header">
-            <div class="admin-header-inner">
-                <h1 class="admin-title">FIT <span>Admin</span></h1>
-                <div class="admin-user">
-                    <span id="user-email"></span>
-                    <button id="logout-btn" class="btn-logout">
+    <div id="admin-wrapper" class="w-full relative z-10" style="display: none;">
+
+        <!-- ── Header ── -->
+        <header class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+            <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex items-center justify-between h-[60px]">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full overflow-hidden border-2 border-orange-200 flex items-center justify-center bg-orange-50">
+                        <img src="../assets/img/favicon.svg" alt="FIT" class="w-5 h-5 object-contain"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <h1 class="text-base font-extrabold text-gray-900">FIT <span class="bg-gradient-to-r from-fit-orange to-fit-yellow bg-clip-text text-transparent">Admin</span></h1>
+                </div>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-3">
+                    <span id="user-email" class="text-xs text-gray-400 hidden md:inline"></span>
+                    <button id="logout-btn"
+                        class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-500 bg-gray-100 border border-gray-200 rounded-lg hover:text-red-500 hover:bg-red-50 hover:border-red-200 transition-all cursor-pointer">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
                 </div>
             </div>
 
             <!-- Tabs -->
-            <div class="admin-tabs">
-                <button class="admin-tab active" data-section="section-palestrantes">
+            <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex gap-0 overflow-x-auto">
+                <button class="admin-tab active flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-palestrantes">
                     <i class="fas fa-user"></i> Palestrantes
                 </button>
-                <button class="admin-tab" data-section="section-patrocinadores">
+                <button class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-patrocinadores">
                     <i class="fas fa-handshake"></i> Patrocinadores
                 </button>
-                <button class="admin-tab" data-section="section-links">
+                <button class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-links">
                     <i class="fas fa-link"></i> Links Úteis (Supabase)
                 </button>
             </div>
         </header>
 
-        <!-- Content -->
-        <div class="admin-content">
+        <!-- ── Content ── -->
+        <main class="max-w-[1200px] mx-auto px-6 max-sm:px-4 py-8">
 
             <!-- ── Palestrantes ── -->
             <div id="section-palestrantes" class="admin-section active">
-                <div class="section-top">
-                    <h2>Palestrantes</h2>
-                    <button id="btn-add-speaker" class="btn-add">
-                        <i class="fas fa-plus"></i> Adicionar
-                    </button>
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Palestrantes</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="speakers" placeholder="Buscar palestrante..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <button id="btn-add-speaker" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    </div>
                 </div>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Cargo</th>
-                            <th>Tema</th>
-                            <th>Ordem</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="speakers-table-body">
-                        <tr>
-                            <td colspan="5" class="empty-state">
-                                <i class="fas fa-spinner fa-spin"></i>
-                                <p>Carregando...</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div id="speakers-loading" class="table-loading-overlay" style="display:none;"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Cargo</th>
+                                    <th>Tema</th>
+                                    <th>Ordem</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="speakers-table-body">
+                                <tr>
+                                    <td colspan="5" class="text-center py-14 text-gray-400 text-sm">
+                                        <i class="fas fa-spinner fa-spin text-2xl mb-3 text-orange-300 block"></i>
+                                        Carregando palestrantes...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- ── Patrocinadores ── -->
             <div id="section-patrocinadores" class="admin-section">
-                <div class="section-top">
-                    <h2>Patrocinadores</h2>
-                    <button id="btn-add-sponsor" class="btn-add">
-                        <i class="fas fa-plus"></i> Adicionar
-                    </button>
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Patrocinadores</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="sponsors" placeholder="Buscar patrocinador..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <button id="btn-add-sponsor" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    </div>
                 </div>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Categoria</th>
-                            <th>Ordem</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="sponsors-table-body">
-                        <tr>
-                            <td colspan="4" class="empty-state">
-                                <i class="fas fa-spinner fa-spin"></i>
-                                <p>Carregando...</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div id="sponsors-loading" class="table-loading-overlay" style="display:none;"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Ordem</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sponsors-table-body">
+                                <tr>
+                                    <td colspan="4" class="text-center py-14 text-gray-400 text-sm">
+                                        <i class="fas fa-spinner fa-spin text-2xl mb-3 text-orange-300 block"></i>
+                                        Carregando patrocinadores...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- ── Links Úteis (Supabase) ── -->
             <div id="section-links" class="admin-section">
-                <!-- Database Connection Status and Configuration -->
-                <div class="db-connection-panel"
-                    style="margin-bottom: 28px; padding: 20px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+
+                <!-- DB Connection Panel -->
+                <div class="db-panel">
                     <div>
-                        <h3
-                            style="font-size: 0.95rem; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-                            <span id="sb-status-dot"
-                                style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
-                            Conexão Supabase: <span id="sb-status-text" style="color: #ef4444;">Desconectado</span>
+                        <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2">
+                            <span id="sb-status-dot" class="w-2.5 h-2.5 rounded-full bg-red-400 inline-block flex-shrink-0"></span>
+                            Supabase: <span id="sb-status-text" class="text-red-500 font-semibold">Desconectado</span>
                         </h3>
-                        <p style="font-size: 0.78rem; color: #71717a; margin-top: 4px;">Você está autenticado utilizando
-                            o banco conectado acima.</p>
+                        <p class="text-xs text-gray-400 mt-0.5">Autenticado via banco conectado.</p>
                     </div>
-                    <div style="display: flex; gap: 10px;">
-                        <button id="btn-config-supabase" class="btn-logout"
-                            style="background: rgba(255,255,255,0.05); color: #ffffff; border-color: rgba(255,255,255,0.15);">
-                            <i class="fas fa-cog"></i> Configurar Banco
+                    <button id="btn-config-supabase" class="fit-btn-secondary">
+                        <i class="fas fa-cog"></i> Configurar Banco
+                    </button>
+                </div>
+
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Links Úteis</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="links" placeholder="Buscar link..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <button id="btn-add-link" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-plus"></i> Adicionar Link
                         </button>
                     </div>
                 </div>
-
-                <div class="section-top">
-                    <h2>Links Úteis (Supabase)</h2>
-                    <button id="btn-add-link" class="btn-add">
-                        <i class="fas fa-plus"></i> Adicionar Link
-                    </button>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div id="links-loading" class="table-loading-overlay" style="display:none;"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Título / Descrição</th>
+                                    <th>URL</th>
+                                    <th>Miniatura</th>
+                                    <th>Estilo</th>
+                                    <th>Ordem</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="links-table-body">
+                                <tr>
+                                    <td colspan="7" class="text-center py-14 text-gray-400 text-sm">
+                                        <i class="fas fa-database text-2xl mb-3 text-orange-300 block"></i>
+                                        Carregando links do banco...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Título / Descrição</th>
-                            <th>URL</th>
-                            <th>Miniatura</th>
-                            <th>Estilo</th>
-                            <th>Ordem</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="links-table-body">
-                        <tr>
-                            <td colspan="7" class="empty-state">
-                                <i class="fas fa-database"></i>
-                                <p>Carregando links do banco...</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
-        </div>
+        </main>
     </div>
 
     <!-- ════════ MODALS ════════ -->
 
     <!-- Speaker Modal -->
-    <div id="speaker-modal" class="modal-overlay">
-        <div class="modal">
-            <h3>Adicionar Palestrante</h3>
-            <form id="speaker-form">
-                <div class="form-group">
-                    <label for="sp-nome">Nome *</label>
-                    <input type="text" id="sp-nome" placeholder="Nome completo" required>
+    <div id="speaker-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 class="modal-title">Adicionar Palestrante</h3>
+            <form id="speaker-form" class="space-y-4">
+                <div>
+                    <label for="sp-nome" class="field-label accent">Nome *</label>
+                    <input type="text" id="sp-nome" placeholder="Nome completo" class="fit-input" required>
                 </div>
-                <div class="form-group">
-                    <label for="sp-cargo">Cargo / Função</label>
-                    <input type="text" id="sp-cargo" placeholder="Ex: Professor, Pesquisador...">
+                <div>
+                    <label for="sp-cargo" class="field-label">Cargo / Função</label>
+                    <input type="text" id="sp-cargo" placeholder="Ex: Professor, Pesquisador..." class="fit-input">
                 </div>
-                <div class="form-group">
-                    <label for="sp-tema">Tema da Palestra</label>
-                    <input type="text" id="sp-tema" placeholder="Ex: IA Generativa e o Futuro">
+                <div>
+                    <label for="sp-tema" class="field-label">Tema da Palestra</label>
+                    <input type="text" id="sp-tema" placeholder="Ex: IA Generativa e o Futuro" class="fit-input">
                 </div>
-                <div class="form-group">
-                    <div class="hybrid-field-header">
-                        <label>Foto de Perfil</label>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="field-label accent mb-0">Foto de Perfil</label>
                         <button type="button" class="btn-toggle-input" id="sp-btn-toggle" data-mode="upload">Usar URL</button>
                     </div>
-                    <!-- Upload Box -->
                     <div class="upload-zone" id="sp-upload-zone">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Clique ou arraste a foto</span>
-                        <input type="file" id="sp-file-input" accept="image/*" style="display:none;">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
+                        <span class="text-xs text-gray-400">Clique ou arraste a foto</span>
+                        <input type="file" id="sp-file-input" accept="image/*" class="hidden">
                     </div>
                     <div class="upload-preview" id="sp-upload-preview" style="display:none;">
-                        <img id="sp-preview-img" src="" alt="Preview">
-                        <button type="button" class="btn-remove-file" id="sp-btn-remove-file"><i class="fas fa-times"></i></button>
+                        <img id="sp-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
+                        <button type="button" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs" id="sp-btn-remove-file">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <!-- Direct URL Box (hidden by default) -->
-                    <input type="text" id="sp-foto" placeholder="Ex: assets/img/... ou https://..." style="display:none;">
+                    <input type="text" id="sp-foto" placeholder="Ex: assets/img/... ou https://..." class="fit-input" style="display:none;">
                 </div>
-                <div class="form-group">
-                    <label for="sp-ordem">Ordem de Exibição</label>
-                    <input type="number" id="sp-ordem" value="0" min="0">
+                <div>
+                    <label for="sp-ordem" class="field-label">Ordem de Exibição</label>
+                    <input type="number" id="sp-ordem" value="0" min="0" class="fit-input">
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel">Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar</button>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-secondary btn-cancel">Cancelar</button>
+                    <button type="submit" class="fit-btn-primary btn-save">Salvar</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Sponsor Modal -->
-    <div id="sponsor-modal" class="modal-overlay">
-        <div class="modal">
-            <h3>Adicionar Patrocinador</h3>
-            <form id="sponsor-form">
-                <div class="form-group">
-                    <label for="pat-nome">Nome *</label>
-                    <input type="text" id="pat-nome" placeholder="Nome do patrocinador" required>
+    <div id="sponsor-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 class="modal-title">Adicionar Patrocinador</h3>
+            <form id="sponsor-form" class="space-y-4">
+                <div>
+                    <label for="pat-nome" class="field-label accent">Nome *</label>
+                    <input type="text" id="pat-nome" placeholder="Nome do patrocinador" class="fit-input" required>
                 </div>
-                <div class="form-group">
-                    <label for="pat-tier">Categoria *</label>
-                    <select id="pat-tier" required>
+                <div>
+                    <label for="pat-tier" class="field-label accent">Categoria *</label>
+                    <select id="pat-tier" class="fit-input" required>
                         <option value="diamante">Diamante</option>
                         <option value="prata">Prata</option>
                         <option value="midia">Apoio de Mídia</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <div class="hybrid-field-header">
-                        <label>Logotipo</label>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="field-label accent mb-0">Logotipo</label>
                         <button type="button" class="btn-toggle-input" id="pat-btn-toggle" data-mode="upload">Usar URL</button>
                     </div>
-                    <!-- Upload Box -->
                     <div class="upload-zone" id="pat-upload-zone">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Clique ou arraste o logo</span>
-                        <input type="file" id="pat-file-input" accept="image/*" style="display:none;">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
+                        <span class="text-xs text-gray-400">Clique ou arraste o logo</span>
+                        <input type="file" id="pat-file-input" accept="image/*" class="hidden">
                     </div>
                     <div class="upload-preview" id="pat-upload-preview" style="display:none;">
-                        <img id="pat-preview-img" src="" alt="Preview">
-                        <button type="button" class="btn-remove-file" id="pat-btn-remove-file"><i class="fas fa-times"></i></button>
+                        <img id="pat-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
+                        <button type="button" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs" id="pat-btn-remove-file">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <!-- Direct URL Box (hidden by default) -->
-                    <input type="text" id="pat-logo" placeholder="Ex: assets/img/... ou https://..." style="display:none;">
+                    <input type="text" id="pat-logo" placeholder="Ex: assets/img/... ou https://..." class="fit-input" style="display:none;">
                 </div>
-                <div class="form-group">
-                    <label for="pat-ordem">Ordem de Exibição</label>
-                    <input type="number" id="pat-ordem" value="0" min="0">
+                <div>
+                    <label for="pat-ordem" class="field-label">Ordem de Exibição</label>
+                    <input type="number" id="pat-ordem" value="0" min="0" class="fit-input">
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel">Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar</button>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-secondary btn-cancel">Cancelar</button>
+                    <button type="submit" class="fit-btn-primary btn-save">Salvar</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Supabase Config Modal -->
-    <div id="supabase-modal" class="modal-overlay">
-        <div class="modal">
-            <h3>Configurar Conexão Supabase</h3>
-            <form id="supabase-config-form">
-                <div class="form-group">
-                    <label for="sb-url">Supabase URL</label>
-                    <input type="url" id="sb-url" placeholder="https://xxxxxxxxxxxxxx.supabase.co" required>
+    <div id="supabase-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 class="modal-title">Configurar Conexão Supabase</h3>
+            <form id="supabase-config-form" class="space-y-4">
+                <div>
+                    <label for="sb-url" class="field-label accent">Supabase URL</label>
+                    <input type="url" id="sb-url" placeholder="https://xxxxxxxxxxxxxx.supabase.co" class="fit-input" required>
                 </div>
-                <div class="form-group">
-                    <label for="sb-key">Supabase Anon Key</label>
-                    <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." required>
+                <div>
+                    <label for="sb-key" class="field-label accent">Supabase Anon Key</label>
+                    <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." class="fit-input" required>
                 </div>
-                <div class="modal-actions" style="display: flex; align-items: center; width: 100%;">
-                    <button type="button" class="btn-delete" id="btn-disconnect-sb"
-                        style="margin-right: auto; padding: 10px 16px;">Desconectar</button>
-                    <button type="button" class="btn-cancel" id="btn-cancel-sb"
-                        style="margin-right: 8px;">Cancelar</button>
-                    <button type="submit" class="btn-save">Conectar</button>
+                <div class="flex items-center justify-between gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-danger" id="btn-disconnect-sb">
+                        <i class="fas fa-unlink"></i> Desconectar
+                    </button>
+                    <div class="flex gap-2">
+                        <button type="button" class="fit-btn-secondary" id="btn-cancel-sb">Cancelar</button>
+                        <button type="submit" class="fit-btn-primary btn-save">Conectar</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Link Supabase Modal -->
-    <div id="link-modal" class="modal-overlay">
-        <div class="modal">
-            <h3 id="link-modal-title">Adicionar Link (Supabase)</h3>
-            <form id="link-form">
-                <div class="form-group">
-                    <label for="lk-title">Título *</label>
-                    <input type="text" id="lk-title" placeholder="Ex: Site Oficial FIT 2026" required>
+    <div id="link-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 id="link-modal-title" class="modal-title">Adicionar Link (Supabase)</h3>
+            <form id="link-form" class="space-y-4">
+                <div>
+                    <label for="lk-title" class="field-label accent">Título *</label>
+                    <input type="text" id="lk-title" placeholder="Ex: Site Oficial FIT 2026" class="fit-input" required>
                 </div>
-                <div class="form-group">
-                    <label for="lk-desc">Descrição</label>
-                    <input type="text" id="lk-desc" placeholder="Ex: Acesse o site principal e programação">
+                <div>
+                    <label for="lk-desc" class="field-label">Descrição</label>
+                    <input type="text" id="lk-desc" placeholder="Ex: Acesse o site principal e programação" class="fit-input">
                 </div>
-                <div class="form-group">
-                    <label for="lk-url">URL de Destino *</label>
-                    <input type="text" id="lk-url" placeholder="Ex: index.html ou https://..." required>
+                <div>
+                    <label for="lk-url" class="field-label accent">URL de Destino *</label>
+                    <input type="text" id="lk-url" placeholder="Ex: index.html ou https://..." class="fit-input" required>
                 </div>
-                <div class="form-group">
-                    <div class="hybrid-field-header">
-                        <label>Miniatura / Imagem Lateral (Opcional)</label>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="field-label accent mb-0">Miniatura / Imagem Lateral</label>
                         <button type="button" class="btn-toggle-input" id="lk-btn-toggle" data-mode="upload">Usar URL</button>
                     </div>
-                    <!-- Upload Box -->
                     <div class="upload-zone" id="lk-upload-zone">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Clique ou arraste a miniatura</span>
-                        <input type="file" id="lk-file-input" accept="image/*" style="display:none;">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
+                        <span class="text-xs text-gray-400">Clique ou arraste a miniatura</span>
+                        <input type="file" id="lk-file-input" accept="image/*" class="hidden">
                     </div>
                     <div class="upload-preview" id="lk-upload-preview" style="display:none;">
-                        <img id="lk-preview-img" src="" alt="Preview">
-                        <button type="button" class="btn-remove-file" id="lk-btn-remove-file"><i class="fas fa-times"></i></button>
+                        <img id="lk-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
+                        <button type="button" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs" id="lk-btn-remove-file">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
-                    <!-- Direct URL Box (hidden by default) -->
-                    <input type="text" id="lk-thumb" placeholder="Ex: fit_2026_avatar.png ou https://..." style="display:none;">
+                    <input type="text" id="lk-thumb" placeholder="Ex: fit_2026_avatar.png ou https://..." class="fit-input" style="display:none;">
                 </div>
-                <div class="form-group">
-                    <label for="lk-style">Estilo Visual Pastel *</label>
-                    <select id="lk-style" required>
+                <div>
+                    <label for="lk-style" class="field-label accent">Estilo Visual Pastel *</label>
+                    <select id="lk-style" class="fit-input" required>
                         <option value="link-gamer">Amarelo Pastel (Gamer)</option>
                         <option value="link-orange">Laranja Pastel (Inscrições)</option>
                         <option value="link-blue">Azul Pastel (Site)</option>
                         <option value="link-gray">Cinza Pastel (Secundário)</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="lk-order">Ordem de Exibição</label>
-                    <input type="number" id="lk-order" value="0" min="0">
+                <div>
+                    <label for="lk-order" class="field-label">Ordem de Exibição</label>
+                    <input type="number" id="lk-order" value="0" min="0" class="fit-input">
                 </div>
-                <div class="form-group"
-                    style="display: flex; flex-direction: row; align-items: center; gap: 8px; margin-top: 10px;">
-                    <input type="checkbox" id="lk-active" checked style="width: auto; height: auto; cursor: pointer;">
-                    <label for="lk-active"
-                        style="margin-bottom: 0; cursor: pointer; text-transform: none; font-size: 0.85rem;">Ativo
-                        (exibir na listagem pública)</label>
+                <div class="flex items-center gap-2.5 mt-1">
+                    <input type="checkbox" id="lk-active" checked class="w-4 h-4 cursor-pointer accent-orange-500 rounded">
+                    <label for="lk-active" class="cursor-pointer text-xs text-gray-500 uppercase tracking-wide">Ativo (exibir na listagem pública)</label>
                 </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" id="btn-cancel-lk">Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar</button>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-secondary btn-cancel" id="btn-cancel-lk">Cancelar</button>
+                    <button type="submit" class="fit-btn-primary btn-save">Salvar</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Confirm Modal -->
+    <div id="confirm-modal" class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card" style="max-width: 420px;">
+            <h3 class="modal-title">Confirmar</h3>
+            <p id="confirm-message" class="text-sm text-gray-600 leading-relaxed mb-6"></p>
+            <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                <button type="button" class="fit-btn-secondary" id="btn-confirm-cancel">Cancelar</button>
+                <button type="button" class="fit-btn-danger" id="btn-confirm-ok">
+                    <i class="fas fa-trash"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div id="toast" class="toast"></div>
+
+    <!-- Partículas suaves -->
+    <script>
+        initParticles('particles-canvas', {
+            colors: ['rgba(255, 95, 23, 0.04)', 'rgba(255, 200, 0, 0.03)', 'rgba(200, 200, 200, 0.03)'],
+            count: 6,
+            maxRadius: 70,
+            minRadius: 30,
+            speedX: 0.3,
+            speedY: 0.3
+        });
+    </script>
 
     <!-- Admin JS -->
     <script src="admin.js"></script>

@@ -14,6 +14,13 @@
     <meta name="keywords"
         content="FIT 2026, Crateús, IA, Inteligência Artificial, tecnologia, evento universitário, UFC Crateús, machine learning, deep learning, palestras, minicursos">
     <meta name="author" content="Núcleo de Comunicação do FIT — UFC Crateús">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fit.crateus.ufc.br/index.html">
+    <meta property="og:title" content="FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios | UFC Crateús">
+    <meta property="og:description"
+        content="FIT 2026 — XIII Fórum de Inovação e Tecnologia da UFC Crateús. Tema: Inteligência Artificial: suas Aplicações e Desafios. Palestras, minicursos e workshops sobre IA. 04 a 08 de Outubro de 2026.">
+    <meta property="og:image" content="https://fit.crateus.ufc.br/fit_2026_avatar.png">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#000000">
     <link rel="canonical" href="https://fit.crateus.ufc.br">
@@ -21,7 +28,6 @@
     <!-- Preconnect para performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
     <!-- Fonte Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -47,7 +53,7 @@
                             teal: '#0d2b3e',
                             orange: '#FF5F17',
                             pink: '#FFC800',
-                            purple: '#1C00FF',
+                            electric: '#1C00FF',
                         }
                     }
                 }
@@ -64,31 +70,31 @@
     <!-- Supabase Integration for Public Frontend -->
     <script src="assets/js/supabase-config.js"></script>
     <script>
-        (function() {
-            const sbUrl = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
-            const sbKey = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
+            (function () {
+                const sbUrl = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
+                const sbKey = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
 
-            if (sbUrl && sbKey && window.supabase) {
-                const supabaseClient = window.supabase.createClient(sbUrl, sbKey);
-                
-                // Load Speakers from Supabase
-                async function loadSpeakers() {
-                    const container = document.getElementById('speakers-grid');
-                    if (!container) return;
-                    try {
-                        const { data, error } = await supabaseClient
-                            .from('palestrantes')
-                            .select('*')
-                            .order('ordem', { ascending: true });
-                            
-                        if (error) throw error;
-                        if (!data || data.length === 0) return; // Keep static fallbacks if empty
-                        
-                        container.innerHTML = '';
-                        data.forEach(d => {
-                            const card = document.createElement('div');
-                            card.className = 'speaker-card';
-                            card.innerHTML = `
+                if (sbUrl && sbKey && window.supabase) {
+                    const supabaseClient = window.supabase.createClient(sbUrl, sbKey);
+
+                    // Load Speakers from Supabase
+                    async function loadSpeakers() {
+                        const container = document.getElementById('speakers-grid');
+                        if (!container) return;
+                        try {
+                            const { data, error } = await supabaseClient
+                                .from('palestrantes')
+                                .select('*')
+                                .order('ordem', { ascending: true });
+
+                            if (error) throw error;
+                            if (!data || data.length === 0) return; // Keep static fallbacks if empty
+
+                            container.innerHTML = '';
+                            data.forEach(d => {
+                                const card = document.createElement('div');
+                                card.className = 'speaker-card';
+                                card.innerHTML = `
                                 <div class="speaker-photo">
                                     ${d.foto ? `<img src="${d.foto}" alt="${d.nome}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : '<i class="fas fa-user-circle"></i>'}
                                 </div>
@@ -96,68 +102,68 @@
                                 <p class="speaker-role">${d.cargo || 'Palestrante'}</p>
                                 <p class="speaker-topic">${d.tema || ''}</p>
                             `;
-                            container.appendChild(card);
-                        });
-                    } catch (err) {
-                        console.error('Error loading speakers from Supabase:', err);
+                                container.appendChild(card);
+                            });
+                        } catch (err) {
+                            console.error('Error loading speakers from Supabase:', err);
+                        }
                     }
-                }
 
-                // Load Sponsors from Supabase
-                async function loadSponsors() {
-                    const container = document.getElementById('sponsors-container');
-                    if (!container) return;
-                    try {
-                        const { data, error } = await supabaseClient
-                            .from('patrocinadores')
-                            .select('*')
-                            .order('ordem', { ascending: true });
-                            
-                        if (error) throw error;
-                        if (!data || data.length === 0) return; // Keep static fallbacks if empty
+                    // Load Sponsors from Supabase
+                    async function loadSponsors() {
+                        const container = document.getElementById('sponsors-container');
+                        if (!container) return;
+                        try {
+                            const { data, error } = await supabaseClient
+                                .from('patrocinadores')
+                                .select('*')
+                                .order('ordem', { ascending: true });
 
-                        const tiers = { diamante: [], prata: [], midia: [] };
-                        data.forEach(d => {
-                            if (tiers[d.tier]) tiers[d.tier].push(d);
-                        });
+                            if (error) throw error;
+                            if (!data || data.length === 0) return; // Keep static fallbacks if empty
 
-                        container.innerHTML = '';
-                        const tierConfig = [
-                            { key: 'diamante', title: 'Diamante', icon: 'fa-gem', class: 'tier-diamante', cardClass: 'sponsor-diamante-card' },
-                            { key: 'prata', title: 'Prata', icon: 'fa-medal', class: 'tier-prata', cardClass: 'sponsor-prata-card' },
-                            { key: 'midia', title: 'Apoio de Mídia', icon: 'fa-newspaper', class: 'tier-midia', cardClass: 'sponsor-midia-card' }
-                        ];
+                            const tiers = { diamante: [], prata: [], midia: [] };
+                            data.forEach(d => {
+                                if (tiers[d.tier]) tiers[d.tier].push(d);
+                            });
 
-                        tierConfig.forEach(tier => {
-                            if (tiers[tier.key].length === 0) return;
-                            const section = document.createElement('div');
-                            section.className = 'sponsor-tier';
-                            section.innerHTML = `
+                            container.innerHTML = '';
+                            const tierConfig = [
+                                { key: 'diamante', title: 'Diamante', icon: 'fa-gem', class: 'tier-diamante', cardClass: 'sponsor-diamante-card' },
+                                { key: 'prata', title: 'Prata', icon: 'fa-medal', class: 'tier-prata', cardClass: 'sponsor-prata-card' },
+                                { key: 'midia', title: 'Apoio de Mídia', icon: 'fa-newspaper', class: 'tier-midia', cardClass: 'sponsor-midia-card' }
+                            ];
+
+                            tierConfig.forEach(tier => {
+                                if (tiers[tier.key].length === 0) return;
+                                const section = document.createElement('div');
+                                section.className = 'sponsor-tier';
+                                section.innerHTML = `
                                 <h3 class="tier-title ${tier.class}"><i class="fas ${tier.icon}"></i> ${tier.title}</h3>
                                 <div class="sponsors-grid sponsors-${tier.key}"></div>
                             `;
-                            const grid = section.querySelector('.sponsors-grid');
-                            tiers[tier.key].forEach(s => {
-                                const card = document.createElement('div');
-                                card.className = `sponsor-card ${tier.cardClass}`;
-                                card.innerHTML = s.logo
-                                    ? `<img src="${s.logo}" alt="${s.nome}" style="max-width:80%;max-height:60%;object-fit:contain;">`
-                                    : `<span>${s.nome}</span>`;
-                                grid.appendChild(card);
+                                const grid = section.querySelector('.sponsors-grid');
+                                tiers[tier.key].forEach(s => {
+                                    const card = document.createElement('div');
+                                    card.className = `sponsor-card ${tier.cardClass}`;
+                                    card.innerHTML = s.logo
+                                        ? `<img src="${s.logo}" alt="${s.nome}" style="max-width:80%;max-height:60%;object-fit:contain;">`
+                                        : `<span>${s.nome}</span>`;
+                                    grid.appendChild(card);
+                                });
+                                container.appendChild(section);
                             });
-                            container.appendChild(section);
-                        });
-                    } catch (err) {
-                        console.error('Error loading sponsors from Supabase:', err);
+                        } catch (err) {
+                            console.error('Error loading sponsors from Supabase:', err);
+                        }
                     }
-                }
 
-                document.addEventListener('DOMContentLoaded', () => {
-                    loadSpeakers();
-                    loadSponsors();
-                });
-            }
-        })();
+                    document.addEventListener('DOMContentLoaded', () => {
+                        loadSpeakers();
+                        loadSponsors();
+                    });
+                }
+            })();
     </script>
 
     <!-- Open Graph -->
@@ -232,20 +238,20 @@
     <!-- ============ HEADER ============ -->
     <header id="header" aria-label="Cabeçalho principal">
         <div class="container nav-container">
-            <a href="#inicio" class="nav-logo" aria-label="Ir para o início">
+            <a class="nav-logo" href="#inicio" aria-label="Ir para o início">
                 <span class="logo-text">FIT</span>
                 <span class="logo-year">2026</span>
             </a>
             <nav class="nav-menu" aria-label="Menu principal">
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#programacao">Programação</a></li>
-                    <li><a href="#palestrantes">Palestrantes</a></li>
-                    <li><a href="#patrocinadores">Patrocinadores</a></li>
-                    <li><a href="#evento">O Evento</a></li>
+                    <li><a data-nav href="#inicio">Início</a></li>
+                    <li><a data-nav href="#programacao">Programação</a></li>
+                    <li><a data-nav href="#palestrantes">Palestrantes</a></li>
+                    <li><a data-nav href="#patrocinadores">Patrocinadores</a></li>
+                    <li><a data-nav href="#evento">O Evento</a></li>
                 </ul>
             </nav>
-            <a href="#" class="btn-inscricao" target="_blank">
+            <a class="btn-inscricao" href="#" target="_blank">
                 <i class="fas fa-edit"></i> Inscreva-se
             </a>
             <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false">
@@ -255,12 +261,12 @@
         <!-- Menu Mobile -->
         <div id="mobile-menu" class="mobile-menu hidden">
             <ul>
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#programacao">Programação</a></li>
-                <li><a href="#palestrantes">Palestrantes</a></li>
-                <li><a href="#patrocinadores">Patrocinadores</a></li>
-                <li><a href="#evento">O Evento</a></li>
-                <li><a href="#" class="btn-inscricao-mobile" target="_blank"><i class="fas fa-edit"></i> Inscreva-se</a>
+                <li><a data-nav href="#inicio">Início</a></li>
+                <li><a data-nav href="#programacao">Programação</a></li>
+                <li><a data-nav href="#palestrantes">Palestrantes</a></li>
+                <li><a data-nav href="#patrocinadores">Patrocinadores</a></li>
+                <li><a data-nav href="#evento">O Evento</a></li>
+                <li><a class="btn-inscricao-mobile" href="#" target="_blank"><i class="fas fa-edit"></i> Inscreva-se</a>
                 </li>
             </ul>
         </div>
@@ -280,10 +286,10 @@
                         <span><i class="fas fa-map-marker-alt"></i> UFC — Campus Crateús</span>
                     </div>
                     <div class="hero-actions">
-                        <a href="#programacao" class="btn btn-primary">
+                        <a class="btn btn-primary" href="#programacao">
                             <i class="fas fa-calendar-alt"></i> Ver Programação
                         </a>
-                        <a href="#" class="btn btn-outline" target="_blank">
+                        <a class="btn btn-outline" href="#" target="_blank">
                             <i class="fas fa-edit"></i> Inscreva-se
                         </a>
                     </div>
@@ -534,31 +540,31 @@
                         </p>
                         <h3 class="edicoes-title">Edições Anteriores</h3>
                         <div class="edicoes-list">
-                            <a href="https://fit.crateus.ufc.br/ano/2025" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2025" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2025 — Internet das Coisas
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2024" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2024" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2024 — Segurança em Redes
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2023" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2023" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2023 — Otimização
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2022" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2022" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2022 — Era dos Dados
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2021" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2021" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2021 — Empreendedorismo
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2020" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2020" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2020 — Cloud Computing
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2019" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2019" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2019 — Inteligência Artificial
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2018" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2018" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2018 — Eu amo Inovação
                             </a>
-                            <a href="https://fit.crateus.ufc.br/ano/2017" target="_blank" class="edicao-item">
+                            <a class="edicao-item" href="https://fit.crateus.ufc.br/ano/2017" target="_blank">
                                 <i class="fas fa-check-circle"></i> FIT 2017 — 4ª Edição
                             </a>
                         </div>
@@ -599,7 +605,7 @@
                     <p>O Fórum de Inovação e Tecnologia (FIT) é o maior evento universitário de tecnologia do Sertão de
                         Crateús, promovendo a inovação e o empreendedorismo.</p>
                     <div class="footer-social">
-                        <a href="https://www.instagram.com/fitcrateus/" target="_blank" aria-label="Instagram do FIT"><i
+                        <a target="_blank" href="https://www.instagram.com/fitcrateus/" aria-label="Instagram do FIT"><i
                                 class="fab fa-instagram"></i></a>
                     </div>
                 </div>
@@ -612,9 +618,9 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 | Núcleo de Comunicação do FIT —
-                    <a href="https://linktr.ee/vicente.neto" target="_blank">Vicente Neto</a> /
-                    <a href="https://linktr.ee/Laiz.Fernandes" target="_blank">Paula Laiz</a> /
-                    <a href="https://linktr.ee/maria.andrade" target="_blank">Francisca Maria</a>
+                    <a target="_blank" href="https://linktr.ee/vicente.neto">Vicente Neto</a> /
+                    <a target="_blank" href="https://linktr.ee/Laiz.Fernandes">Paula Laiz</a> /
+                    <a target="_blank" href="https://linktr.ee/maria.andrade">Francisca Maria</a>
                 </p>
             </div>
         </div>

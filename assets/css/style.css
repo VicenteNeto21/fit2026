@@ -3,6 +3,7 @@
    Tema: IA — Inteligência Artificial
    Paleta: Indigo/Teal + Laranja/Rosa
    Fonte: Inter
+   Accessibility: All form inputs use <label> and aria-label / placeholder attributes.
    ============================================ */
 
 /* ── Reset & Base ────────────────────────── */

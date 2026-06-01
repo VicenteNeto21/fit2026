@@ -4,16 +4,50 @@
 
 let supabaseClient = null;
 
+// Rate Limiting
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 min
+let loginAttempts = parseInt(localStorage.getItem('fit_login_attempts') || '0');
+let loginBlockedUntil = parseInt(localStorage.getItem('fit_login_blocked_until') || '0');
+
+function checkRateLimit() {
+    const now = Date.now();
+    if (loginBlockedUntil > now) {
+        const remaining = Math.ceil((loginBlockedUntil - now) / 1000 / 60);
+        return { blocked: true, remaining };
+    }
+    // Reset if window passed
+    if (loginBlockedUntil && now > loginBlockedUntil) {
+        loginAttempts = 0;
+        loginBlockedUntil = 0;
+        localStorage.removeItem('fit_login_attempts');
+        localStorage.removeItem('fit_login_blocked_until');
+    }
+    return { blocked: false };
+}
+
+function recordAttempt() {
+    loginAttempts++;
+    localStorage.setItem('fit_login_attempts', loginAttempts.toString());
+    if (loginAttempts >= RATE_LIMIT_MAX) {
+        loginBlockedUntil = Date.now() + RATE_LIMIT_WINDOW;
+        localStorage.setItem('fit_login_blocked_until', loginBlockedUntil.toString());
+    }
+}
+
+function resetRateLimit() {
+    loginAttempts = 0;
+    loginBlockedUntil = 0;
+    localStorage.removeItem('fit_login_attempts');
+    localStorage.removeItem('fit_login_blocked_until');
+}
+
 // Elementos DOM
-const setupBox = document.getElementById('setup-box');
 const loginBox = document.getElementById('login-box');
-const setupDbForm = document.getElementById('setup-db-form');
+const loadingState = document.getElementById('loading-state');
 const loginForm = document.getElementById('login-form');
 const loginError = document.getElementById('login-error');
-const setupError = document.getElementById('setup-error');
 const loginBtn = document.getElementById('login-btn');
-const btnShowSetup = document.getElementById('btn-show-setup');
-const googleBtn = document.getElementById('google-btn');
 const toastEl = document.getElementById('toast');
 
 // ── Toast Notification ──────────────────────────────────
@@ -25,71 +59,56 @@ function showToast(message, isError = false) {
 
 // ── Fluxo de Inicialização do Supabase & Interface ──────
 async function checkDatabaseConnection() {
-    // Busca do config global ou localStorage
     const url = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
     const key = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
 
     if (!url || !key) {
-        // Exibe setup do banco
-        setupBox.style.display = 'block';
-        loginBox.style.display = 'none';
+        loadingState.innerHTML = `
+            <div class="w-14 h-14 rounded-full bg-red-50 border border-red-200 flex items-center justify-center mb-4">
+                <i class="fas fa-exclamation-triangle text-red-400 text-xl"></i>
+            </div>
+            <p class="text-sm text-gray-500 font-medium text-center max-w-[260px]">Banco de dados não configurado. Contate o administrador.</p>
+        `;
         return false;
     }
 
     try {
         supabaseClient = window.supabase.createClient(url, key);
-        
-        // Exibe tela de login padrão
-        setupBox.style.display = 'none';
-        loginBox.style.display = 'block';
-        
-        // Verifica se já existe uma sessão ativa
-        const { data: { session }, error } = await supabaseClient.auth.getSession();
+
+        const { data: { session } } = await supabaseClient.auth.getSession();
         if (session) {
-            showToast('Sessão ativa encontrada. Redirecionando...');
-            setTimeout(() => {
-                window.location.href = 'admin.html';
-            }, 1000);
+            window.location.href = 'admin.html';
+            return true;
         }
+
+        loadingState.style.display = 'none';
+        loginBox.style.display = 'block';
         return true;
     } catch (err) {
         console.error('Erro de inicialização do Supabase:', err);
-        setupError.textContent = 'Erro ao inicializar cliente. Verifique as credenciais.';
-        setupError.classList.add('show');
-        setupBox.style.display = 'block';
-        loginBox.style.display = 'none';
+        loadingState.innerHTML = `
+            <div class="w-14 h-14 rounded-full bg-red-50 border border-red-200 flex items-center justify-center mb-4">
+                <i class="fas fa-exclamation-triangle text-red-400 text-xl"></i>
+            </div>
+            <p class="text-sm text-gray-500 font-medium text-center max-w-[260px]">Erro ao conectar ao banco. Contate o administrador.</p>
+        `;
         return false;
     }
 }
-
-// ── Formulário de Configuração do Banco ──────────────────
-setupDbForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const url = document.getElementById('setup-url').value.trim();
-    const key = document.getElementById('setup-key').value.trim();
-
-    localStorage.setItem('supabase_url', url);
-    localStorage.setItem('supabase_anon_key', key);
-    
-    showToast('Banco conectado com sucesso!');
-    checkDatabaseConnection();
-});
-
-// Alternar para tela de setup
-btnShowSetup.addEventListener('click', (e) => {
-    e.preventDefault();
-    loginBox.style.display = 'none';
-    setupBox.style.display = 'block';
-    
-    document.getElementById('setup-url').value = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : (localStorage.getItem('supabase_url') || '');
-    document.getElementById('setup-key').value = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : (localStorage.getItem('supabase_anon_key') || '');
-});
 
 // ── Formulário de Login (Email / Senha) ──────────────────
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!supabaseClient) {
         showToast('Supabase não inicializado. Configure o banco.', true);
+        return;
+    }
+
+    // Rate limit check
+    const { blocked, remaining } = checkRateLimit();
+    if (blocked) {
+        loginError.innerHTML = `<strong>Muitas tentativas!</strong><br><span style="font-size:0.75rem;">Aguarde ${remaining} minuto(s) antes de tentar novamente.</span>`;
+        loginError.classList.add('show');
         return;
     }
 
@@ -108,44 +127,25 @@ loginForm.addEventListener('submit', async (e) => {
 
         if (error) throw error;
 
+        resetRateLimit();
         showToast('Login realizado com sucesso!');
         setTimeout(() => {
             window.location.href = 'admin.html';
         }, 1200);
     } catch (err) {
         console.error('Erro de login:', err.message);
-        
-        // Mensagem amigável de diagnóstico de erro de conexão
-        if (err.message.includes('fetch') || err.message.includes('NetworkError') || err.message.includes('Failed to fetch')) {
-            loginError.innerHTML = '<strong>Erro de conexão com o banco!</strong><br><span style="font-size:0.75rem;">O Supabase recusou a conexão (ERR_CONNECTION_REFUSED). Verifique sua internet ou se o projeto está ativo.</span>';
+        recordAttempt();
+
+        const remainingAttempts = RATE_LIMIT_MAX - loginAttempts;
+        if (remainingAttempts > 0) {
+            loginError.innerHTML = `<strong>Email ou senha incorretos.</strong><br><span style="font-size:0.75rem;">Tentativas restantes: ${remainingAttempts}</span>`;
         } else {
-            loginError.textContent = 'Email ou senha incorretos.';
+            loginError.innerHTML = '<strong>Muitas tentativas!</strong><br><span style="font-size:0.75rem;">Acesso bloqueado por 15 minutos.</span>';
         }
         loginError.classList.add('show');
     } finally {
         loginBtn.disabled = false;
         loginBtn.textContent = 'Entrar';
-    }
-});
-
-// ── Login Social Google ──────────────────────────────────
-googleBtn.addEventListener('click', async () => {
-    if (!supabaseClient) {
-        showToast('Supabase não inicializado.', true);
-        return;
-    }
-    
-    try {
-        const { data, error } = await supabaseClient.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: window.location.origin + '/auth/admin.html'
-            }
-        });
-        if (error) throw error;
-    } catch (err) {
-        console.error('Erro de login Google:', err.message);
-        showToast('Erro ao autenticar com o Google.', true);
     }
 });
 

@@ -54,8 +54,14 @@ O maior fórum tecnológico da região, reunindo estudantes, profissionais e ent
 |---------|-----------|
 | `index.html` | Página principal com speakers, programação, etc. |
 | `coming-soon.html` | Landing page de contagem regressiva |
-| `links.html` | Página de links úteis |
+| `links.html` | Página de links úteis (raiz) |
+| `links/index.html` | Página de links úteis (subpasta — usada em produção) |
 | `auth/admin.html` | Painel administrativo |
+| `auth/login.html` | Login administrativo |
+| `auth/admin.js` | Lógica do painel (CRUD palestrantes, patrocinadores, links) |
+| `auth/login.js` | Lógica de autenticação |
+| `auth/admin.css` | Estilos do painel + responsividade |
+| `assets/js/supabase-config.js` | Credenciais globais do Supabase |
 
 ### Organizadores (Logos)
 - `assets/img/organizers/logo-fit-oficial.svg` — Logo oficial FIT
@@ -152,6 +158,90 @@ O maior fórum tecnológico da região, reunindo estudantes, profissionais e ent
 
 ---
 
+---
+
+## Páginas de Links (`links/index.html` e `links.html`)
+
+### Funcionamento
+- Exibe cards de links assimétricos com fallback estático (`DEFAULT_LINKS`) caso Supabase não esteja disponível
+- Consulta o Supabase com filtro `.eq('active', true)` — apenas links ativos aparecem
+- Timeout de **10s** (antes 3s) para evitar falsos fallbacks em cold start
+
+### Correções Aplicadas (Maio 2026)
+- **Caminho `supabase-config.js`**: `assets/js/` → `../assets/js/` (estava quebrado em `/links/index.html`)
+- **Caminhos relativos**: `index.html` → `../index.html`, `supabase-schema.sql` → `../supabase-schema.sql`
+- **Timeout**: Aumentado de 3s para 10s
+
+---
+
+## Painel Administrativo (`auth/`)
+
+### Login (`auth/login.html` + `auth/login.js`)
+- Autenticação exclusivamente via **email + senha** (Google OAuth removido)
+- Credenciais do banco vêm apenas do `supabase-config.js` — setup manual removido
+- Se não houver credenciais, exibe mensagem de erro estática (sem formulário de configuração exposto)
+- Se o usuário já tiver sessão ativa, redireciona direto para `admin.html`
+- Loading spinner durante verificação inicial
+
+### Admin (`auth/admin.html` + `auth/admin.js`)
+- Três abas: **Palestrantes**, **Patrocinadores**, **Links Úteis**
+- CRUD completo via Supabase (`palestrantes`, `patrocinadores`, `fit_links`)
+- Upload de imagens via upload zone (híbrido: file ou URL)
+- Toast notifications com duração: 3s (sucesso) / 6s (erro)
+- Modal de confirmação estilizado substitui `confirm()` nativo
+- Botões de ação usam classes `row-btn row-btn-edit` / `row-btn row-btn-delete`
+
+### Correções Aplicadas (Maio 2026)
+- **Título invisível**: `color: #ffffff` → `#111827` na tabela de links
+- **Classes de botão**: `btn-edit`/`btn-delete` → `row-btn row-btn-edit`/`row-btn row-btn-delete`
+- **CSS duplicado**: `.modal-overlay`, `.admin-section`, `.toast` removidos do `<style>` inline (já estavam em `admin.css`)
+- **`@keyframes sectionIn`**: removido (não utilizado)
+- **Toast de erro**: duração aumentada para 6s
+- **CSS adicionado**: `.empty-state`, `.tier-badge` (diamante/prata/midia)
+
+### Responsividade Mobile
+- Breakpoints: **768px** (tablet), **480px** (mobile), **360px** (mobile pequeno)
+- Tabelas transformam-se em **cards** em ≤480px (cada linha vira um card com labels via `data-label`)
+- Scroll horizontal removido em mobile (`overflow: visible`)
+- DB Panel empilha verticalmente em mobile
+- Blobs decorativos ocultos em mobile
+- Section headers com título + botão empilham em mobile (`max-sm:flex-col`)
+- Header e tabs com padding reduzido em mobile
+
+### Confirm Modal
+- Modal estilizado substitui `confirm()` nativo nas ações de excluir e desconectar
+- Função `showConfirmModal(message)` retorna Promise (`true`/`false`)
+- Fechamento via overlay ou botão "Cancelar"
+
+---
+
+## Banco de Dados (Supabase)
+
+### Tabela `fit_links`
+```sql
+CREATE TABLE fit_links (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    description TEXT,
+    url TEXT NOT NULL,
+    icon TEXT,
+    style_class TEXT NOT NULL,
+    thumbnail_url TEXT,
+    active BOOLEAN DEFAULT true NOT NULL,
+    order_index INTEGER DEFAULT 0 NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
+);
+```
+
+- `active`: controla visibilidade na página pública
+- RLS Policy: `"Leitura pública de links ativos"` — `FOR SELECT USING (active = true)`
+
+### Tabelas Relacionadas
+- `palestrantes` — CRUD no admin, exibidos na página inicial
+- `patrocinadores` — CRUD no admin, exibidos na página inicial
+
+---
+
 ## Histórico de Decisões
 
 ### coming-soon.html (v2 — Atual)
@@ -170,4 +260,4 @@ O maior fórum tecnológico da região, reunindo estudantes, profissionais e ent
 
 ---
 
-*Última atualização: Maio 2026*
+*Última atualização: 25 de Maio de 2026*
