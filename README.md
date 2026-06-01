@@ -53,9 +53,7 @@ fit-2026-main/
 | **Tailwind CSS** | Framework CSS utilitário (via CDN) |
 | **CSS Customizado** | Estilos específicos do tema IA |
 | **JavaScript (ES6)** | Interatividade e lógica |
-| **Firebase Firestore** | Banco de dados NoSQL (palestrantes/patrocinadores) |
-| **Firebase Auth** | Sistema de autenticação do painel admin |
-| **Font Awesome 7** | Ícones |
+| **Font Awesome 6** | Ícones |
 | **Google Fonts (Inter)** | Tipografia |
 
 ---
@@ -82,7 +80,7 @@ fit-2026-main/
 - **Header Scroll**: Efeito de background ao rolar
 - **Fade-in Animations**: Animações de entrada ao scroll
 - **Programação Dinâmica**: Carregamento do JSON
-- **Palestrantes/Patrocinadores**: Carregamento do Firebase Firestore
+- **Palestrantes/Patrocinadores**: Dados embutidos na interface estática
 
 ---
 
@@ -104,9 +102,8 @@ Página minimalista para o período pré-evento, contendo:
 Sistema de gerenciamento para organizadores do evento.
 
 #### Autenticação:
-- Login com email/senha
-- Login com Google (OAuth)
-- Proteção de rotas (páginas só acessíveis após login)
+- Login via simulação / credenciais estáticas (Firebase removido)
+- Proteção de rotas simples no frontend
 
 #### Funcionalidades:
 
@@ -135,32 +132,6 @@ Sistema de gerenciamento para organizadores do evento.
 
 ---
 
-## Banco de Dados (Firebase Firestore)
-
-### Collections:
-
-#### `palestrantes`
-```javascript
-{
-  nome: "Nome Completo",
-  cargo: "Professor/Pesquisador",
-  tema: "IA Generativa e o Futuro",
-  foto: "https://url-da-foto.com/foto.jpg", // opcional
-  ordem: 1 // número para ordenação
-}
-```
-
-#### `patrocinadores`
-```javascript
-{
-  nome: "Empresa XYZ",
-  tier: "diamante" | "prata" | "midia",
-  logo: "https://url-do-logo.com/logo.png", // opcional
-  ordem: 1 // número para ordenação
-}
-```
-
----
 
 ## Programação (JSON)
 
@@ -200,22 +171,6 @@ O arquivo `programacao.json` contém a estrutura de 5 dias de evento:
 
 ---
 
-## Configuração Firebase
-
-O projeto utiliza Firebase Realtime Database (Firestore) com as seguintes credenciais:
-
-```javascript
-const firebaseConfig = {
-  apiKey: "AIzaSyAOGVRFFgUoYA8MvDkaIjGumNzEkGzcEHY",
-  authDomain: "fit-crateus.firebaseapp.com",
-  projectId: "fit-crateus",
-  storageBucket: "fit-crateus.firebasestorage.app",
-  messagingSenderId: "88037686885",
-  appId: "1:88037686885:web:53e6860fa068e003ac908c"
-};
-```
-
----
 
 ## Tema Visual
 
@@ -279,27 +234,23 @@ O site é totalmente responsivo com breakpoints em:
 
 ## Segurança
 
-- Autenticação Firebase para painel admin
-- Credenciais Firebase expostas (apenas leitura pública)
-- Firestore Rules devem ser configuradas para permitir apenas write autenticado
+- Interface estática sem backend conectado
 - Página admin com `noindex, nofollow` para não aparecer em buscas
 
 ---
 
 ## Próximos Passos para Produção
 
-1. **Firestore Rules**: Configurar regras de segurança
-2. **Formulário de Inscrição**: Criar/vincular formulário externo (Google Forms, Typeform, etc.)
-3. **Hospedagem**: Deploy em Firebase Hosting ou similar
-4. **SSL**: Garantir HTTPS (obrigatório para Firebase)
-5. **Domínio**: Configurar domínio customizado (fit.crateus.ufc.br)
+1. **Formulário de Inscrição**: Criar/vincular formulário externo (Google Forms, Typeform, etc.)
+2. **Hospedagem**: Deploy em GitHub Pages, Vercel ou similar
+3. **Domínio**: Configurar domínio customizado (fit.crateus.ufc.br)
 
 ---
 
 ## Pendências e Tarefas
 
 ### Design/UI
-- [ ] **Atualizar tema visual**: Aplicar nova paleta de cores (`#FF6A00`, `#FF3700`, `#00FF09`, `#009405`, `#021031`, `#00C7F8`, `#000000`)
+- [x] **Atualizar tema visual**: Aplicar nova paleta de cores e estilo
 - [ ] **Logo na Hero**: Substituir ilustração SVG do chip de IA pela logo oficial (`assets/img/logo-fit-2026.svg`)
 - [ ] **OG Image**: Criar imagem Open Graph (1200x630px)
 - [ ] **Favicon SVG**: Atualizar favicon com nova identidade visual
@@ -315,8 +266,6 @@ O site é totalmente responsivo com breakpoints em:
 - [ ] **Verificar Programação**: Confirmar atividades e horários do JSON
 
 ### Administrativo
-- [ ] **Criar usuários admin**: Configurar contas no Firebase Auth
-- [ ] **Regras Firestore**: Proteger escrita (apenas admins autenticados)
 - [ ] **Validação de conteúdo**: Adicionar validações nos formulários do admin
 
 ### Imagens
