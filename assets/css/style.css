@@ -36,7 +36,6 @@
 
     /* ── Typography ── */
     --font-base: 'Encode Sans', sans-serif;
-    --font-heading: 'Sofia', cursive;
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
     --text-muted: #71717a;
@@ -73,8 +72,13 @@ html {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-base);
 }
 
 body {
