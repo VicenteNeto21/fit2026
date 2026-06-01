@@ -36,6 +36,7 @@
 
     /* ── Typography ── */
     --font-base: 'Encode Sans', sans-serif;
+    --font-heading: 'Sofia Sans', sans-serif;
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
     --text-muted: #71717a;
@@ -78,7 +79,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-base);
+    font-family: var(--font-heading);
 }
 
 body {
