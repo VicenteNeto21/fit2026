@@ -4,27 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios</title>
-    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <title>FIT 2026 — Em Breve</title>
+    <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 
-    <!-- SEO -->
-    <meta name="description" content="FIT 2026 — O maior Fórum de Inovação e Tecnologia está chegando. Em breve.">
+    <meta name="description" content="FIT 2026 — O maior Fórum de Inovação e Tecnologia está chegando. Em breve.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fit.crateus.ufc.br/coming-soon.html">
+    <meta property="og:title" content="FIT 2026 — Em Breve">
+    <meta property="og:description"
+        content="FIT 2026 — O maior Fórum de Inovação e Tecnologia está chegando. Em breve.">
+    <meta property="og:image" content="https://fit.crateus.ufc.br/fit_2026_avatar.png">
     <meta name="theme-color" content="#000000">
     <meta name="robots" content="index, follow">
 
     <!-- Fonte Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;500;600;700;800;900&family=Sofia+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;500;600;700;800;900&family=Sofia+Sans:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    <!-- Font Awesome 7 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <style>
-        /* ── Reset ── */
+        /* ———— Reset ———— */
         *,
         *::before,
         *::after {
@@ -53,7 +58,7 @@
             font-family: 'Sofia Sans', sans-serif;
         }
 
-        /* ── Grid de fundo (placa de circuito) ── */
+        /* ———— Grid de fundo (placa de circuito) ———— */
         .circuit-grid {
             position: fixed;
             inset: 0;
@@ -65,7 +70,7 @@
             background-size: 60px 60px;
         }
 
-        /* ── Partículas (brancas) ── */
+        /* ———— Partículas (brancas) ———— */
         .particles {
             position: fixed;
             inset: 0;
@@ -101,7 +106,7 @@
             }
         }
 
-        /* ── Vignette escuro nas bordas ── */
+        /* ———— Vignette escuro nas bordas ———— */
         .vignette {
             position: fixed;
             inset: 0;
@@ -110,7 +115,7 @@
             background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
         }
 
-        /* ── Conteúdo ── */
+        /* ———— Conteúdo ———— */
         .content {
             position: relative;
             z-index: 10;
@@ -119,7 +124,7 @@
             max-width: 750px;
         }
 
-        /* ── Logo ── */
+        /* ———— Logo ———— */
         .logo {
             display: inline-flex;
             align-items: baseline;
@@ -140,7 +145,7 @@
             color: #999999;
         }
 
-        /* ── Linha fina ── */
+        /* ———— Linha fina ———— */
         .divider {
             width: 50px;
             height: 1px;
@@ -150,7 +155,7 @@
             animation: fadeInUp 1s ease forwards 0.5s;
         }
 
-        /* ── AI visual (cérebro SVG) ── */
+        /* ———— AI visual (cérebro SVG) ———— */
         .ai-icon-wrapper {
             margin-bottom: 36px;
             opacity: 0;
@@ -209,7 +214,7 @@
             }
         }
 
-        /* ── Tagline ── */
+        /* ———— Tagline ———— */
         .tagline {
             font-size: 0.75rem;
             font-weight: 500;
@@ -221,7 +226,7 @@
             animation: fadeInUp 1s ease forwards 0.7s;
         }
 
-        /* ── Texto principal ── */
+        /* ———— Texto principal ———— */
         .main-text {
             font-size: clamp(1.6rem, 4.5vw, 2.8rem);
             font-weight: 800;
@@ -270,7 +275,7 @@
             }
         }
 
-        /* ── EM BREVE ── */
+        /* ———— EM BREVE ———— */
         .em-breve {
             font-size: clamp(3rem, 10vw, 6.5rem);
             font-weight: 900;
@@ -305,7 +310,7 @@
             }
         }
 
-        /* ── Countdown ── */
+        /* ———— Countdown ———— */
         .countdown-mini {
             display: flex;
             justify-content: center;
@@ -344,7 +349,7 @@
             line-height: 1;
         }
 
-        /* ── Social ── */
+        /* ———— Social ———— */
         .social {
             display: flex;
             justify-content: center;
@@ -373,7 +378,7 @@
             transform: translateY(-3px);
         }
 
-        /* ── Texto AI no rodapé ── */
+        /* ———— Texto AI no rodapé ———— */
         .ai-hint {
             position: fixed;
             bottom: 24px;
@@ -394,7 +399,60 @@
             font-size: 0.65rem;
         }
 
-        /* ── Botão Voluntário ── */
+        /* ———— Tags de Status ———— */
+        .badge-closed {
+            border: 1px solid #707070;
+            color: #ffffff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 12px;
+        }
+
+        .btn-disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* ———— Botão Gamer (Destaque Principal) ———— */
+        .btn-gamer {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #a1a1aa;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 2.3s;
+        }
+
+        .btn-gamer:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .btn-gamer i {
+            font-size: 1rem;
+            color: #a1a1aa;
+            transition: color 0.3s ease;
+        }
+
+        .btn-gamer:hover i {
+            color: #ffffff;
+        }
+
+        /* ———— Botão Voluntário ———— */
         .btn-volunteer {
             display: inline-flex;
             align-items: center;
@@ -402,30 +460,26 @@
             padding: 12px 28px;
             font-size: 0.9rem;
             font-weight: 600;
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.05);
+            color: #a1a1aa;
+            background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             text-decoration: none;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             transition: all 0.3s ease;
-            margin-top: 48px;
-            margin-bottom: 48px;
             opacity: 0;
             animation: fadeInUp 1s ease forwards 2.4s;
         }
 
         .btn-volunteer:hover {
-            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .btn-volunteer i {
             font-size: 1rem;
-            color: #999999;
+            color: #a1a1aa;
             transition: color 0.3s ease;
         }
 
@@ -433,14 +487,73 @@
             color: #ffffff;
         }
 
-        /* ── Grupo de Botões ── */
+        /* ———— Botão Corrida FIT ———— */
+        .btn-race {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 2.35s;
+        }
+
+        .btn-race:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.06);
+        }
+
+        .btn-race i {
+            font-size: 1rem;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .badge-lote {
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #cccccc;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            .btn-race {
+                padding: 10px 22px;
+                font-size: 0.85rem;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ———— Grupo de Botões ———— */
         .btn-group {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch;
             justify-content: center;
             gap: 16px;
             margin-top: 48px;
             margin-bottom: 48px;
+        }
+
+        .btn-group>a {
+            justify-content: center;
         }
 
         .btn-secondary {
@@ -473,7 +586,7 @@
             margin-bottom: 0;
         }
 
-        /* ── Seção Organizadores (Realização) ── */
+        /* ———— Seção Organizadores (Realização) ———— */
         .organizers-section {
             margin-bottom: 64px;
             opacity: 0;
@@ -512,7 +625,7 @@
             transform: scale(1.1);
         }
 
-        /* ── Animações ── */
+        /* ———— Animações ———— */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -537,7 +650,7 @@
             }
         }
 
-        /* ── Responsivo ── */
+        /* ———— Responsivo ———— */
         @media (max-width: 640px) {
             .logo {
                 margin-bottom: 36px;
@@ -659,11 +772,21 @@
         </div>
 
         <div class="btn-group">
-            <a href="https://forms.gle/WrNpp3KVtz7iWyfe7" target="_blank" class="btn-volunteer">
-                <i class="fas fa-hands-helping"></i> Seja um Voluntário (Inscrições Encerradas)
+            <a href="https://cronusride.com.br/event/1-corrida-fit--ufc-crateus" target="_blank"
+                rel="noopener noreferrer" class="btn-race">
+                <i class="fas fa-running"></i> 1° Lote — Corrida FIT
+                <span class="badge-lote">Inscrições Abertas</span>
+            </a>
+            <a class="btn-gamer btn-disabled">
+                <i class="fas fa-gamepad"></i> Perfil Gamer
+                <span class="badge-closed">Encerradas</span>
+            </a>
+            <a class="btn-volunteer btn-disabled">
+                <i class="fas fa-hands-helping"></i> Seja um Voluntário
+                <span class="badge-closed">Encerradas</span>
             </a>
             <a href="https://fit.crateus.ufc.br/ano/2025" target="_blank" class="btn-secondary">
-                <i class="fas fa-history"></i> Edição 2025 (em correção)
+                <i class="fas fa-history"></i> Edição 2025
             </a>
         </div>
 
