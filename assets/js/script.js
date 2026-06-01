@@ -6,11 +6,30 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── Header Scroll Effect ──────────────────────
+    // ── Header Scroll Effect + Active Nav (único listener passivo) ────
     const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id]');
+
+    function onScroll() {
+        // Header scrolled state
         header.classList.toggle('scrolled', window.scrollY > 60);
-    });
+
+        // Active nav link
+        const scrollPos = window.scrollY + 100;
+        sections.forEach(section => {
+            const top = section.offsetTop - 80;
+            const bottom = top + section.offsetHeight;
+            const id = section.getAttribute('id');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.toggle('active', scrollPos >= top && scrollPos < bottom);
+                }
+            });
+        });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     // ── Mobile Menu ───────────────────────────────
     const mobileBtn = document.getElementById('mobile-menu-btn');
@@ -34,30 +53,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Countdown Timer ──────────────────────────
+    // ── Countdown Timer (elementos cacheados) ────────────────────────
     const eventDate = new Date('2026-10-04T08:00:00-03:00').getTime();
+    const cdDays    = document.getElementById('cd-days');
+    const cdHours   = document.getElementById('cd-hours');
+    const cdMinutes = document.getElementById('cd-minutes');
+    const cdSeconds = document.getElementById('cd-seconds');
 
     function updateCountdown() {
-        const now = new Date().getTime();
-        const diff = eventDate - now;
+        const diff = eventDate - Date.now();
 
         if (diff <= 0) {
-            document.getElementById('cd-days').textContent = '00';
-            document.getElementById('cd-hours').textContent = '00';
-            document.getElementById('cd-minutes').textContent = '00';
-            document.getElementById('cd-seconds').textContent = '00';
+            cdDays.textContent = cdHours.textContent = cdMinutes.textContent = cdSeconds.textContent = '00';
             return;
         }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-        document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
-        document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+        cdDays.textContent    = String(Math.floor(diff / 864e5)).padStart(2, '0');
+        cdHours.textContent   = String(Math.floor((diff % 864e5) / 36e5)).padStart(2, '0');
+        cdMinutes.textContent = String(Math.floor((diff % 36e5) / 6e4)).padStart(2, '0');
+        cdSeconds.textContent = String(Math.floor((diff % 6e4) / 1e3)).padStart(2, '0');
     }
 
     updateCountdown();
@@ -74,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Erro:', error);
             const tabsContainer = document.getElementById('schedule-tabs');
             if (tabsContainer) {
-                tabsContainer.innerHTML = '<span class="schedule-loading" style="color:#ff6b35;">Erro ao carregar programação. Recarregue a página.</span>';
+                tabsContainer.innerHTML = '<span class="schedule-loading" style="color:var(--clr-orange);">Erro ao carregar programação. Recarregue a página.</span>';
             }
         }
     }
@@ -85,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!tabsContainer || !daysContainer) return;
 
-        // Limpar loading
         tabsContainer.innerHTML = '';
         daysContainer.innerHTML = '';
 
@@ -112,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
             daysContainer.appendChild(dayDiv);
         });
 
-        // Ativar abas
         initScheduleTabs();
     }
 
@@ -120,13 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('div');
         card.className = 'schedule-card' + (atividade.tipo === 'coffee' ? ' card-coffee' : '');
 
-        // Horário
         const time = document.createElement('div');
         time.className = 'schedule-time';
         time.textContent = atividade.horario;
         card.appendChild(time);
 
-        // Info
         const info = document.createElement('div');
         info.className = 'schedule-info';
 
@@ -146,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         card.appendChild(info);
 
-        // Tag
         const tag = document.createElement('span');
         tag.className = `schedule-tag tag-${atividade.tipo}`;
         tag.textContent = atividade.tipoLabel;
@@ -173,7 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Carregar programação
     loadProgramacao();
 
     // ── Smooth Scroll (Links de Navegação) ───────
@@ -185,53 +193,27 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const target = document.querySelector(targetId);
             if (target) {
-                const headerHeight = header.offsetHeight;
-                const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
+                const targetPosition = target.getBoundingClientRect().top + window.scrollY - header.offsetHeight - 16;
                 window.scrollTo({ top: targetPosition, behavior: 'smooth' });
             }
         });
     });
 
-    // ── Active Nav Link ──────────────────────────
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const sections = document.querySelectorAll('section[id]');
-
-    function highlightNavLink() {
-        const scrollPos = window.scrollY + 100;
-
-        sections.forEach(section => {
-            const top = section.offsetTop - 80;
-            const bottom = top + section.offsetHeight;
-            const id = section.getAttribute('id');
-
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === `#${id}`) {
-                    link.classList.toggle('active', scrollPos >= top && scrollPos < bottom);
-                }
-            });
-        });
-    }
-
-    window.addEventListener('scroll', highlightNavLink);
-
-    // ── Fade-in Animations ──────────────────────
-    const fadeElements = document.querySelectorAll('.section-header, .schedule-card, .speaker-card, .sponsor-tier, .organizer-card, .evento-content');
-
+    // ── Fade-in via CSS class (sem inline style) ─
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('visible');
                 fadeObserver.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 });
 
-    fadeElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        fadeObserver.observe(el);
-    });
+    document.querySelectorAll('.section-header, .schedule-card, .speaker-card, .sponsor-tier, .organizer-card, .evento-content')
+        .forEach(el => {
+            el.classList.add('fade-in');
+            fadeObserver.observe(el);
+        });
 
 });
+
