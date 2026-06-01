@@ -11,6 +11,7 @@
     --clr-purple: #8b5cf6;
     --clr-green: #10b981;
     --clr-blue: #3b82f6;
+    --clr-white: #ffffff;
 
     /* ── Brand Gradient ── */
     --gradient-brand: linear-gradient(135deg, #ff6b35, #e91e8c);
@@ -34,7 +35,8 @@
     --border-medium: rgba(255, 255, 255, 0.10);
 
     /* ── Typography ── */
-    --font-base: 'Inter', sans-serif;
+    --font-base: 'Encode Sans', sans-serif;
+    --font-heading: 'Sofia', cursive;
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
     --text-muted: #71717a;
@@ -69,6 +71,10 @@ html {
     scroll-behavior: smooth;
     font-size: 16px;
     overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
 }
 
 body {
@@ -145,7 +151,7 @@ img {
 
 .logo-text {
     font-size: 1.6rem;
-    color: #ffffff;
+    color: var(--clr-white);
 }
 
 .logo-year {
