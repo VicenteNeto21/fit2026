@@ -6,50 +6,50 @@
 /* ── Design Tokens (CSS Custom Properties) ── */
 :root {
     /* ── Brand Colors ── */
-    --clr-orange:  #ff6b35;
-    --clr-pink:    #e91e8c;
-    --clr-purple:  #8b5cf6;
-    --clr-green:   #10b981;
-    --clr-blue:    #3b82f6;
+    --clr-orange: #ff6b35;
+    --clr-pink: #e91e8c;
+    --clr-purple: #8b5cf6;
+    --clr-green: #10b981;
+    --clr-blue: #3b82f6;
 
     /* ── Brand Gradient ── */
     --gradient-brand: linear-gradient(135deg, #ff6b35, #e91e8c);
 
     /* ── Backgrounds ── */
-    --bg-base:   #0e0a1a;
-    --bg-deep:   #08060f;
-    --bg-navy:   #021031;
+    --bg-base: #0e0a1a;
+    --bg-deep: #08060f;
+    --bg-navy: #021031;
     --bg-navy-2: #041b52;
 
     /* ── Glass Surfaces ── */
-    --surface-1:     rgba(255, 255, 255, 0.03);
-    --surface-2:     rgba(255, 255, 255, 0.04);
-    --surface-3:     rgba(255, 255, 255, 0.05);
+    --surface-1: rgba(255, 255, 255, 0.03);
+    --surface-2: rgba(255, 255, 255, 0.04);
+    --surface-3: rgba(255, 255, 255, 0.05);
     --surface-hover: rgba(255, 255, 255, 0.07);
 
     /* ── Borders ── */
     --border-subtle: rgba(255, 255, 255, 0.04);
-    --border-faint:  rgba(255, 255, 255, 0.06);
-    --border-light:  rgba(255, 255, 255, 0.08);
+    --border-faint: rgba(255, 255, 255, 0.06);
+    --border-light: rgba(255, 255, 255, 0.08);
     --border-medium: rgba(255, 255, 255, 0.10);
 
     /* ── Typography ── */
-    --font-base:      'Inter', sans-serif;
-    --text-primary:   #ffffff;
+    --font-base: 'Inter', sans-serif;
+    --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
-    --text-muted:     #71717a;
-    --text-dim:       #52525b;
+    --text-muted: #71717a;
+    --text-dim: #52525b;
 
     /* ── Transitions ── */
     --transition-fast: 0.2s ease;
     --transition-base: 0.3s ease;
 
     /* ── Border Radius ── */
-    --radius-sm:   8px;
-    --radius-md:   10px;
-    --radius-lg:   14px;
-    --radius-xl:   16px;
-    --radius-2xl:  20px;
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
     --radius-full: 9999px;
 
     /* ── Spacing ── */
@@ -73,13 +73,11 @@ html {
 
 body {
     font-family: var(--font-base);
-    background: radial-gradient(
-        circle at center,
-        var(--bg-navy)   0%,
-        var(--bg-navy)   35%,
-        var(--bg-navy-2) 60%,
-        #010816          100%
-    );
+    background: radial-gradient(circle at center,
+            var(--bg-navy) 0%,
+            var(--bg-navy) 35%,
+            var(--bg-navy-2) 60%,
+            #010816 100%);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
@@ -276,28 +274,20 @@ img {
     inset: 0;
 
     background-image:
-        radial-gradient(
-            circle at 20% 50%,
+        radial-gradient(circle at 20% 50%,
             rgba(255, 200, 0, 0.08) 0%,
-            transparent 40%
-        ),
+            transparent 40%),
 
-        radial-gradient(
-            circle at 80% 30%,
+        radial-gradient(circle at 80% 30%,
             rgba(28, 0, 255, 0.10) 0%,
-            transparent 45%
-        ),
+            transparent 45%),
 
-        linear-gradient(
-            rgba(255,255,255,0.015) 1px,
-            transparent 1px
-        ),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px),
 
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,0.015) 1px,
-            transparent 1px
-        );
+        linear-gradient(90deg,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px);
 
     background-size:
         auto,
@@ -722,20 +712,9 @@ img {
 
 .section-palestrantes {
     padding: 80px 0;
-    background: #4d8dff;
-}
-
-.section-palestrantes .container {
-    background: var(--bg-navy);
-    border-radius: 28px;
-    padding: 60px;
-}
-
-/*.section-palestrantes {
-    padding: 80px 0;
     background: linear-gradient(180deg, #130e24 0%, var(--bg-base) 100%);
 }
-*/
+
 .speakers-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
