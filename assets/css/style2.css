@@ -34,6 +34,15 @@ body {
     overflow-x: hidden;
 }
 
+/*
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0e0a1a;
+    color: #e4e4e7;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+*/
 a {
     text-decoration: none;
     color: inherit;
@@ -66,7 +75,7 @@ img {
     left: 0;
     width: 100%;
     z-index: 100;
-    background: rgb(8, 27, 53);
+    background: rgba(14, 10, 26, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -74,8 +83,8 @@ img {
 }
 
 #header.scrolled {
-    background: rgb(8, 27, 53);
-    box-shadow: 0 4px 30px rgba(6, 60, 104, 0.4);
+    background: rgba(14, 10, 26, 0.95);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
 .nav-container {
@@ -259,6 +268,17 @@ img {
     pointer-events: none;
 }
 
+/* .hero-bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(233, 30, 140, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 60% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 40%);
+    pointer-events: none;
+}
+*/
+
 .hero-content {
     display: flex;
     flex-direction: row;
@@ -270,6 +290,17 @@ img {
     padding: 80px 0;
 }
 
+/*.hero-content muidei em cima{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    position: relative;
+    z-index: 2;
+    padding: 80px 0;
+}
+    e aqui em baixo no text, tava 600 coloquei 700*/
+
 .hero-text {
     width: 55%;
     max-width: 55%;
@@ -280,7 +311,7 @@ img {
     padding: 6px 16px;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #f1f1f1;
+    color: #ff6b35;
     background: rgba(255, 107, 53, 0.1);
     border: 1px solid rgba(255, 107, 53, 0.2);
     border-radius: 20px;
@@ -292,7 +323,7 @@ img {
 .hero-title {
     font-size: 5rem;
     font-weight: 900;
-    color: #f5eeee;
+    color: #ffffff;
     line-height: 1;
     margin-bottom: 8px;
     letter-spacing: -2px;
@@ -308,7 +339,7 @@ img {
 .hero-subtitle {
     font-size: 1.35rem;
     font-weight: 500;
-    color: #d8cbcb;
+    color: #a1a1aa;
     margin-bottom: 24px;
     line-height: 1.5;
 }
@@ -328,7 +359,7 @@ img {
 }
 
 .hero-info i {
-    color: #e66532;
+    color: #ff6b35;
 }
 
 .hero-actions {
@@ -346,7 +377,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    left: 60%;
+    left: 70%;
     bottom: 15%
 }
 
@@ -510,7 +541,7 @@ img {
 }
 
 /* Pinos verticais (topo e fundo) */
-.pin-top-1,#35b5ff, #e91e8c);
+.pin-top-1,
 .pin-top-2,
 .pin-top-3,
 .pin-bottom-1,
@@ -638,7 +669,7 @@ img {
 
 .fi-4 {
     bottom: 10%;
-    right: 15%;#35b5ff, #e91e8c);
+    right: 15%;
     color: #10b981;
     animation: floatIcon 4.5s ease-in-out infinite 1.5s;
 }
@@ -658,11 +689,20 @@ img {
 /* ── COUNTDOWN ───────────────────────────── */
 
 .countdown-section {
-    background: hsl(221, 80%, 10%);
+    background: #021031;
     border-top: 1px solid rgba(77, 141, 255, 0.25);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     padding: 48px 0;
 }
+
+
+/*.countdown-section {
+    background: linear-gradient(135deg, #13082a 0%, #0d1f2d 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 48px 0;
+}
+*/
 
 .countdown-container {
     display: flex;
@@ -747,20 +787,8 @@ img {
 /* ── PROGRAMAÇÃO ─────────────────────────── */
 .section-programacao {
     padding: 80px 0;
-
-    background-image: url("../img/preto.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-
-
-/*
-.section-programacao {
-    padding: 80px 0;
     background: linear-gradient(180deg, #0e0a1a 0%, #130e24 100%);
-}*/
+}
 
 .schedule-loading {
     display: block;
@@ -925,11 +953,18 @@ img {
     padding: 80px 0;
     background: #4d8dff;
 }
-.section-palestrantes {
+
+.section-palestrantes .container {
+    background: #021031;
+    border-radius: 28px;
+    padding: 60px;
+}
+
+/*.section-palestrantes {
     padding: 80px 0;
     background: linear-gradient(180deg, #130e24 0%, #0e0a1a 100%);
 }
-
+*/
 .speakers-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1175,21 +1210,10 @@ img {
 }
 
 /* ── ORGANIZADORES ───────────────────────── */
-
-.section-organizadores {
-    padding: 80px 0;
-
-    background-image: url("../img/preto.png");
-    background-size: cover;       /* faz a imagem preencher a seção */
-    background-position: center;  /* centraliza a imagem */
-    background-repeat: no-repeat; /* impede repetição */
-}
-
-/*
 .section-organizadores {
     padding: 80px 0;
     background: #0e0a1a;
-}*/
+}
 
 .organizers-grid {
     display: grid;
@@ -1217,9 +1241,9 @@ img {
 
 /* ── FOOTER ──────────────────────────────── */
 .footer {
-    background: rgb(8, 27, 53) ;
+    background: #08060f;
     padding: 60px 0 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .footer-grid {
