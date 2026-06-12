@@ -580,7 +580,6 @@ img {
     background: linear-gradient(135deg, #ff6b35, #e91e8c);
     color: #ffffff;
     border-color: transparent;
-    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.25);
 }
 
 .schedule-tab:hover:not(.active) {
@@ -1104,12 +1103,24 @@ img {
 }
 
 /* ── RESPONSIVO ──────────────────────────── */
+
+/* ── Tablet (até 1024px) ── */
 @media (max-width: 1024px) {
-    .hero-illustration {
-        flex: 0 0 300px;
-        height: 300px;
+
+    /* Hero */
+    .hero-content {
+        gap: 80px;
     }
 
+    .hero-fox img {
+        width: 260px;
+    }
+
+    .hero-logo {
+        width: 320px;
+    }
+
+    /* Grids */
     .speakers-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1119,8 +1130,10 @@ img {
     }
 }
 
+/* ── Mobile (até 768px) ── */
 @media (max-width: 768px) {
 
+    /* Navbar */
     .nav-links,
     .btn-inscricao {
         display: none;
@@ -1130,18 +1143,28 @@ img {
         display: block;
     }
 
+    .logo-img {
+        height: 26px;
+    }
+
+    /* Hero */
+    .hero {
+        min-height: auto;
+        padding: 100px 0 40px;
+    }
+
     .hero-content {
         flex-direction: column;
-        text-align: center;
-        padding: 40px 0;
+        gap: 40px;
+        padding: 20px 0;
     }
 
     .hero-text {
         max-width: 100%;
     }
 
-    .hero-fox img {
-        width: 220px;
+    .hero-logo {
+        width: 280px;
     }
 
     .hero-title {
@@ -1149,57 +1172,114 @@ img {
     }
 
     .hero-subtitle {
-        font-size: 1.1rem;
-    }
-
-    /* Ajuste do logo em mobile para melhor proporção */
-    .logo-img {
-        height: 26px;
+        font-size: 1.05rem;
     }
 
     .hero-info {
-        justify-content: center;
         flex-wrap: wrap;
+        gap: 12px;
+        font-size: 0.82rem;
     }
 
     .hero-actions {
-        justify-content: center;
+        gap: 12px;
     }
 
-    .hero-illustration {
-        flex: 0 0 260px;
-        height: 260px;
+    .hero-actions .btn {
+        padding: 12px 22px;
+        font-size: 0.88rem;
+    }
+
+    /* Raposa */
+    .hero-fox img {
+        width: 200px;
+    }
+
+    /* Countdown */
+    .countdown-section {
+        padding: 32px 0;
     }
 
     .countdown-container {
         flex-direction: column;
         text-align: center;
+        gap: 24px;
+    }
+
+    .countdown-text h3 {
+        font-size: 1.3rem;
     }
 
     .countdown-text p {
         max-width: 100%;
+        margin: 0 auto;
+        font-size: 0.88rem;
     }
 
     .countdown-timer {
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        width: 100%;
+    }
+
+    .countdown-item {
+        min-width: auto;
+        padding: 16px 10px;
+    }
+
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+
+    .countdown-label {
+        font-size: 0.65rem;
+    }
+
+    /* Programação */
+    .schedule-tabs {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .schedule-tab {
+        padding: 10px 20px;
+        font-size: 0.82rem;
     }
 
     .schedule-card {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 10px;
+    }
+
+    .schedule-time {
+        min-width: auto;
     }
 
     .schedule-tag {
         align-self: flex-start;
     }
 
+    /* Palestrantes */
     .speakers-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 
+    .speaker-card {
+        padding: 24px 16px;
+    }
+
+    .speaker-photo {
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Sobre o Evento */
     .evento-content {
         flex-direction: column;
+        gap: 32px;
     }
 
     .evento-visual {
@@ -1207,16 +1287,24 @@ img {
         width: 100%;
     }
 
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-
+    /* Organizadores */
     .organizers-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    /* Seções gerais */
     .section-title {
         font-size: 2rem;
+    }
+
+    .section-desc {
+        font-size: 0.95rem;
     }
 }
 
@@ -1226,30 +1314,114 @@ img {
     outline-offset: 3px;
 }
 
-/* Pequena melhora de transição para o menu móvel quando exibido */
+/* Transição do menu móvel */
 .mobile-menu {
     transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
+/* ── Mobile pequeno (até 480px) ── */
 @media (max-width: 480px) {
+
+    /* Hero */
+    .hero {
+        padding: 88px 0 32px;
+    }
+
+    .hero-content {
+        gap: 32px;
+    }
+
+    .hero-logo {
+        width: 220px;
+    }
+
     .hero-title {
         font-size: 2.8rem;
     }
 
+    .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+    }
+
+    .hero-badge {
+        font-size: 0.7rem;
+        padding: 5px 12px;
+    }
+
+    .hero-info {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Raposa */
+    .hero-fox img {
+        width: 160px;
+    }
+
+    /* Countdown */
+    .countdown-timer {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
     .countdown-item {
-        padding: 14px 16px;
-        min-width: 70px;
+        padding: 12px 6px;
     }
 
     .countdown-number {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
+    .countdown-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.5px;
+    }
+
+    .countdown-text h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Palestrantes */
     .speakers-grid {
         grid-template-columns: 1fr;
     }
 
+    /* Patrocinadores */
+    .sponsor-diamante-card {
+        width: 100%;
+        max-width: 240px;
+    }
+
+    .sponsor-prata-card,
+    .sponsor-midia-card {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    /* Organizadores */
     .organizers-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Sobre o Evento */
+    .edition-badge {
+        font-size: 4rem;
+    }
+
+    .evento-visual {
+        padding: 40px 24px;
     }
 }
