@@ -58,7 +58,7 @@ fit-2026-main/
 
 #### Seções:
 - **Header/Navbar**: Navegação fixa com menu responsivo (mobile)
-- **Hero**: Apresentação do evento com countdown e ilustração animada de IA
+- **Hero**: Apresentação do evento com logo, informações, botões de ação e ilustração da Raposa FIT
 - **Countdown**: Timer regressivo para o evento
 - **Programação**: Abas por dia com cards das atividades
 - **Palestrantes**: Grid de cards estáticos
@@ -150,8 +150,9 @@ O arquivo `programacao.json` contém a estrutura de 5 dias de evento:
 - Gradientes diagonais em background
 - Cards com bordas sutis
 - Ícones flutuantes animados
-- Chip de IA central na hero
-- Circuitos neurais em SVG
+- Fundo com grid e padrões de background (radial-gradient)
+- Ilustração central da Raposa FIT na hero
+- Efeitos de glow e drop-shadow na raposa e elementos de destaque
 - Efeitos de glow em elementos interativos
 
 ---
@@ -159,9 +160,10 @@ O arquivo `programacao.json` contém a estrutura de 5 dias de evento:
 ## Responsividade
 
 O site é totalmente responsivo com breakpoints em:
-- **Desktop**: > 1024px (layout completo)
-- **Tablet**: 768px - 1024px (grid adaptado)
-- **Mobile**: < 768px (menu hamburger, cards empilhados)
+- **Desktop**: > 1024px (layout completo e espaçado)
+- **Tablet**: 768px - 1024px (grid adaptado, gap reduzido)
+- **Mobile**: 480px - 768px (menu hamburger, hero em coluna, cards e countdown empilhados)
+- **Mobile Pequeno**: < 480px (grids de 1 coluna, tamanho de fontes e componentes otimizados)
 
 ---
 
@@ -204,7 +206,7 @@ O site é totalmente responsivo com breakpoints em:
 
 ### Design/UI
 - [x] **Atualizar tema visual**: Aplicar nova paleta de cores e estilo
-- [ ] **Logo na Hero**: Substituir ilustração SVG do chip de IA pela logo oficial (`assets/img/logo-fit-2026.svg`)
+- [x] **Logo na Hero**: Substituir ilustração do chip de IA pela logo oficial e ilustração da raposa
 - [ ] **OG Image**: Criar imagem Open Graph (1200x630px)
 - [ ] **Favicon SVG**: Atualizar favicon com nova identidade visual
 
@@ -214,8 +216,8 @@ O site é totalmente responsivo com breakpoints em:
 - [ ] **Contagem Regressiva**: Data correta configurada (04/10/2026)
 
 ### Dados
-- [ ] **Cadastrar Palestrantes**: Adicionar dados reais dos palestrantes localmente
-- [ ] **Cadastrar Patrocinadores**: Adicionar empresas e logos localmente
+- [x] **Cadastrar Palestrantes**: Adicionar dados reais dos palestrantes localmente
+- [x] **Cadastrar Patrocinadores**: Adicionar empresas e logos localmente
 - [ ] **Verificar Programação**: Confirmar atividades e horários do JSON
 
 ### Imagens
@@ -226,8 +228,8 @@ O site é totalmente responsivo com breakpoints em:
   - [ ] GSIPP
   - [ ] EngineLab
   - [ ] SPARC
-- [ ] **Fotos Palestrantes**: Adquirir fotos profissionais
-- [ ] **Logo Sponsor Placeholder**: Criar placeholder para patrocinadores sem logo
+- [x] **Fotos Palestrantes**: Fotos inseridas no diretório `assets/img/speakers`
+- [x] **Logo Patrocinadores**: Logos inseridas no diretório `assets/img/sponsors`
 
 ---
 
