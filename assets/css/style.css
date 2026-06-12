@@ -15,7 +15,7 @@
     --clr-green: #10b981;
     --clr-blue: #3b82f6;
     --clr-white: #ffffff;
-    --clr-orange-rgb: 255,107,53;
+    --clr-orange-rgb: 255, 107, 53;
 
     /* ── Brand Gradient ── */
     --gradient-brand: linear-gradient(135deg, #ff6b35, #e91e8c);
@@ -70,13 +70,11 @@ html {
 body {
     background:
 
-    radial-gradient(
-        circle at center,
-        #021031 0%,
-        #021031 35%,
-        #041b52 60%,
-        #010816 100%
-    );
+        radial-gradient(circle at center,
+            #021031 0%,
+            #021031 35%,
+            #041b52 60%,
+            #010816 100%);
 
     color: white;
     overflow-x: hidden;
@@ -267,7 +265,12 @@ img {
     position: relative;
     overflow: hidden;
 
-    padding: 80px 0 120px;
+    min-height: calc(100vh - 160px);
+    /* Mudei aqui altura do hero */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 72px 0 0;
 }
 
 .hero-bg-pattern {
@@ -275,28 +278,20 @@ img {
     inset: 0;
 
     background-image:
-        radial-gradient(
-            circle at 20% 50%,
+        radial-gradient(circle at 20% 50%,
             rgba(255, 200, 0, 0.08) 0%,
-            transparent 40%
-        ),
+            transparent 40%),
 
-        radial-gradient(
-            circle at 80% 30%,
+        radial-gradient(circle at 80% 30%,
             rgba(28, 0, 255, 0.10) 0%,
-            transparent 45%
-        ),
+            transparent 45%),
 
-        linear-gradient(
-            rgba(255,255,255,0.015) 1px,
-            transparent 1px
-        ),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px),
 
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,0.015) 1px,
-            transparent 1px
-        );
+        linear-gradient(90deg,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px);
 
     background-size:
         auto,
@@ -311,16 +306,19 @@ img {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    gap: 40px;
+    justify-content: center;
+    gap: 300px;
     position: relative;
     z-index: 2;
     padding: 80px 0;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .hero-text {
-    width: 55%;
-    max-width: 55%;
+    flex: 1;
+    max-width: 600px;
+    text-align: center;
 }
 
 .hero-badge {
@@ -363,6 +361,7 @@ img {
 
 .hero-info {
     display: flex;
+    justify-content: center;
     gap: 24px;
     margin-bottom: 36px;
     font-size: 0.9rem;
@@ -381,6 +380,7 @@ img {
 
 .hero-actions {
     display: flex;
+    justify-content: center;
     gap: 16px;
     flex-wrap: wrap;
 }
@@ -389,18 +389,16 @@ img {
 /* RAPOSA */
 
 .hero-fox {
-    position: absolute;
-    width: 45%;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    left: 60%;
-    bottom: 15%
 }
 
 .hero-fox img {
-    width: 260px;
+    width: 320px;
     height: auto;
+    filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.15));
 }
 
 /* Buttons */
@@ -712,6 +710,7 @@ img {
     padding: 80px 0;
     background: #4d8dff;
 }
+
 .section-palestrantes {
     padding: 80px 0;
     background: linear-gradient(180deg, #130e24 0%, #0e0a1a 100%);
@@ -967,9 +966,12 @@ img {
     padding: 80px 0;
 
     background-image: url("../img/preto.png");
-    background-size: cover;       /* faz a imagem preencher a seção */
-    background-position: center;  /* centraliza a imagem */
-    background-repeat: no-repeat; /* impede repetição */
+    background-size: cover;
+    /* faz a imagem preencher a seção */
+    background-position: center;
+    /* centraliza a imagem */
+    background-repeat: no-repeat;
+    /* impede repetição */
 }
 
 /*
@@ -1004,87 +1006,87 @@ img {
 
 /* ── FOOTER ──────────────────────────────── */
 .footer {
-  background: var(--bg-deep);
-  padding: 60px 0 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+    background: var(--bg-deep);
+    padding: 60px 0 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .footer-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 40px;
 }
 
 .footer-col h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
 }
 
 .footer-col p {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .footer-col p i {
-  color: #ff6b35;
-  width: 16px;
-  text-align: center;
+    color: #ff6b35;
+    width: 16px;
+    text-align: center;
 }
 
 .footer-social {
-  display: flex;
-  gap: 12px;
-  margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
 }
 
 .footer-social a {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
 }
 
 .footer-social a:hover {
-  color: #ffffff;
-  background: var(--gradient-brand);
-  border-color: transparent;
-  transform: translateY(-2px);
+    color: #ffffff;
+    background: var(--gradient-brand);
+    border-color: transparent;
+    transform: translateY(-2px);
 }
 
 .footer-bottom {
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
 }
 
 .footer-bottom p {
-  font-size: 0.82rem;
-  color: var(--text-dim);
+    font-size: 0.82rem;
+    color: var(--text-dim);
 }
 
 .footer-bottom a {
-  color: var(--text-secondary);
-  font-weight: 600;
-  transition: color 0.3s ease;
+    color: var(--text-secondary);
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .footer-bottom a:hover {
-  color: #ff6b35;
+    color: #ff6b35;
 }
 
 /* ── LOGOS ──────────────────────────────── */
@@ -1098,6 +1100,7 @@ img {
     width: 400px;
     max-width: 100%;
     height: auto;
+    margin: 0 auto;
 }
 
 /* ── RESPONSIVO ──────────────────────────── */
@@ -1135,6 +1138,10 @@ img {
 
     .hero-text {
         max-width: 100%;
+    }
+
+    .hero-fox img {
+        width: 220px;
     }
 
     .hero-title {
