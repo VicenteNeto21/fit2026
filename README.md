@@ -24,17 +24,20 @@ Este projeto é o site oficial do FIT 2026, o maior evento universitário de tec
 ## Arquitetura
 
 ```
-fit-2026-main/
+fit-2026/
 ├── index.html              # Página principal do evento
 ├── coming-soon.html        # Página "Em Breve" (pré-evento)
 └── assets/
     ├── css/
-    │   └── style.css      # Estilos globais do site
+    │   └── style.css       # Estilos globais do site
     ├── js/
     │   └── script.js       # JavaScript do site principal
     ├── data/
-    │   └── programacao.json    # Programação do evento (5 dias)
-    └── img/               # Imagens e logos
+    │   └── programacao.json # Programação do evento (5 dias)
+    └── img/                # Imagens e logos globais
+        ├── organizers/     # Logos das instituições organizadoras
+        ├── speakers/       # Fotos dos palestrantes
+        └── sponsors/       # Logos dos patrocinadores
 ```
 
 ---
