@@ -1,94 +1,94 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios | UFC Crateús</title>
-    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios | UFC Crateús</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
 
-    <!-- SEO Básico -->
-    <meta name="description"
-        content="FIT 2026 — XIII Fórum de Inovação e Tecnologia da UFC Crateús. Tema: Inteligência Artificial: suas Aplicações e Desafios. Palestras, minicursos e workshops sobre IA. 04 a 08 de Outubro de 2026.">
-    <meta name="keywords"
-        content="FIT 2026, Crateús, IA, Inteligência Artificial, tecnologia, evento universitário, UFC Crateús, machine learning, deep learning, palestras, minicursos">
-    <meta name="author" content="Núcleo de Comunicação do FIT — UFC Crateús">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0e0a1a">
-    <link rel="canonical" href="https://fit.crateus.ufc.br">
+  <!-- SEO Básico -->
+  <meta name="description"
+    content="FIT 2026 — XIII Fórum de Inovação e Tecnologia da UFC Crateús. Tema: Inteligência Artificial: suas Aplicações e Desafios. Palestras, minicursos e workshops sobre IA. 04 a 08 de Outubro de 2026.">
+  <meta name="keywords"
+    content="FIT 2026, Crateús, IA, Inteligência Artificial, tecnologia, evento universitário, UFC Crateús, machine learning, deep learning, palestras, minicursos">
+  <meta name="author" content="Núcleo de Comunicação do FIT — UFC Crateús">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0e0a1a">
+  <link rel="canonical" href="https://fit.crateus.ufc.br">
 
-    <!-- Preconnect para performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <!-- Fonte Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+  <!-- Fonte Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-    <!-- Font Awesome 7 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <!-- Font Awesome 7 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
 
-    <!-- Tailwind CSS v4 -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        inter: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        fit: {
-                            bg: '#0e0a1a',
-                            indigo: '#1a0533',
-                            teal: '#0d2b3e',
-                            orange: '#ff6b35',
-                            pink: '#e91e8c',
-                            purple: '#8b5cf6',
-                        }
-                    }
-                }
+  <!-- Tailwind CSS v4 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            fit: {
+              bg: '#0e0a1a',
+              indigo: '#1a0533',
+              teal: '#0d2b3e',
+              orange: '#ff6b35',
+              pink: '#e91e8c',
+              purple: '#8b5cf6',
             }
+          }
         }
-    </script>
+      }
+    }
+  </script>
 
-    <!-- CSS Customizado -->
-    <link rel="stylesheet" href="assets/css/style.css">
+  <!-- CSS Customizado -->
+  <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAOGVRFFgUoYA8MvDkaIjGumNzEkGzcEHY",
-            authDomain: "fit-crateus.firebaseapp.com",
-            projectId: "fit-crateus",
-            storageBucket: "fit-crateus.firebasestorage.app",
-            messagingSenderId: "88037686885",
-            appId: "1:88037686885:web:53e6860fa068e003ac908c"
-        };
+    const firebaseConfig = {
+      apiKey: "AIzaSyAOGVRFFgUoYA8MvDkaIjGumNzEkGzcEHY",
+      authDomain: "fit-crateus.firebaseapp.com",
+      projectId: "fit-crateus",
+      storageBucket: "fit-crateus.firebasestorage.app",
+      messagingSenderId: "88037686885",
+      appId: "1:88037686885:web:53e6860fa068e003ac908c"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        // Load Palestrantes
-        async function loadSpeakers() {
-            const container = document.getElementById('speakers-grid');
-            if (!container) return;
-            try {
-                const q = query(collection(db, 'palestrantes'), orderBy('ordem'));
-                const snapshot = await getDocs(q);
-                if (snapshot.empty) return; // Keep static fallback
-                container.innerHTML = '';
-                snapshot.forEach(docSnap => {
-                    const d = docSnap.data();
-                    const card = document.createElement('div');
-                    card.className = 'speaker-card';
-                    card.innerHTML = `
+    // Load Palestrantes
+    async function loadSpeakers() {
+      const container = document.getElementById('speakers-grid');
+      if (!container) return;
+      try {
+        const q = query(collection(db, 'palestrantes'), orderBy('ordem'));
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) return; // Keep static fallback
+        container.innerHTML = '';
+        snapshot.forEach(docSnap => {
+          const d = docSnap.data();
+          const card = document.createElement('div');
+          card.className = 'speaker-card';
+          card.innerHTML = `
                         <div class="speaker-photo">
                             ${d.foto ? `<img src="${d.foto}" alt="${d.nome}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : '<i class="fas fa-user-circle"></i>'}
                         </div>
@@ -96,87 +96,88 @@
                         <p class="speaker-role">${d.cargo || 'Palestrante'}</p>
                         <p class="speaker-topic">${d.tema || ''}</p>
                     `;
-                    container.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Firestore speakers error:', err);
-            }
-        }
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error('Firestore speakers error:', err);
+      }
+    }
 
-        // Load Patrocinadores
-        async function loadSponsors() {
-            const container = document.getElementById('sponsors-container');
-            if (!container) return;
-            try {
-                const q = query(collection(db, 'patrocinadores'), orderBy('ordem'));
-                const snapshot = await getDocs(q);
-                if (snapshot.empty) return; // Keep static fallback
+    // Load Patrocinadores
+    async function loadSponsors() {
+      const container = document.getElementById('sponsors-container');
+      if (!container) return;
+      try {
+        const q = query(collection(db, 'patrocinadores'), orderBy('ordem'));
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) return; // Keep static fallback
 
-                const tiers = { diamante: [], prata: [], midia: [] };
-                snapshot.forEach(docSnap => {
-                    const d = docSnap.data();
-                    if (tiers[d.tier]) tiers[d.tier].push(d);
-                });
+        const tiers = { diamante: [], prata: [], midia: [] };
+        snapshot.forEach(docSnap => {
+          const d = docSnap.data();
+          if (tiers[d.tier]) tiers[d.tier].push(d);
+        });
 
-                container.innerHTML = '';
-                const tierConfig = [
-                    { key: 'diamante', title: 'Diamante', icon: 'fa-gem', class: 'tier-diamante', cardClass: 'sponsor-diamante-card' },
-                    { key: 'prata', title: 'Prata', icon: 'fa-medal', class: 'tier-prata', cardClass: 'sponsor-prata-card' },
-                    { key: 'midia', title: 'Apoio de Mídia', icon: 'fa-newspaper', class: 'tier-midia', cardClass: 'sponsor-midia-card' }
-                ];
+        container.innerHTML = '';
+        const tierConfig = [
+          { key: 'diamante', title: 'Diamante', icon: 'fa-gem', class: 'tier-diamante', cardClass: 'sponsor-diamante-card' },
+          { key: 'ouro', title: 'Ouro', icon: 'fa-gold', class: 'tier-ouro', cardClass: 'sponsor-ouro-card' },
+          { key: 'prata', title: 'Prata', icon: 'fa-medal', class: 'tier-prata', cardClass: 'sponsor-prata-card' },
+          { key: 'midia', title: 'Apoio de Mídia', icon: 'fa-newspaper', class: 'tier-midia', cardClass: 'sponsor-midia-card' }
+        ];
 
-                tierConfig.forEach(tier => {
-                    if (tiers[tier.key].length === 0) return;
-                    const section = document.createElement('div');
-                    section.className = 'sponsor-tier';
-                    section.innerHTML = `
+        tierConfig.forEach(tier => {
+          if (tiers[tier.key].length === 0) return;
+          const section = document.createElement('div');
+          section.className = 'sponsor-tier';
+          section.innerHTML = `
                         <h3 class="tier-title ${tier.class}"><i class="fas ${tier.icon}"></i> ${tier.title}</h3>
                         <div class="sponsors-grid sponsors-${tier.key}"></div>
                     `;
-                    const grid = section.querySelector('.sponsors-grid');
-                    tiers[tier.key].forEach(s => {
-                        const card = document.createElement('div');
-                        card.className = `sponsor-card ${tier.cardClass}`;
-                        card.innerHTML = s.logo
-                            ? `<img src="${s.logo}" alt="${s.nome}" style="max-width:80%;max-height:60%;object-fit:contain;">`
-                            : `<span>${s.nome}</span>`;
-                        grid.appendChild(card);
-                    });
-                    container.appendChild(section);
-                });
-            } catch (err) {
-                console.error('Firestore sponsors error:', err);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadSpeakers();
-            loadSponsors();
+          const grid = section.querySelector('.sponsors-grid');
+          tiers[tier.key].forEach(s => {
+            const card = document.createElement('div');
+            card.className = `sponsor-card ${tier.cardClass}`;
+            card.innerHTML = s.logo
+              ? `<img src="${s.logo}" alt="${s.nome}" style="max-width:80%;max-height:60%;object-fit:contain;">`
+              : `<span>${s.nome}</span>`;
+            grid.appendChild(card);
+          });
+          container.appendChild(section);
         });
-    </script>
+      } catch (err) {
+        console.error('Firestore sponsors error:', err);
+      }
+    }
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios">
-    <meta property="og:description"
-        content="XIII Fórum de Inovação e Tecnologia da UFC Crateús. O maior evento universitário de tecnologia do Sertão de Crateús. 04 a 08 de Outubro de 2026.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fit.crateus.ufc.br">
-    <meta property="og:site_name" content="FIT 2026">
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:image" content="https://fit.crateus.ufc.br/assets/img/og-image.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios">
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSpeakers();
+      loadSponsors();
+    });
+  </script>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="FIT 2026 — Inteligência Artificial">
-    <meta name="twitter:description"
-        content="XIII Fórum de Inovação e Tecnologia. O maior evento de tecnologia do Sertão de Crateús.">
-    <meta name="twitter:image" content="https://fit.crateus.ufc.br/assets/img/og-image.png">
+  <!-- Open Graph -->
+  <meta property="og:title" content="FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios">
+  <meta property="og:description"
+    content="XIII Fórum de Inovação e Tecnologia da UFC Crateús. O maior evento universitário de tecnologia do Sertão de Crateús. 04 a 08 de Outubro de 2026.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fit.crateus.ufc.br">
+  <meta property="og:site_name" content="FIT 2026">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:image" content="https://fit.crateus.ufc.br/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="FIT 2026 — Inteligência Artificial: suas Aplicações e Desafios">
 
-    <!-- Schema.org (Evento Estruturado) -->
-    <script type="application/ld+json">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FIT 2026 — Inteligência Artificial">
+  <meta name="twitter:description"
+    content="XIII Fórum de Inovação e Tecnologia. O maior evento de tecnologia do Sertão de Crateús.">
+  <meta name="twitter:image" content="https://fit.crateus.ufc.br/assets/img/og-image.png">
+
+  <!-- Schema.org (Evento Estruturado) -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Event",
@@ -211,8 +212,8 @@
     }
     </script>
 
-    <!-- Schema.org (Website) -->
-    <script type="application/ld+json">
+  <!-- Schema.org (Website) -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -223,400 +224,357 @@
     </script>
 </head>
 
-  <body>
-<!-- ============ HEADER ============ -->
-    <header id="header" aria-label="Cabeçalho principal">
-        <div class="container nav-container">
-            <a href="#inicio" class="nav-logo" aria-label="Ir para o início">
-                <img src="assets/img/fit.cima.png" alt="FIT 2026" class="logo-img">
+<body>
+  <!-- ============ HEADER ============ -->
+  <header id="header" aria-label="Cabeçalho principal">
+    <div class="container nav-container">
+      <a href="#inicio" class="nav-logo" aria-label="Ir para o início">
+        <img src="assets/img/fit.cima.png" alt="FIT 2026" class="logo-img">
+      </a>
+      <nav class="nav-menu" aria-label="Menu principal">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#programacao">Programação</a></li>
+          <li><a href="#palestrantes">Palestrantes</a></li>
+          <li><a href="#patrocinadores">Patrocinadores</a></li>
+          <li><a href="#evento">O Evento</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="btn-inscricao" target="_blank">
+        <i class="fas fa-edit"></i> Inscreva-se
+      </a>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="mobile-menu hidden">
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#programacao">Programação</a></li>
+        <li><a href="#palestrantes">Palestrantes</a></li>
+        <li><a href="#patrocinadores">Patrocinadores</a></li>
+        <li><a href="#evento">O Evento</a></li>
+        <li><a href="#" class="btn-inscricao-mobile" target="_blank"><i class="fas fa-edit"></i> Inscreva-se</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+
+    <section id="inicio" class="hero">
+      <div class="hero-bg-pattern"></div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <span class="hero-badge">XIII Fórum de Inovação e Tecnologia</span>
+          <h1 class="hero-title">
+            <img src="assets/img/logo.cima.png" alt="FIT 2026" class="hero-logo">
+          </h1>
+          <h2 class="hero-subtitle">Inteligência Artificial: suas Aplicações e Desafios</h2>
+          <div class="hero-info">
+            <span><i class="fas fa-calendar-alt"></i> 04 a 08 de Outubro 2026</span>
+            <span><i class="fas fa-map-marker-alt"></i> UFC — Campus Crateús</span>
+          </div>
+          <div class="hero-actions">
+            <a href="#programacao" class="btn btn-primary">
+              <i class="fas fa-calendar-alt"></i> Ver Programação
             </a>
-            <nav class="nav-menu" aria-label="Menu principal">
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#programacao">Programação</a></li>
-                    <li><a href="#palestrantes">Palestrantes</a></li>
-                    <li><a href="#patrocinadores">Patrocinadores</a></li>
-                    <li><a href="#evento">O Evento</a></li>
-                </ul>
-            </nav>
-            <a href="#" class="btn-inscricao" target="_blank">
-                <i class="fas fa-edit"></i> Inscreva-se
+            <a href="#" class="btn btn-outline" target="_blank">
+              <i class="fas fa-edit"></i> Inscreva-se
             </a>
-            <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-        <!-- Menu Mobile -->
-        <div id="mobile-menu" class="mobile-menu hidden">
-            <ul>
-                <li><a href="#inicio">Início</a></li>
-                <li><a href="#programacao">Programação</a></li>
-                <li><a href="#palestrantes">Palestrantes</a></li>
-                <li><a href="#patrocinadores">Patrocinadores</a></li>
-                <li><a href="#evento">O Evento</a></li>
-                <li><a href="#" class="btn-inscricao-mobile" target="_blank"><i class="fas fa-edit"></i> Inscreva-se</a>
-                </li>
-            </ul>
-        </div>
-    </header>
-
-    <main>
-        <!-- ============ HERO ============ -->
-
-        <section id="inicio" class="hero">
-            <div class="hero-bg-pattern"></div>
-            <div class="container hero-content">
-                <div class="hero-text">
-                    <span class="hero-badge">XIII Fórum de Inovação e Tecnologia</span>
-                    <h1 class="hero-title">
-                        <img src="assets/img/logo.cima.png" alt="FIT 2026" class="hero-logo">
-                    </h1>
-                    <h2 class="hero-subtitle">Inteligência Artificial: suas Aplicações e Desafios</h2>
-                    <div class="hero-info">
-                        <span><i class="fas fa-calendar-alt"></i> 04 a 08 de Outubro 2026</span>
-                        <span><i class="fas fa-map-marker-alt"></i> UFC — Campus Crateús</span>
-                    </div>
-                    <div class="hero-actions">
-                        <a href="#programacao" class="btn btn-primary">
-                            <i class="fas fa-calendar-alt"></i> Ver Programação
-                        </a>
-                        <a href="#" class="btn btn-outline" target="_blank">
-                            <i class="fas fa-edit"></i> Inscreva-se
-                        </a>
-                    </div>
-                     <!-- RAPOSA AQUI -->
-                      <div class="hero-fox">
-                         <img src="assets/img/raposa.png" alt="Raposa FIT">
-                      </div>
-                </div>
-            </div>
-        </section>
-
-
-      <!-- ============ COUNTDOWN ============ -->
-      <section class="countdown-section">
-        <div class="container countdown-container">
-          <div class="countdown-text">
-            <h3>Contagem Regressiva</h3>
-            <p>
-              O maior evento universitário de tecnologia do Sertão de Crateús
-              está chegando
-            </p>
           </div>
-          <div class="countdown-timer" id="countdown">
-            <div class="countdown-item">
-              <span class="countdown-number" id="cd-days">00</span>
-              <span class="countdown-label">Dias</span>
-            </div>
-            <div class="countdown-item">
-              <span class="countdown-number" id="cd-hours">00</span>
-              <span class="countdown-label">Horas</span>
-            </div>
-            <div class="countdown-item">
-              <span class="countdown-number" id="cd-minutes">00</span>
-              <span class="countdown-label">Minutos</span>
-            </div>
-            <div class="countdown-item">
-              <span class="countdown-number" id="cd-seconds">00</span>
-              <span class="countdown-label">Segundos</span>
-            </div>
+          <!-- RAPOSA AQUI -->
+          <div class="hero-fox">
+            <img src="assets/img/raposa.png" alt="Raposa FIT">
           </div>
-        </div>
-      </section>
-
-      <!-- ============ PROGRAMAÇÃO ============ -->
-      <section id="programacao" class="section-programacao">
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">Programação</h2>
-            <p class="section-desc">
-              Explore a agenda completa do FIT 2026, com palestras, workshops e
-              atividades práticas sobre Inteligência Artificial. 04 a 08 de
-              Outubro.
-            </p>
-          </div>
-          <!-- Abas de dias (geradas dinamicamente) -->
-          <div class="schedule-tabs" id="schedule-tabs">
-            <span class="schedule-loading">Carregando programação...</span>
-          </div>
-          <!-- Container de dias (gerado dinamicamente) -->
-          <div id="schedule-days-container"></div>
-        </div>
-      </section>
-
-      <!-- ============ PALESTRANTES ============ -->
-      <section id="palestrantes" class="section-palestrantes">
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">Palestrantes</h2>
-            <p class="section-desc">
-              Conheça os especialistas que compartilharão seus conhecimentos no
-              FIT 2026.
-            </p>
-          </div>
-          <div class="speakers-grid" id="speakers-grid">
-            <div class="speaker-card">
-              <div class="speaker-photo">
-                <i class="fas fa-user-circle"></i>
-              </div>
-              <h4>A definir</h4>
-              <p class="speaker-role">Palestrante</p>
-              <p class="speaker-topic">IA Generativa e o Futuro do Trabalho</p>
-            </div>
-            <div class="speaker-card">
-              <div class="speaker-photo">
-                <i class="fas fa-user-circle"></i>
-              </div>
-              <h4>A definir</h4>
-              <p class="speaker-role">Palestrante</p>
-              <p class="speaker-topic">Desafios Éticos da IA</p>
-            </div>
-            <div class="speaker-card">
-              <div class="speaker-photo">
-                <i class="fas fa-user-circle"></i>
-              </div>
-              <h4>A definir</h4>
-              <p class="speaker-role">Instrutor</p>
-              <p class="speaker-topic">Machine Learning com Python</p>
-            </div>
-            <div class="speaker-card">
-              <div class="speaker-photo">
-                <i class="fas fa-user-circle"></i>
-              </div>
-              <h4>A definir</h4>
-              <p class="speaker-role">Instrutor</p>
-              <p class="speaker-topic">Visão Computacional</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ PATROCINADORES ============ -->
-      <section id="patrocinadores" class="section-patrocinadores">
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">Patrocinadores</h2>
-            <p class="section-desc">
-              Agradecemos aos nossos patrocinadores que tornam o FIT 2026
-              possível.
-            </p>
-          </div>
-          <div id="sponsors-container">
-            <!-- Diamante -->
-            <div class="sponsor-tier">
-              <h3 class="tier-title tier-diamante">
-                <i class="fas fa-gem"></i> Diamante
-              </h3>
-              <div class="sponsors-grid sponsors-diamante">
-                <div class="sponsor-card sponsor-diamante-card">
-                  <span>Patrocinador</span>
-                </div>
-                <div class="sponsor-card sponsor-diamante-card">
-                  <span>Patrocinador</span>
-                </div>
-                <div class="sponsor-card sponsor-diamante-card">
-                  <span>Patrocinador</span>
-                </div>
-              </div>
-            </div>
-            <!-- Prata -->
-            <div class="sponsor-tier">
-              <h3 class="tier-title tier-prata">
-                <i class="fas fa-medal"></i> Prata
-              </h3>
-              <div class="sponsors-grid sponsors-prata">
-                <div class="sponsor-card sponsor-prata-card">
-                  <span>Patrocinador</span>
-                </div>
-                <div class="sponsor-card sponsor-prata-card">
-                  <span>Patrocinador</span>
-                </div>
-              </div>
-            </div>
-            <!-- Apoio de Mídia -->
-            <div class="sponsor-tier">
-              <h3 class="tier-title tier-midia">
-                <i class="fas fa-newspaper"></i> Apoio de Mídia
-              </h3>
-              <div class="sponsors-grid sponsors-midia">
-                <div class="sponsor-card sponsor-midia-card">
-                  <span>Mídia</span>
-                </div>
-                <div class="sponsor-card sponsor-midia-card">
-                  <span>Mídia</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ SOBRE O EVENTO ============ -->
-      <section id="evento" class="section-evento">
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">Sobre o FIT 2026</h2>
-          </div>
-          <div class="evento-content">
-            <div class="evento-text">
-              <p>
-                O <strong>Fórum de Inovação e Tecnologia (FIT)</strong> do
-                Campus da UFC em Crateús, maior evento universitário de
-                tecnologia do Sertão de Crateús, traz uma programação de
-                palestras, workshops e amostras tecnológicas que lançam um olhar
-                em toda essa revolução.
-              </p>
-              <p>
-                Em sua <strong>13ª edição</strong>, o FIT 2026 tem como tema
-                "Inteligência Artificial: suas Aplicações e Desafios",
-                explorando como a IA está transformando diversos setores, desde
-                a educação até o cotidiano das pessoas.
-              </p>
-              <h3 class="edicoes-title">Edições Anteriores</h3>
-              <div class="edicoes-list">
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2025"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2025 — Internet das
-                  Coisas
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2024"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2024 — Segurança em
-                  Redes
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2023"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2023 — Otimização
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2022"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2022 — Era dos Dados
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2021"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2021 —
-                  Empreendedorismo
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2020"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2020 — Cloud Computing
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2019"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2019 — Inteligência
-                  Artificial
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2018"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2018 — Eu amo Inovação
-                </a>
-                <a
-                  href="https://fit.crateus.ufc.br/ano/2017"
-                  target="_blank"
-                  class="edicao-item"
-                >
-                  <i class="fas fa-check-circle"></i> FIT 2017 — 4ª Edição
-                </a>
-              </div>
-            </div>
-            <div class="evento-visual">
-              <div class="edition-badge">XIII</div>
-              <p class="edition-subtext">Edição</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============ ORGANIZADORES ============ -->
-      <section class="section-organizadores">
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">Realização</h2>
-            <p class="section-desc">
-              Conheça as equipes que tornam o FIT 2026 realidade.
-            </p>
-          </div>
-          <div class="organizers-grid">
-            <div class="organizer-card">FIT Crateús</div>
-            <div class="organizer-card">UFC</div>
-            <div class="organizer-card">Sebrae</div>
-            <div class="organizer-card">GSIPP</div>
-            <div class="organizer-card">EngineLab</div>
-            <div class="organizer-card">SPARC</div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- ============ FOOTER ============ -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-col">
-            <h3>Sobre o FIT</h3>
-            <p>
-              O Fórum de Inovação e Tecnologia (FIT) é o maior evento
-              universitário de tecnologia do Sertão de Crateús, promovendo a
-              inovação e o empreendedorismo.
-            </p>
-            <div class="footer-social">
-              <a
-                href="https://www.instagram.com/fitcrateus/"
-                target="_blank"
-                aria-label="Instagram do FIT"
-                ><i class="fab fa-instagram"></i
-              ></a>
-            </div>
-          </div>
-          <div class="footer-col">
-            <h3>Contato</h3>
-            <p>
-              <i class="fas fa-map-marker-alt"></i> Av. Professora Machadinha
-              Lima, S/N, Crateús-CE
-            </p>
-            <p><i class="fas fa-phone"></i> (88) 3691-9700</p>
-            <p><i class="fas fa-envelope"></i> fit@crateus.ufc.br</p>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>
-            &copy; 2026 | Núcleo de Comunicação do FIT —
-            <a href="https://linktr.ee/vicente.neto" target="_blank"
-              >Vicente Neto</a
-            >
-            /
-            <a href="https://linktr.ee/geciaragomes01" target="_blank"
-              >Geciara Gomes</a
-            >
-          </p>
         </div>
       </div>
-    </footer>
+    </section>
 
-    <script src="assets/js/script.js" defer></script>
-  </body>
+
+    <!-- ============ COUNTDOWN ============ -->
+    <section class="countdown-section">
+      <div class="container countdown-container">
+        <div class="countdown-text">
+          <h3>Contagem Regressiva</h3>
+          <p>
+            O maior evento universitário de tecnologia do Sertão de Crateús
+            está chegando
+          </p>
+        </div>
+        <div class="countdown-timer" id="countdown">
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd-days">00</span>
+            <span class="countdown-label">Dias</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd-hours">00</span>
+            <span class="countdown-label">Horas</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd-minutes">00</span>
+            <span class="countdown-label">Minutos</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd-seconds">00</span>
+            <span class="countdown-label">Segundos</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROGRAMAÇÃO ============ -->
+    <section id="programacao" class="section-programacao">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Programação</h2>
+          <p class="section-desc">
+            Explore a agenda completa do FIT 2026, com palestras, workshops e
+            atividades práticas sobre Inteligência Artificial. 04 a 08 de
+            Outubro.
+          </p>
+        </div>
+        <!-- Abas de dias (geradas dinamicamente) -->
+        <div class="schedule-tabs" id="schedule-tabs">
+          <span class="schedule-loading">Carregando programação...</span>
+        </div>
+        <!-- Container de dias (gerado dinamicamente) -->
+        <div id="schedule-days-container"></div>
+      </div>
+    </section>
+
+    <!-- ============ PALESTRANTES ============ -->
+    <section id="palestrantes" class="section-palestrantes">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Palestrantes</h2>
+          <p class="section-desc">
+            Conheça os especialistas que compartilharão seus conhecimentos no
+            FIT 2026.
+          </p>
+        </div>
+        <div class="speakers-grid" id="speakers-grid">
+          <div class="speaker-card">
+            <div class="speaker-photo">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <h4>A definir</h4>
+            <p class="speaker-role">Palestrante</p>
+            <p class="speaker-topic">IA Generativa e o Futuro do Trabalho</p>
+          </div>
+          <div class="speaker-card">
+            <div class="speaker-photo">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <h4>A definir</h4>
+            <p class="speaker-role">Palestrante</p>
+            <p class="speaker-topic">Desafios Éticos da IA</p>
+          </div>
+          <div class="speaker-card">
+            <div class="speaker-photo">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <h4>A definir</h4>
+            <p class="speaker-role">Instrutor</p>
+            <p class="speaker-topic">Machine Learning com Python</p>
+          </div>
+          <div class="speaker-card">
+            <div class="speaker-photo">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <h4>A definir</h4>
+            <p class="speaker-role">Instrutor</p>
+            <p class="speaker-topic">Visão Computacional</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PATROCINADORES ============ -->
+    <section id="patrocinadores" class="section-patrocinadores">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Patrocinadores</h2>
+          <p class="section-desc">
+            Agradecemos aos nossos patrocinadores que tornam o FIT 2026
+            possível.
+          </p>
+        </div>
+        <div id="sponsors-container">
+          <!-- Diamante -->
+          <div class="sponsor-tier">
+            <h3 class="tier-title tier-diamante">
+              <i class="fas fa-gem"></i> Diamante
+            </h3>
+            <div class="sponsors-grid sponsors-diamante">
+              <div class="sponsor-card sponsor-diamante-card">
+                <span>Patrocinador</span>
+              </div>
+              <div class="sponsor-card sponsor-diamante-card">
+                <span>Patrocinador</span>
+              </div>
+              <div class="sponsor-card sponsor-diamante-card">
+                <span>Patrocinador</span>
+              </div>
+            </div>
+          </div>
+          <!-- Prata -->
+          <div class="sponsor-tier">
+            <h3 class="tier-title tier-prata">
+              <i class="fas fa-medal"></i> Prata
+            </h3>
+            <div class="sponsors-grid sponsors-prata">
+              <div class="sponsor-card sponsor-prata-card">
+                <span>Patrocinador</span>
+              </div>
+              <div class="sponsor-card sponsor-prata-card">
+                <span>Patrocinador</span>
+              </div>
+            </div>
+          </div>
+          <!-- Apoio de Mídia -->
+          <div class="sponsor-tier">
+            <h3 class="tier-title tier-midia">
+              <i class="fas fa-newspaper"></i> Apoio de Mídia
+            </h3>
+            <div class="sponsors-grid sponsors-midia">
+              <div class="sponsor-card sponsor-midia-card">
+                <span>Mídia</span>
+              </div>
+              <div class="sponsor-card sponsor-midia-card">
+                <span>Mídia</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOBRE O EVENTO ============ -->
+    <section id="evento" class="section-evento">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Sobre o FIT 2026</h2>
+        </div>
+        <div class="evento-content">
+          <div class="evento-text">
+            <p>
+              O <strong>Fórum de Inovação e Tecnologia (FIT)</strong> do
+              Campus da UFC em Crateús, maior evento universitário de
+              tecnologia do Sertão de Crateús, traz uma programação de
+              palestras, workshops e amostras tecnológicas que lançam um olhar
+              em toda essa revolução.
+            </p>
+            <p>
+              Em sua <strong>13ª edição</strong>, o FIT 2026 tem como tema
+              "Inteligência Artificial: suas Aplicações e Desafios",
+              explorando como a IA está transformando diversos setores, desde
+              a educação até o cotidiano das pessoas.
+            </p>
+            <h3 class="edicoes-title">Edições Anteriores</h3>
+            <div class="edicoes-list">
+              <a href="https://fit.crateus.ufc.br/ano/2025" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2025 — Internet das
+                Coisas
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2024" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2024 — Segurança em
+                Redes
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2023" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2023 — Otimização
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2022" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2022 — Era dos Dados
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2021" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2021 —
+                Empreendedorismo
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2020" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2020 — Cloud Computing
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2019" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2019 — Inteligência
+                Artificial
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2018" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2018 — Eu amo Inovação
+              </a>
+              <a href="https://fit.crateus.ufc.br/ano/2017" target="_blank" class="edicao-item">
+                <i class="fas fa-check-circle"></i> FIT 2017 — 4ª Edição
+              </a>
+            </div>
+          </div>
+          <div class="evento-visual">
+            <div class="edition-badge">XIII</div>
+            <p class="edition-subtext">Edição</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ORGANIZADORES ============ -->
+    <section class="section-organizadores">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Realização</h2>
+          <p class="section-desc">
+            Conheça as equipes que tornam o FIT 2026 realidade.
+          </p>
+        </div>
+        <div class="organizers-grid">
+          <div class="organizer-card">FIT Crateús</div>
+          <div class="organizer-card">UFC</div>
+          <div class="organizer-card">Sebrae</div>
+          <div class="organizer-card">GSIPP</div>
+          <div class="organizer-card">EngineLab</div>
+          <div class="organizer-card">SPARC</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Sobre o FIT</h3>
+          <p>
+            O Fórum de Inovação e Tecnologia (FIT) é o maior evento
+            universitário de tecnologia do Sertão de Crateús, promovendo a
+            inovação e o empreendedorismo.
+          </p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/fitcrateus/" target="_blank" aria-label="Instagram do FIT"><i
+                class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Contato</h3>
+          <p>
+            <i class="fas fa-map-marker-alt"></i> Av. Professora Machadinha
+            Lima, S/N, Crateús-CE
+          </p>
+          <p><i class="fas fa-phone"></i> (88) 3691-9700</p>
+          <p><i class="fas fa-envelope"></i> fit@crateus.ufc.br</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 | Núcleo de Comunicação do FIT —
+          <a href="https://linktr.ee/vicente.neto" target="_blank">Vicente Neto</a>
+          /
+          <a href="https://linktr.ee/geciaragomes01" target="_blank">Geciara Gomes</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/script.js" defer></script>
+</body>
+
 </html>
