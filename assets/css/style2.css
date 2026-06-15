@@ -1,3 +1,10 @@
+/* ============================================
+   FIT 2026 — Design System Customizado
+   Tema: IA — Inteligência Artificial
+   Paleta: Indigo/Teal + Laranja/Rosa
+   Fonte: Inter
+   ============================================ */
+
 /* ── Reset & Base ────────────────────────── */
 *,
 *::before,
@@ -5,61 +12,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-:root {
-    /* ── Brand Colors ── */
-    --clr-orange: #ff6b35;
-    --clr-pink: #e91e8c;
-    --clr-purple: #8b5cf6;
-    --clr-green: #10b981;
-    --clr-blue: #3b82f6;
-    --clr-white: #ffffff;
-    --clr-orange-rgb: 255, 107, 53;
-
-    /* ── Brand Gradient ── */
-    --gradient-brand: linear-gradient(135deg, #ff6b35, #e91e8c);
-
-    /* ── Backgrounds ── */
-    --bg-base: #0e0a1a;
-    --bg-deep: #08060f;
-    --bg-navy: #021031;
-    --bg-navy-2: #041b52;
-
-    /* ── Glass Surfaces ── */
-    --surface-1: rgba(255, 255, 255, 0.03);
-    --surface-2: rgba(255, 255, 255, 0.04);
-    --surface-3: rgba(255, 255, 255, 0.05);
-    --surface-hover: rgba(255, 255, 255, 0.07);
-
-    /* ── Borders ── */
-    --border-subtle: rgba(255, 255, 255, 0.04);
-    --border-faint: rgba(255, 255, 255, 0.06);
-    --border-light: rgba(255, 255, 255, 0.08);
-    --border-medium: rgba(255, 255, 255, 0.1);
-
-    /* ── Typography ── */
-    --font-base: "Encode Sans", sans-serif;
-    --font-heading: "Sofia Sans", sans-serif;
-    --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    --text-dim: #52525b;
-
-    /* ── Transitions ── */
-    --transition-fast: 0.2s ease;
-    --transition-base: 0.3s ease;
-
-    /* ── Border Radius ── */
-    --radius-sm: 8px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 16px;
-    --radius-2xl: 20px;
-    --radius-full: 9999px;
-
-    /* ── Spacing ── */
-    --section-padding: 80px 0;
 }
 
 html {
@@ -70,16 +22,27 @@ html {
 body {
     background:
 
-        radial-gradient(circle at center,
-            #021031 0%,
-            #021031 35%,
-            #041b52 60%,
-            #010816 100%);
+    radial-gradient(
+        circle at center,
+        #021031 0%,
+        #021031 35%,
+        #041b52 60%,
+        #010816 100%
+    );
 
     color: white;
     overflow-x: hidden;
 }
 
+/*
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0e0a1a;
+    color: #e4e4e7;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+*/
 a {
     text-decoration: none;
     color: inherit;
@@ -112,7 +75,7 @@ img {
     left: 0;
     width: 100%;
     z-index: 100;
-    background: rgb(8, 27, 53);
+    background: rgba(14, 10, 26, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -120,8 +83,8 @@ img {
 }
 
 #header.scrolled {
-    background: rgb(8, 27, 53);
-    box-shadow: 0 4px 30px rgba(6, 60, 104, 0.4);
+    background: rgba(14, 10, 26, 0.95);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
 .nav-container {
@@ -146,7 +109,7 @@ img {
 
 .logo-year {
     font-size: 1.6rem;
-    background: var(--gradient-brand);
+    background: linear-gradient(135deg, #ff6b35, #e91e8c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -155,8 +118,6 @@ img {
 .nav-menu {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
 }
 
 .nav-links {
@@ -202,7 +163,7 @@ img {
     font-size: 0.85rem;
     font-weight: 600;
     color: #ffffff;
-    background: var(--gradient-brand);
+    background: linear-gradient(135deg, #ff6b35, #e91e8c);
     border-radius: 8px;
     transition: transform 0.2s ease, box-shadow 0.3s ease;
     margin-left: 32px;
@@ -210,7 +171,7 @@ img {
 
 .btn-inscricao:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(var(--clr-orange-rgb), 0.3);
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
 }
 
 .mobile-menu-btn {
@@ -251,7 +212,7 @@ img {
 }
 
 .btn-inscricao-mobile {
-    background: var(--gradient-brand) !important;
+    background: linear-gradient(135deg, #ff6b35, #e91e8c) !important;
     color: #ffffff !important;
     text-align: center;
     border-radius: 8px;
@@ -267,12 +228,7 @@ img {
     position: relative;
     overflow: hidden;
 
-    min-height: calc(100vh - 160px);
-    /* Mudei aqui altura do hero */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 72px 0 0;
+    padding: 80px 0 120px;
 }
 
 .hero-bg-pattern {
@@ -280,20 +236,28 @@ img {
     inset: 0;
 
     background-image:
-        radial-gradient(circle at 20% 50%,
+        radial-gradient(
+            circle at 20% 50%,
             rgba(255, 200, 0, 0.08) 0%,
-            transparent 40%),
+            transparent 40%
+        ),
 
-        radial-gradient(circle at 80% 30%,
+        radial-gradient(
+            circle at 80% 30%,
             rgba(28, 0, 255, 0.10) 0%,
-            transparent 45%),
+            transparent 45%
+        ),
 
-        linear-gradient(rgba(255, 255, 255, 0.015) 1px,
-            transparent 1px),
+        linear-gradient(
+            rgba(255,255,255,0.015) 1px,
+            transparent 1px
+        ),
 
-        linear-gradient(90deg,
-            rgba(255, 255, 255, 0.015) 1px,
-            transparent 1px);
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.015) 1px,
+            transparent 1px
+        );
 
     background-size:
         auto,
@@ -304,23 +268,42 @@ img {
     pointer-events: none;
 }
 
+/* .hero-bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(233, 30, 140, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 60% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 40%);
+    pointer-events: none;
+}
+*/
+
 .hero-content {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 300px;
+    justify-content: space-between;
+    gap: 40px;
     position: relative;
     z-index: 2;
     padding: 80px 0;
-    max-width: 1100px;
-    margin: 0 auto;
 }
 
+/*.hero-content muidei em cima{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    position: relative;
+    z-index: 2;
+    padding: 80px 0;
+}
+    e aqui em baixo no text, tava 600 coloquei 700*/
+
 .hero-text {
-    flex: 1;
-    max-width: 600px;
-    text-align: center;
+    width: 55%;
+    max-width: 55%;
 }
 
 .hero-badge {
@@ -328,9 +311,9 @@ img {
     padding: 6px 16px;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #f1f1f1;
-    background: rgba(var(--clr-orange-rgb), 0.1);
-    border: 1px solid rgba(var(--clr-orange-rgb), 0.2);
+    color: #ff6b35;
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.2);
     border-radius: 20px;
     margin-bottom: 24px;
     letter-spacing: 0.5px;
@@ -340,7 +323,7 @@ img {
 .hero-title {
     font-size: 5rem;
     font-weight: 900;
-    color: #f5eeee;
+    color: #ffffff;
     line-height: 1;
     margin-bottom: 8px;
     letter-spacing: -2px;
@@ -356,14 +339,13 @@ img {
 .hero-subtitle {
     font-size: 1.35rem;
     font-weight: 500;
-    color: #d8cbcb;
+    color: #a1a1aa;
     margin-bottom: 24px;
     line-height: 1.5;
 }
 
 .hero-info {
     display: flex;
-    justify-content: center;
     gap: 24px;
     margin-bottom: 36px;
     font-size: 0.9rem;
@@ -377,12 +359,11 @@ img {
 }
 
 .hero-info i {
-    color: var(--clr-orange);
+    color: #ff6b35;
 }
 
 .hero-actions {
     display: flex;
-    justify-content: center;
     gap: 16px;
     flex-wrap: wrap;
 }
@@ -391,16 +372,18 @@ img {
 /* RAPOSA */
 
 .hero-fox {
-    flex-shrink: 0;
+    position: absolute;
+    width: 45%;
     display: flex;
     justify-content: center;
     align-items: center;
+    left: 70%;
+    bottom: 15%
 }
 
 .hero-fox img {
-    width: 320px;
+    width: 260px;
     height: auto;
-    filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.15));
 }
 
 /* Buttons */
@@ -419,38 +402,307 @@ img {
 }
 
 .btn-primary {
-    color: white;
-    background: #f16f3c;
-    border: 1px solid #f16f3c;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.25);
 }
 
 .btn-primary:hover {
-    background: #f16f3c;
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.35);
 }
 
 .btn-outline {
-    color: white;
-    background: #f16f3c;
-    border: 1px solid #f16f3c;
+    color: #ffffff;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-outline:hover {
-    background: #f16f3c;
-    transform: translateY(-2px) scale(1.02);
-    /* box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3); */
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
 }
 
-/* Ilustração de chip removida (limpeza de CSS não utilizado) */
+/* Hero AI Illustration — Brain + Chip */
+.hero-illustration {
+    flex: 0 0 400px;
+    height: 400px;
+    position: relative;
+}
+
+.ai-brain-visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ai-circuit-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Chip Central */
+.ai-chip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    z-index: 3;
+}
+
+.chip-inner {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(233, 30, 140, 0.15));
+    border: 2px solid rgba(255, 107, 53, 0.4);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.15), inset 0 0 20px rgba(255, 107, 53, 0.05);
+    animation: chipPulse 3s ease-in-out infinite;
+}
+
+.chip-label {
+    font-size: 1.6rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+}
+
+@keyframes chipPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 40px rgba(255, 107, 53, 0.15), inset 0 0 20px rgba(255, 107, 53, 0.05);
+    }
+
+    50% {
+        box-shadow: 0 0 60px rgba(255, 107, 53, 0.25), inset 0 0 30px rgba(255, 107, 53, 0.08);
+    }
+}
+
+/* Pinos do chip */
+.chip-pin {
+    position: absolute;
+    background: linear-gradient(135deg, #ff6b35, #e91e8c);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+/* Pinos horizontais (esquerda e direita) */
+.pin-left-1,
+.pin-left-2,
+.pin-left-3,
+.pin-right-1,
+.pin-right-2,
+.pin-right-3 {
+    width: 18px;
+    height: 3px;
+}
+
+.pin-left-1 {
+    left: -18px;
+    top: 22px;
+}
+
+.pin-left-2 {
+    left: -18px;
+    top: 43px;
+}
+
+.pin-left-3 {
+    left: -18px;
+    top: 64px;
+}
+
+.pin-right-1 {
+    right: -18px;
+    top: 22px;
+}
+
+.pin-right-2 {
+    right: -18px;
+    top: 43px;
+}
+
+.pin-right-3 {
+    right: -18px;
+    top: 64px;
+}
+
+/* Pinos verticais (topo e fundo) */
+.pin-top-1,
+.pin-top-2,
+.pin-top-3,
+.pin-bottom-1,
+.pin-bottom-2,
+.pin-bottom-3 {
+    width: 3px;
+    height: 18px;
+}
+
+.pin-top-1 {
+    top: -18px;
+    left: 22px;
+}
+
+.pin-top-2 {
+    top: -18px;
+    left: 43px;
+}
+
+.pin-top-3 {
+    top: -18px;
+    left: 64px;
+}
+
+.pin-bottom-1 {
+    bottom: -18px;
+    left: 22px;
+}
+
+.pin-bottom-2 {
+    bottom: -18px;
+    left: 43px;
+}
+
+.pin-bottom-3 {
+    bottom: -18px;
+    left: 64px;
+}
+
+/* Circuitos / Linhas animadas */
+.circuit-path {
+    stroke-dasharray: 8 6;
+    animation: circuitFlow 4s linear infinite;
+}
+
+.circuit-line {
+    stroke-dasharray: 6 4;
+    animation: circuitFlow 3s linear infinite;
+}
+
+@keyframes circuitFlow {
+    from {
+        stroke-dashoffset: 0;
+    }
+
+    to {
+        stroke-dashoffset: -28;
+    }
+}
+
+/* Data dots pulsantes */
+.data-dot {
+    animation: dotPulse 2.5s ease-in-out infinite;
+}
+
+.data-dot:nth-child(odd) {
+    animation-delay: 0.5s;
+}
+
+.data-dot:nth-child(3n) {
+    animation-delay: 1s;
+}
+
+@keyframes dotPulse {
+
+    0%,
+    100% {
+        r: 3;
+        opacity: 0.4;
+    }
+
+    50% {
+        r: 5;
+        opacity: 0.8;
+    }
+}
+
+/* Ícones flutuantes temáticos */
+.ai-float-icon {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #ff6b35;
+    backdrop-filter: blur(6px);
+    z-index: 2;
+}
+
+.fi-1 {
+    top: 8%;
+    left: 15%;
+    color: #ff6b35;
+    animation: floatIcon 5s ease-in-out infinite;
+}
+
+.fi-2 {
+    top: 12%;
+    right: 10%;
+    color: #8b5cf6;
+    animation: floatIcon 6s ease-in-out infinite 1s;
+}
+
+.fi-3 {
+    bottom: 15%;
+    left: 8%;
+    color: #e91e8c;
+    animation: floatIcon 5.5s ease-in-out infinite 0.5s;
+}
+
+.fi-4 {
+    bottom: 10%;
+    right: 15%;
+    color: #10b981;
+    animation: floatIcon 4.5s ease-in-out infinite 1.5s;
+}
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
 
 /* ── COUNTDOWN ───────────────────────────── */
 
 .countdown-section {
-    background: hsl(221, 80%, 10%);
+    background: #021031;
     border-top: 1px solid rgba(77, 141, 255, 0.25);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     padding: 48px 0;
 }
+
+
+/*.countdown-section {
+    background: linear-gradient(135deg, #13082a 0%, #0d1f2d 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 48px 0;
+}
+*/
 
 .countdown-container {
     display: flex;
@@ -535,11 +787,7 @@ img {
 /* ── PROGRAMAÇÃO ─────────────────────────── */
 .section-programacao {
     padding: 80px 0;
-
-    background-image: url("../img/preto.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: linear-gradient(180deg, #0e0a1a 0%, #130e24 100%);
 }
 
 .schedule-loading {
@@ -575,6 +823,7 @@ img {
     background: linear-gradient(135deg, #ff6b35, #e91e8c);
     color: #ffffff;
     border-color: transparent;
+    box-shadow: 0 4px 16px rgba(255, 107, 53, 0.25);
 }
 
 .schedule-tab:hover:not(.active) {
@@ -705,34 +954,26 @@ img {
     background: #4d8dff;
 }
 
-.section-palestrantes {
+.section-palestrantes .container {
+    background: #021031;
+    border-radius: 28px;
+    padding: 60px;
+}
+
+/*.section-palestrantes {
     padding: 80px 0;
-    background: linear-gradient(180deg,
-            #021031 0%,
-            #041b52 100%);
+    background: linear-gradient(180deg, #130e24 0%, #0e0a1a 100%);
 }
-
-.section-card {
-    border: 1px solid rgba(255, 107, 53, 0.2);
-    border-radius: 24px;
-    padding: 40px;
-
-    background: linear-gradient(180deg,
-            rgba(4, 27, 82, 0.8) 0%,
-            rgba(2, 16, 49, 0.8) 100%);
-}
-
+*/
 .speakers-grid {
     display: grid;
-    /*grid-template-columns: repeat(4, 1fr);
-    grid-template-columns: repeat(4, 300px);*/
-    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
 }
 
 .speaker-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 107, 53, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
     padding: 32px 24px;
     text-align: center;
@@ -740,7 +981,8 @@ img {
 }
 
 .speaker-card:hover {
-    border-color: rgba(255, 107, 53, 0.3);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 107, 53, 0.2);
     transform: translateY(-4px);
 }
 
@@ -756,23 +998,9 @@ img {
     border: 2px solid rgba(255, 107, 53, 0.2);
 }
 
-/*
 .speaker-photo i {
     font-size: 3rem;
     color: #52525b;
-}*/
-.speaker-photo {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.speaker-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 .speaker-card h4 {
@@ -782,51 +1010,23 @@ img {
     margin-bottom: 4px;
 }
 
-.speaker-card h4 {
-    color: var(--clr-orange);
-}
-
-.speaker-link {
-    position: relative;
-    color: #71717a;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.speaker-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -3px;
-    width: 0;
-    height: 2px;
-    background: #ff6b35;
-    /* barrinha laranja */
-    transition: width 0.3s ease;
-}
-
-.speaker-link:hover::after {
-    width: 100%;
-}
-
-/*
 .speaker-role {
     font-size: 0.8rem;
     color: #ff6b35;
     font-weight: 600;
     margin-bottom: 8px;
-}*/
+}
 
 .speaker-topic {
-    color: #ffffff;
+    font-size: 0.82rem;
+    color: #71717a;
+    line-height: 1.4;
 }
 
 /* ── PATROCINADORES ──────────────────────── */
 .section-patrocinadores {
     padding: 80px 0;
-    background: linear-gradient(180deg,
-            #041b52 0%,
-            #021031 100%);
+    background: #0e0a1a;
 }
 
 .sponsor-tier {
@@ -845,15 +1045,11 @@ img {
 }
 
 .tier-diamante {
-    color: #ffffff;
-}
-
-.tier-ouro {
-    color: #fbbf24;
+    color: #ff6b35;
 }
 
 .tier-prata {
-    color: #94949c;
+    color: #a1a1aa;
 }
 
 .tier-midia {
@@ -875,12 +1071,6 @@ img {
     transition: all 0.3s ease;
 }
 
-.sponsor-card img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
-
 .sponsor-card:hover {
     transform: scale(1.05);
 }
@@ -894,7 +1084,7 @@ img {
 .sponsor-diamante-card {
     width: 240px;
     height: 120px;
-    background: white;
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 107, 53, 0.15);
 }
 
@@ -902,21 +1092,10 @@ img {
     border-color: rgba(255, 107, 53, 0.35);
 }
 
-.sponsor-ouro-card {
-    width: 220px;
-    height: 110px;
-    background: white;
-    border: 1px solid rgba(251, 191, 36, 0.15);
-}
-
-.sponsor-ouro-card:hover {
-    border-color: rgba(251, 191, 36, 0.35);
-}
-
 .sponsor-prata-card {
     width: 200px;
     height: 100px;
-    background: white;
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(161, 161, 170, 0.12);
 }
 
@@ -937,17 +1116,9 @@ img {
 
 /* ── SOBRE O EVENTO ──────────────────────── */
 .section-evento {
-    display: flex;
-    gap: 60px;
-    align-items: flex-start;
-
-    border: 1px solid rgba(255, 107, 53, 0.2);
-    border-radius: 34px;
-    padding: 40px;
-
-    background: rgba(255, 255, 255, 0.02);
+    padding: 80px 0;
+    background: linear-gradient(180deg, #0e0a1a 0%, #130e24 100%);
 }
-
 
 .evento-content {
     display: flex;
@@ -1039,24 +1210,10 @@ img {
 }
 
 /* ── ORGANIZADORES ───────────────────────── */
-
-.section-organizadores {
-    padding: 80px 0;
-
-    background-image: url("../img/preto.png");
-    background-size: cover;
-    /* faz a imagem preencher a seção */
-    background-position: center;
-    /* centraliza a imagem */
-    background-repeat: no-repeat;
-    /* impede repetição */
-}
-
-/*
 .section-organizadores {
     padding: 80px 0;
     background: #0e0a1a;
-}*/
+}
 
 .organizers-grid {
     display: grid;
@@ -1084,7 +1241,7 @@ img {
 
 /* ── FOOTER ──────────────────────────────── */
 .footer {
-    background: var(--bg-deep);
+    background: #08060f;
     padding: 60px 0 32px;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -1105,7 +1262,7 @@ img {
 
 .footer-col p {
     font-size: 0.88rem;
-    color: var(--text-muted);
+    color: #71717a;
     line-height: 1.7;
     margin-bottom: 8px;
     display: flex;
@@ -1134,14 +1291,14 @@ img {
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--text-secondary);
+    color: #a1a1aa;
     font-size: 1.1rem;
     transition: all 0.3s ease;
 }
 
 .footer-social a:hover {
-    color: #f3e1e1;
-    background: var(--gradient-brand);
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff6b35, #e91e8c);
     border-color: transparent;
     transform: translateY(-2px);
 }
@@ -1154,11 +1311,11 @@ img {
 
 .footer-bottom p {
     font-size: 0.82rem;
-    color: var(--text-dim);
+    color: #52525b;
 }
 
 .footer-bottom a {
-    color: var(--text-secondary);
+    color: #a1a1aa;
     font-weight: 600;
     transition: color 0.3s ease;
 }
@@ -1170,7 +1327,7 @@ img {
 /* ── LOGOS ──────────────────────────────── */
 
 .logo-img {
-    height: 36px;
+    height: 30px;
     width: auto;
 }
 
@@ -1178,28 +1335,15 @@ img {
     width: 400px;
     max-width: 100%;
     height: auto;
-    margin: 0 auto;
 }
 
 /* ── RESPONSIVO ──────────────────────────── */
-
-/* ── Tablet (até 1024px) ── */
 @media (max-width: 1024px) {
-
-    /* Hero */
-    .hero-content {
-        gap: 80px;
+    .hero-illustration {
+        flex: 0 0 300px;
+        height: 300px;
     }
 
-    .hero-fox img {
-        width: 260px;
-    }
-
-    .hero-logo {
-        width: 320px;
-    }
-
-    /* Grids */
     .speakers-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1209,10 +1353,8 @@ img {
     }
 }
 
-/* ── Mobile (até 768px) ── */
 @media (max-width: 768px) {
 
-    /* Navbar */
     .nav-links,
     .btn-inscricao {
         display: none;
@@ -1222,28 +1364,14 @@ img {
         display: block;
     }
 
-    .logo-img {
-        height: 26px;
-    }
-
-    /* Hero */
-    .hero {
-        min-height: auto;
-        padding: 100px 0 40px;
-    }
-
     .hero-content {
         flex-direction: column;
-        gap: 40px;
-        padding: 20px 0;
+        text-align: center;
+        padding: 40px 0;
     }
 
     .hero-text {
         max-width: 100%;
-    }
-
-    .hero-logo {
-        width: 280px;
     }
 
     .hero-title {
@@ -1251,114 +1379,52 @@ img {
     }
 
     .hero-subtitle {
-        font-size: 1.05rem;
+        font-size: 1.1rem;
     }
 
     .hero-info {
+        justify-content: center;
         flex-wrap: wrap;
-        gap: 12px;
-        font-size: 0.82rem;
     }
 
     .hero-actions {
-        gap: 12px;
+        justify-content: center;
     }
 
-    .hero-actions .btn {
-        padding: 12px 22px;
-        font-size: 0.88rem;
-    }
-
-    /* Raposa */
-    .hero-fox img {
-        width: 200px;
-    }
-
-    /* Countdown */
-    .countdown-section {
-        padding: 32px 0;
+    .hero-illustration {
+        flex: 0 0 260px;
+        height: 260px;
     }
 
     .countdown-container {
         flex-direction: column;
         text-align: center;
-        gap: 24px;
-    }
-
-    .countdown-text h3 {
-        font-size: 1.3rem;
     }
 
     .countdown-text p {
         max-width: 100%;
-        margin: 0 auto;
-        font-size: 0.88rem;
     }
 
     .countdown-timer {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        width: 100%;
-    }
-
-    .countdown-item {
-        min-width: auto;
-        padding: 16px 10px;
-    }
-
-    .countdown-number {
-        font-size: 1.8rem;
-    }
-
-    .countdown-label {
-        font-size: 0.65rem;
-    }
-
-    /* Programação */
-    .schedule-tabs {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .schedule-tab {
-        padding: 10px 20px;
-        font-size: 0.82rem;
+        justify-content: center;
     }
 
     .schedule-card {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
-    }
-
-    .schedule-time {
-        min-width: auto;
+        gap: 12px;
     }
 
     .schedule-tag {
         align-self: flex-start;
     }
 
-    /* Palestrantes */
     .speakers-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
     }
 
-    .speaker-card {
-        padding: 24px 16px;
-    }
-
-    .speaker-photo {
-        width: 80px;
-        height: 80px;
-    }
-
-    /* Sobre o Evento */
     .evento-content {
         flex-direction: column;
-        gap: 32px;
     }
 
     .evento-visual {
@@ -1366,146 +1432,38 @@ img {
         width: 100%;
     }
 
-    /* Organizadores */
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
     .organizers-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* Footer */
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
-
-    /* Seções gerais */
     .section-title {
         font-size: 2rem;
     }
-
-    .section-desc {
-        font-size: 0.95rem;
-    }
 }
 
-/* Acessibilidade: foco visível no menu móvel */
-.mobile-menu a:focus {
-    outline: 3px solid rgba(var(--clr-orange-rgb), 0.25);
-    outline-offset: 3px;
-}
-
-/* Transição do menu móvel */
-.mobile-menu {
-    transition: opacity 0.18s ease, transform 0.18s ease;
-}
-
-/* ── Mobile pequeno (até 480px) ── */
 @media (max-width: 480px) {
-
-    /* Hero */
-    .hero {
-        padding: 88px 0 32px;
-    }
-
-    .hero-content {
-        gap: 32px;
-    }
-
-    .hero-logo {
-        width: 220px;
-    }
-
     .hero-title {
         font-size: 2.8rem;
     }
 
-    .hero-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 16px;
-    }
-
-    .hero-badge {
-        font-size: 0.7rem;
-        padding: 5px 12px;
-    }
-
-    .hero-info {
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
-    .hero-actions .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    /* Raposa */
-    .hero-fox img {
-        width: 160px;
-    }
-
-    /* Countdown */
-    .countdown-timer {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-    }
-
     .countdown-item {
-        padding: 12px 6px;
+        padding: 14px 16px;
+        min-width: 70px;
     }
 
     .countdown-number {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
 
-    .countdown-label {
-        font-size: 0.6rem;
-        letter-spacing: 0.5px;
-    }
-
-    .countdown-text h3 {
-        font-size: 1.1rem;
-    }
-
-    /* Palestrantes */
     .speakers-grid {
         grid-template-columns: 1fr;
     }
 
-    /* Patrocinadores */
-    .sponsor-diamante-card {
-        width: 100%;
-        max-width: 240px;
+    .organizers-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-
-    .sponsor-ouro-card {
-        width: 100%;
-        max-width: 240px;
-        ;
-
-        .sponsor-prata-card,
-        .sponsor-midia-card {
-            width: 100%;
-            max-width: 200px;
-        }
-
-        /* Organizadores */
-        .organizers-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        /* Sobre o Evento */
-        .edition-badge {
-            font-size: 4rem;
-        }
-
-        .evento-visual {
-            padding: 40px 24px;
-        }
-    }
+}
