@@ -941,13 +941,10 @@ img {
     gap: 60px;
     align-items: flex-start;
 
-    border: 1px solid rgba(255, 107, 53, 0.2);
-    border-radius: 34px;
     padding: 40px;
 
     background: rgba(255, 255, 255, 0.02);
 }
-
 
 .evento-content {
     display: flex;
@@ -1064,8 +1061,7 @@ img {
     gap: 16px;
 }
 
-.organizer-card {
-    background: #0e0e0f; 
+.organizer-card { 
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 14px;
     padding: 28px 16px;
@@ -1077,7 +1073,7 @@ img {
 }
 
 .organizer-card:hover {
-    background: #0e0e0f; 
+    background: rgba(255, 255, 255, 0.04); 
     transform: translateY(-5px); 
     color: #ffffff;
 }
