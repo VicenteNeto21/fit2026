@@ -263,4 +263,60 @@ document.addEventListener('DOMContentLoaded', () => {
         fadeObserver.observe(el);
     });
 
+    // ── Speaker Modal Logic ─────────────────────
+    const speakerModal = document.getElementById('speaker-modal');
+    const detailButtons = document.querySelectorAll('.btn-details');
+    const closeModalBtn = document.getElementById('close-modal');
+    const modalOverlay = document.querySelector('.speaker-modal-overlay');
+
+    if (speakerModal) {
+        function openSpeakerModal(btn) {
+            // Populate data
+            document.getElementById('modal-photo').src = btn.dataset.photo;
+            document.getElementById('modal-name').textContent = btn.dataset.name;
+            document.getElementById('modal-role').textContent = btn.dataset.role;
+            document.getElementById('modal-title').textContent = btn.dataset.title;
+            document.getElementById('modal-time').textContent = btn.dataset.time;
+            document.getElementById('modal-location').textContent = btn.dataset.location;
+            document.getElementById('modal-bio').innerHTML = btn.dataset.bio;
+            document.getElementById('modal-link').href = btn.dataset.link;
+
+            // Show modal
+            speakerModal.classList.remove('hidden');
+            speakerModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            // Add ESC listener
+            document.addEventListener('keydown', handleModalEscape);
+        }
+
+        function closeSpeakerModal() {
+            speakerModal.classList.add('hidden');
+            speakerModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleModalEscape);
+        }
+
+        function handleModalEscape(e) {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+                closeSpeakerModal();
+            }
+        }
+
+        detailButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openSpeakerModal(btn);
+            });
+        });
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeSpeakerModal);
+        }
+
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', closeSpeakerModal);
+        }
+    }
+
 });

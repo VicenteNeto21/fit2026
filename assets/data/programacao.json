@@ -4,11 +4,11 @@
     "local": "UFC — Campus Crateús",
     "dias": [
         {
-            "id": "day1",
-            "label": "Dia 1",
-            "data": "04/10",
-            "dataCompleta": "2026-10-04",
-            "diaSemana": "Domingo",
+            "id": "Pré-FIT",
+            "label": "Pré-FIT",
+            "data": "17/06",
+            "dataCompleta": "2026-06-17",
+            "diaSemana": "Quarta-feira",
             "atividades": [
                 {
                     "horario": "12:00 - 12:50",
@@ -19,44 +19,28 @@
                     "tipoLabel": "Credenciamento"
                 },
                 {
-                    "horario": "14:00 - 15:00",
-                    "titulo": "Palestra: What African Cities and AI Writing Tools Reveal About Hidden Patterns in Complex Systems",
-                    "palestrante": "A definir",
-                    "local": "Auditório",
-                    "tipo": "palestra",
-                    "tipoLabel": "Palestra"
-                },
-                {
-                    "horario": "11:00 - 13:00",
-                    "titulo": "Almoço & Arena FIT Games",
-                    "palestrante": null,
-                    "local": "Hall do RU",
-                    "tipo": "coffee",
-                    "tipoLabel": "Coffee Break"
-                },
-                {
                     "horario": "13:00 - 15:00",
-                    "titulo": "Minicurso: Introdução ao Machine Learning com Python",
-                    "palestrante": "A definir",
-                    "local": "Laboratório 03",
-                    "tipo": "minicurso",
-                    "tipoLabel": "Minicurso"
-                },
-                {
-                    "horario": "15:30 - 17:00",
-                    "titulo": "Mesa Redonda: Desafios Éticos da Inteligência Artificial",
-                    "palestrante": "A definir",
+                    "titulo": "Palestra: O que as cidades africanas e as ferramentas de escrita de IA revelam sobre padrões ocultos em sistemas complexos",
+                    "palestrante": "Ronaldo Menezes",
                     "local": "Auditório",
                     "tipo": "palestra",
                     "tipoLabel": "Palestra"
                 },
                 {
-                    "horario": "19:00 - 21:00",
-                    "titulo": "Maratona de Programação — Fase 1",
-                    "palestrante": "A definir",
-                    "local": "Laboratório 02",
-                    "tipo": "startufc",
-                    "tipoLabel": "StartUFC"
+                    "horario": "15:00 - 15:30",
+                    "titulo": "Comunicados sobre o FIT",
+                    "palestrante": "José Wellington",
+                    "local": "Auditório",
+                    "tipo": "comunicados",
+                    "tipoLabel": "Comunicados"
+                },
+                {
+                    "horario": "15:50 - 16:00",
+                    "titulo": "Encerramento",
+                    "palestrante": "José Wellington",
+                    "local": "Auditório",
+                    "tipo": "encerramento",
+                    "tipoLabel": "Encerramento"
                 }
             ]
         }
