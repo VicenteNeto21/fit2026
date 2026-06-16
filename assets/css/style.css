@@ -1316,8 +1316,8 @@ img {
 /* ── LOGOS ──────────────────────────────── */
 
 .logo-img {
-    height: 36px;
-    width: auto;
+    height: auto;
+    width: 20vh;
 }
 
 .hero-logo {
