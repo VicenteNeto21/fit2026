@@ -19,7 +19,9 @@
     <!-- Google Fonts: Inter e Encode Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Encode+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Encode+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -629,19 +631,19 @@
                                 <div>
                                     <label for="of-numero" class="field-label accent">Número do Ofício *</label>
                                     <input type="text" id="of-numero" placeholder="Ofício Nº 001/2026 – UFC"
-                                        class="fit-input" value="Ofício Nº 001/2026 – Universidade Federal do Ceará" required>
+                                        class="fit-input" value="Ofício Nº 001/2026 – Universidade Federal do Ceará"
+                                        required>
                                 </div>
                                 <div>
                                     <label for="of-data" class="field-label accent">Local e Data *</label>
-                                    <input type="text" id="of-data" placeholder="Crateús, 23 de setembro de 2025"
-                                        class="fit-input" value="Crateús, 23 de setembro de 2025" required>
+                                    <input type="text" id="of-data" placeholder="Crateús - CE, 23 de junho de 2026"
+                                        class="fit-input" value="Crateús - CE, 23 de junho de 2026" required>
                                 </div>
                             </div>
                             <div>
                                 <label for="of-assunto" class="field-label accent">Assunto *</label>
                                 <input type="text" id="of-assunto" placeholder="Assunto do ofício" class="fit-input"
-                                    value="Agendamento de Apresentação do Plano de Patrocínio para o FIT 2025"
-                                    required>
+                                    value="Agendamento de Apresentação do Plano de Patrocínio para o FIT 2025" required>
                             </div>
 
                             <hr class="border-gray-100">
@@ -709,7 +711,13 @@
 
                             <hr class="border-gray-100">
 
-                            <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                            <div class="mb-4 flex items-center gap-2">
+                                <input type="checkbox" id="of-assinatura-toggle" class="fit-checkbox" checked>
+                                <label for="of-assinatura-toggle" class="field-label accent !mb-0 cursor-pointer">Exibir
+                                    linha para assinatura física</label>
+                            </div>
+
+                            <div id="of-responsavel-wrapper" class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
                                 <!-- Campos de signatário removidos -->
                                 <div>
                                     <label for="of-responsavel" class="field-label accent">Nome do Responsável *</label>
@@ -732,7 +740,8 @@
                         class="oficio-preview-panel flex-1 bg-gray-50 p-6 rounded-2xl border border-gray-200 overflow-x-auto flex justify-center items-start">
                         <!-- Wrapper para dar escala no preview e não quebrar layout -->
                         <div class="oficio-preview-wrapper" style="transform-origin: top center;">
-                            <div id="oficio-document" class="a4-document bg-white relative" style="font-family: 'Encode Sans', sans-serif;">
+                            <div id="oficio-document" class="a4-document bg-white relative"
+                                style="font-family: 'Encode Sans', sans-serif;">
                                 <div class="a4-content flex flex-col h-full">
                                     <!-- Cabeçalho -->
                                     <div class="of-header flex justify-between items-start mb-6 pb-2">
@@ -787,9 +796,9 @@
                                     </div>
 
                                     <!-- Responsável -->
-                                    <div
+                                    <div id="prev-assinatura-block"
                                         class="mt-2 mb-10 text-[12pt]  text-center w-full flex flex-col items-center">
-                                        <div class="border-t border-black w-2/3 pt-1">
+                                        <div id="prev-assinatura-line" class="border-t border-black w-2/3 pt-1">
                                             <div id="prev-responsavel" class="font-bold">José Wellington Franco da Silva
                                             </div>
                                             <div id="prev-responsavel-cargo">Professor responsável pelo evento</div>
@@ -799,9 +808,9 @@
 
                                 <!-- Rodapé absoluto -->
                                 <div class="of-footer absolute bottom-0 left-0 w-full">
-                                    <div class="absolute bottom-[28px] left-[20mm] text-[8pt] font-sans font-bold leading-normal z-10">
-                                        E-mail: <span
-                                            class="text-blue-600 font-normal">fit@crateus.ufc.br</span><br>
+                                    <div
+                                        class="absolute bottom-[28px] left-[20mm] text-[8pt] font-sans font-bold leading-normal z-10">
+                                        E-mail: <span class="text-blue-600 font-normal">fit@crateus.ufc.br</span><br>
                                         Localização: <span class="font-normal">Avenida Professora Machadinha Lima, S/N,
                                             Príncipe Imperial, Crateús-CE.</span><br>
                                         CEP: <span class="font-normal">63708-825</span>

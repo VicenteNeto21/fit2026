@@ -57,6 +57,24 @@ export function initOficios() {
     // Initial update
     updateOficioPreview();
 
+    const toggleAssinatura = document.getElementById('of-assinatura-toggle');
+    const prevAssinaturaLine = document.getElementById('prev-assinatura-line');
+
+    function updateAssinaturaVisibility() {
+        if (toggleAssinatura && prevAssinaturaLine) {
+            if (toggleAssinatura.checked) {
+                prevAssinaturaLine.classList.add('border-t', 'border-black', 'pt-1');
+            } else {
+                prevAssinaturaLine.classList.remove('border-t', 'border-black', 'pt-1');
+            }
+        }
+    }
+
+    if(toggleAssinatura) {
+        toggleAssinatura.addEventListener('change', updateAssinaturaVisibility);
+        updateAssinaturaVisibility(); // Call initially
+    }
+
     // UI Elements
     const btnGeneratePdf = document.getElementById('btn-generate-pdf');
     const btnSaveOficio = document.getElementById('btn-save-oficio');
@@ -180,6 +198,21 @@ export function initOficios() {
         });
     }
 
+    // Modal close logic
+    if (oficiosListModal) {
+        const closeBtn = oficiosListModal.querySelector('.btn-cancel');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                oficiosListModal.classList.remove('show');
+            });
+        }
+        oficiosListModal.addEventListener('click', (e) => {
+            if (e.target === oficiosListModal) {
+                oficiosListModal.classList.remove('show');
+            }
+        });
+    }
+
     // Delegação de eventos para botões na tabela de ofícios
     if (oficiosTableBody) {
         oficiosTableBody.addEventListener('click', async (e) => {
@@ -250,7 +283,8 @@ export function initOficios() {
                 filename:     `Oficio_FIT_2026_${destName}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true, logging: false },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: 'avoid-all' }
             };
 
             if (window.html2pdf) {
