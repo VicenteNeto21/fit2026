@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIT 2026 — Admin</title>
+    <meta name="description"
+        content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fit.crateus.ufc.br/auth/admin.html">
+    <meta property="og:title" content="FIT 2026 — Admin">
+    <meta property="og:description"
+        content="Gerencie os palestrantes, patrocinadores e links do XIII Fórum de Inovação e Tecnologia (FIT 2026) Crateús.">
+    <meta property="og:image" content="https://fit.crateus.ufc.br/fit_2026_avatar.png">
+    <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Google Fonts: Inter e Encode Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Encode+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <!-- html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+    <script src="../assets/js/particles.js"></script>
+    <script src="../assets/js/supabase-config.js"></script>
+
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    colors: {
+                        fit: {
+                            orange: '#FF5F17',
+                            yellow: '#FFC800',
+                            red: '#ef4444',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Admin CSS para Abas, Modais e Toasts Dinâmicos -->
+    <link rel="stylesheet" href="admin.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f0f0;
+        }
+
+        /* ── Blobs decorativos do fundo ── */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Tabs de navegação ── */
+        .admin-tab {
+            transition: all 0.25s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .admin-tab.active {
+            color: #FF5F17 !important;
+            border-bottom-color: #FF5F17 !important;
+            font-weight: 700;
+        }
+
+        .admin-tab:hover:not(.active) {
+            color: #374151;
+            border-bottom-color: #e5e7eb;
+        }
+
+        /* ── Input padrão (light) ── */
+        .fit-input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            outline: none;
+            font-size: 0.875rem;
+            color: #1a1a1a;
+            background: #fafafa;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .fit-input:focus {
+            border-color: #FF5F17;
+            box-shadow: 0 0 0 3px rgba(255, 95, 23, 0.1);
+            background: #fff;
+        }
+
+        .fit-input::placeholder {
+            color: #9ca3af;
+        }
+
+        select.fit-input {
+            cursor: pointer;
+        }
+
+        /* ── Botão primário ── */
+        .fit-btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #FF5F17, #FFC800);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .fit-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 95, 23, 0.28);
+        }
+
+        .fit-btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* ── Botão secundário ── */
+        .fit-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            background: #fff;
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.78rem;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .fit-btn-secondary:hover {
+            border-color: #d1d5db;
+            background: #f9fafb;
+        }
+
+        /* ── Botão de perigo (vermelho) ── */
+        .fit-btn-danger {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            background: #fef2f2;
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 0.78rem;
+            border: 1.5px solid #fecaca;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .fit-btn-danger:hover {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        /* ── Tabela ── */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table thead tr {
+            background: #f9fafb;
+        }
+
+        .admin-table th {
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 13px 16px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .admin-table tbody tr {
+            border-bottom: 1px solid #f3f4f6;
+            transition: background 0.15s;
+        }
+
+        .admin-table tbody tr:hover {
+            background: #fafafa;
+        }
+
+        .admin-table td {
+            padding: 13px 16px;
+            font-size: 0.875rem;
+            color: #374151;
+            vertical-align: middle;
+        }
+
+        .admin-table td:last-child {
+            color: #6b7280;
+        }
+
+        /* ── Action buttons nas rows ── */
+        .row-btn {
+            padding: 5px 10px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1.5px solid;
+        }
+
+        .row-btn-edit {
+            color: #FF5F17;
+            border-color: #fed7aa;
+            background: #fff7ed;
+        }
+
+        .row-btn-edit:hover {
+            background: #ffedd5;
+            border-color: #fdba74;
+        }
+
+        .row-btn-delete {
+            color: #ef4444;
+            border-color: #fecaca;
+            background: #fef2f2;
+        }
+
+        .row-btn-delete:hover {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
+
+        /* ── Upload Zone ── */
+        .upload-zone {
+            border: 2px dashed #e5e7eb;
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            background: #fafafa;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.drag-active {
+            border-color: #FF5F17;
+            background: rgba(255, 95, 23, 0.03);
+        }
+
+        .upload-preview {
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fafafa;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* ── Modal ── */
+        .modal-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            padding: 28px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #111827;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        /* ── Label para campos do modal ── */
+        .field-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+
+        .field-label.accent {
+            color: #FF5F17;
+        }
+
+        /* ── Toggle URL/Upload ── */
+        .btn-toggle-input {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-toggle-input:hover {
+            border-color: #FF5F17;
+            color: #FF5F17;
+        }
+
+        /* ── Status badge ── */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .badge-green {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-gray {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        /* ── DB Connection Panel ── */
+        .db-panel {
+            background: #fff;
+            border: 1.5px solid #f3f4f6;
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+
+    <!-- Script de Segurança: Redirecionamento Prévio de Sessão (Simplificado, verificação final ocorre no main.js) -->
+    <script>
+        const url = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_SUPABASE_URL_AQUI') ? window.SUPABASE_URL : localStorage.getItem('supabase_url');
+        const key = (window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY !== 'SUA_SUPABASE_ANON_KEY_AQUI') ? window.SUPABASE_ANON_KEY : localStorage.getItem('supabase_anon_key');
+        if (!url || !key) window.location.href = 'login.html';
+    </script>
+</head>
+
+<body style="display: none;">
+    <!-- Canvas de Partículas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Blobs decorativos do fundo -->
+    <div class="bg-blob w-64 h-64 bg-yellow-200 opacity-40" style="top: 65%; left: 0%;"></div>
+    <div class="bg-blob w-48 h-48 bg-orange-100 opacity-50" style="top: 8%; right: 3%;"></div>
+    <div class="bg-blob w-36 h-36 bg-red-100 opacity-35" style="top: 70%; right: 5%;"></div>
+    <div class="bg-blob w-32 h-32 bg-yellow-100 opacity-45" style="top: 2%; left: 20%;"></div>
+
+    <!-- ════════ ADMIN PANEL ════════ -->
+    <div id="admin-wrapper" class="w-full relative z-10" style="display: none;">
+
+        <!-- ── Header ── -->
+        <header class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+            <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex items-center justify-between h-[60px]">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-8 h-8 rounded-full overflow-hidden border-2 border-orange-200 flex items-center justify-center bg-orange-50">
+                        <img src="../assets/img/favicon.svg" alt="FIT" class="w-5 h-5 object-contain"
+                            onerror="this.style.display='none'">
+                    </div>
+                    <h1 class="text-base font-extrabold text-gray-900">FIT <span
+                            class="bg-gradient-to-r from-fit-orange to-fit-yellow bg-clip-text text-transparent">Admin</span>
+                    </h1>
+                </div>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-3">
+                    <span id="user-email" class="text-xs text-gray-400 hidden md:inline"></span>
+                    <button id="logout-btn"
+                        class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-500 bg-gray-100 border border-gray-200 rounded-lg hover:text-red-500 hover:bg-red-50 hover:border-red-200 transition-all cursor-pointer">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex gap-0 overflow-x-auto">
+                <button
+                    class="admin-tab active flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-palestrantes">
+                    <i class="fas fa-user"></i> Palestrantes
+                </button>
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-patrocinadores">
+                    <i class="fas fa-handshake"></i> Patrocinadores
+                </button>
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-links">
+                    <i class="fas fa-link"></i> Links Úteis (Supabase)
+                </button>
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-oficios">
+                    <i class="fas fa-file-alt"></i> Ofícios
+                </button>
+            </div>
+        </header>
+
+        <!-- ── Content ── -->
+        <main class="max-w-[1200px] mx-auto px-6 max-sm:px-4 py-8">
+
+            <!-- ── Palestrantes ── -->
+            <div id="section-palestrantes" class="admin-section active">
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Palestrantes</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="speakers"
+                            placeholder="Buscar palestrante..."
+                            style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <button id="btn-add-speaker" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div id="speakers-loading" class="table-loading-overlay" style="display:none;"><i
+                            class="fas fa-spinner fa-spin"></i></div>
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Cargo</th>
+                                    <th>Tema</th>
+                                    <th>Ordem</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="speakers-table-body">
+                                <tr>
+                                    <td colspan="5" class="text-center py-14 text-gray-400 text-sm">
+                                        <i class="fas fa-spinner fa-spin text-2xl mb-3 text-orange-300 block"></i>
+                                        Carregando palestrantes...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Patrocinadores ── -->
+            <div id="section-patrocinadores" class="admin-section">
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Patrocinadores</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="sponsors"
+                            placeholder="Buscar patrocinador..."
+                            style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <button id="btn-add-sponsor" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div id="sponsors-loading" class="table-loading-overlay" style="display:none;"><i
+                            class="fas fa-spinner fa-spin"></i></div>
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Ordem</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sponsors-table-body">
+                                <tr>
+                                    <td colspan="4" class="text-center py-14 text-gray-400 text-sm">
+                                        <i class="fas fa-spinner fa-spin text-2xl mb-3 text-orange-300 block"></i>
+                                        Carregando patrocinadores...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Links Úteis (Supabase) ── -->
+            <div id="section-links" class="admin-section">
+
+                <!-- DB Connection Panel -->
+                <div class="db-panel">
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2">
+                            <span id="sb-status-dot"
+                                class="w-2.5 h-2.5 rounded-full bg-red-400 inline-block flex-shrink-0"></span>
+                            Supabase: <span id="sb-status-text" class="text-red-500 font-semibold">Desconectado</span>
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Autenticado via banco conectado.</p>
+                    </div>
+                    <button id="btn-config-supabase" class="fit-btn-secondary">
+                        <i class="fas fa-cog"></i> Configurar Banco
+                    </button>
+                </div>
+
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Links Úteis</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <input type="text" class="search-input fit-input max-sm:w-full" data-search="links"
+                            placeholder="Buscar link..." style="max-width:220px;padding:8px 12px;font-size:0.8rem;">
+                        <button id="btn-add-link" class="fit-btn-primary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-plus"></i> Adicionar Link
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div id="links-loading" class="table-loading-overlay" style="display:none;"><i
+                            class="fas fa-spinner fa-spin"></i></div>
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Título / Descrição</th>
+                                    <th>URL</th>
+                                    <th>Miniatura</th>
+                                    <th>Estilo</th>
+                                    <th>Ordem</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="links-table-body">
+                                <tr>
+                                    <td colspan="7" class="text-center py-14 text-gray-400 text-sm">
+                                        <i class="fas fa-database text-2xl mb-3 text-orange-300 block"></i>
+                                        Carregando links do banco...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Ofícios ── -->
+            <div id="section-oficios" class="admin-section">
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Gerador de Ofícios</h2>
+                    <div class="flex gap-2 max-sm:flex-col w-full sm:w-auto">
+                        <button id="btn-oficios-list" class="fit-btn-secondary max-sm:justify-center w-full sm:w-auto">
+                            <i class="fas fa-list"></i> Salvos
+                        </button>
+                        <button id="btn-oficio-novo" class="fit-btn-secondary max-sm:justify-center w-full sm:w-auto">
+                            <i class="fas fa-plus"></i> Novo
+                        </button>
+                        <button id="btn-save-oficio" class="fit-btn-primary max-sm:justify-center w-full sm:w-auto"
+                            style="background: #10b981; border-color: #10b981;">
+                            <i class="fas fa-save"></i> Salvar
+                        </button>
+                        <button id="btn-generate-pdf" class="fit-btn-primary max-sm:justify-center w-full sm:w-auto">
+                            <i class="fas fa-file-pdf"></i> Gerar PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="oficio-container flex gap-6 max-lg:flex-col">
+                    <!-- Formulário -->
+                    <div
+                        class="oficio-form-panel bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex-1 h-fit">
+                        <form id="oficio-form" class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                                <div>
+                                    <label for="of-numero" class="field-label accent">Número do Ofício *</label>
+                                    <input type="text" id="of-numero" placeholder="Ofício Nº 001/2026 – UFC"
+                                        class="fit-input" value="Ofício Nº 001/2026 – Universidade Federal do Ceará" required>
+                                </div>
+                                <div>
+                                    <label for="of-data" class="field-label accent">Local e Data *</label>
+                                    <input type="text" id="of-data" placeholder="Crateús, 23 de setembro de 2025"
+                                        class="fit-input" value="Crateús, 23 de setembro de 2025" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="of-assunto" class="field-label accent">Assunto *</label>
+                                <input type="text" id="of-assunto" placeholder="Assunto do ofício" class="fit-input"
+                                    value="Agendamento de Apresentação do Plano de Patrocínio para o FIT 2025"
+                                    required>
+                            </div>
+
+                            <hr class="border-gray-100">
+
+                            <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                                <div>
+                                    <label for="of-tratamento" class="field-label accent">Tratamento *</label>
+                                    <input type="text" id="of-tratamento" placeholder="À Senhora," class="fit-input"
+                                        value="À Senhora," required>
+                                </div>
+                                <div>
+                                    <label for="of-destinatario" class="field-label accent">Nome do Destinatário
+                                        *</label>
+                                    <input type="text" id="of-destinatario" placeholder="Nome completo"
+                                        class="fit-input" value="Maria do Carmo" required>
+                                </div>
+                                <div>
+                                    <label for="of-cargo" class="field-label accent">Cargo / Título *</label>
+                                    <input type="text" id="of-cargo" placeholder="Presidenta da Associação..."
+                                        class="fit-input"
+                                        value="Presidenta da Associação Comercial e Industrial de Crateús - ACIC"
+                                        required>
+                                </div>
+                                <div>
+                                    <label for="of-organizacao" class="field-label accent">Organização *</label>
+                                    <input type="text" id="of-organizacao" placeholder="Nome da instituição"
+                                        class="fit-input" value="Associação Comercial e Industrial de Crateús" required>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                                <div>
+                                    <label for="of-rua" class="field-label accent">Endereço (Rua e Bairro)</label>
+                                    <input type="text" id="of-rua"
+                                        placeholder="Rua Almirante Tamandaré, 741 - São Vicente" class="fit-input"
+                                        value="Rua Almirante Tamandaré, 741 - São Vicente">
+                                </div>
+                                <div>
+                                    <label for="of-cep" class="field-label accent">CEP e Cidade</label>
+                                    <input type="text" id="of-cep" placeholder="CEP: 63700-000 Crateús - CE"
+                                        class="fit-input" value="CEP: 63700-000 Crateús - CE">
+                                </div>
+                            </div>
+
+                            <hr class="border-gray-100">
+
+                            <div>
+                                <label for="of-vocativo" class="field-label accent">Vocativo Inicial *</label>
+                                <input type="text" id="of-vocativo" placeholder="Senhora Presidenta," class="fit-input"
+                                    value="Senhora Presidenta," required>
+                            </div>
+
+                            <div>
+                                <label for="of-corpo" class="field-label accent">Corpo do Ofício (Quebras de linha são
+                                    suportadas) *</label>
+                                <textarea id="of-corpo" class="fit-input" rows="12"
+                                    required>1. Temos o prazer de convidar Vossa Excelência para o Fórum de Inovação e Tecnologia (FIT) 2025, que será realizado nos dias 20 e 21 de outubro de 2025, no Campus da Universidade Federal do Ceará (UFC) em Crateús. O FIT se consolidou ao longo dos anos como um evento de grande importância para a região, reunindo pesquisadores, acadêmicos, especialistas e a comunidade local para debater as inovações tecnológicas mais recentes.
+
+2. Aproveitamos a oportunidade para convidar a Banda Municipal a participar da solenidade de abertura do evento, marcada para o dia 20 de outubro (segunda-feira). Reconhecemos sua importância cultura para a valorização da identidade local, e estamos certos de que sua participação engrandecerá o evento, reforçando o vínculo entre universidade e comunidade.
+
+3. Solicitamos a gentileza de confirmar a disponibilidade da banda e, se possível, o encaminhamento dos contatos necessários para alinhamentos técnicos e logísticos.
+
+4. Desde já, agradecemos a atenção e colocamo-nos à disposição para quaisquer esclarecimentos, por meio dos contatos: (88) 3691-9701 ou fit@crateus.ufc.br.</textarea>
+                            </div>
+
+                            <hr class="border-gray-100">
+
+                            <div class="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                                <!-- Campos de signatário removidos -->
+                                <div>
+                                    <label for="of-responsavel" class="field-label accent">Nome do Responsável *</label>
+                                    <input type="text" id="of-responsavel" placeholder="José Wellington Franco da Silva"
+                                        class="fit-input" value="José Wellington Franco da Silva" required>
+                                </div>
+                                <div>
+                                    <label for="of-responsavel-cargo" class="field-label accent">Cargo do Responsável
+                                        *</label>
+                                    <input type="text" id="of-responsavel-cargo"
+                                        placeholder="Professor responsável pelo evento" class="fit-input"
+                                        value="Professor responsável pelo evento" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Preview -->
+                    <div
+                        class="oficio-preview-panel flex-1 bg-gray-50 p-6 rounded-2xl border border-gray-200 overflow-x-auto flex justify-center items-start">
+                        <!-- Wrapper para dar escala no preview e não quebrar layout -->
+                        <div class="oficio-preview-wrapper" style="transform-origin: top center;">
+                            <div id="oficio-document" class="a4-document bg-white relative" style="font-family: 'Encode Sans', sans-serif;">
+                                <div class="a4-content flex flex-col h-full">
+                                    <!-- Cabeçalho -->
+                                    <div class="of-header flex justify-between items-start mb-6 pb-2">
+                                        <img src="../assets/img/offices/logo-fit-oficio.png" alt="FIT"
+                                            class="h-24 object-contain">
+                                        <img src="../assets/img/offices/ufc-logo-oficio.png" alt="UFC"
+                                            class="h-24 object-contain">
+                                    </div>
+
+                                    <!-- Número -->
+                                    <div class="mb-2 text-[12pt]  font-bold">
+                                        <span id="prev-numero">Ofício Nº 001/2026 – Universidade Federal do Ceará</span>
+                                    </div>
+
+                                    <!-- Data -->
+                                    <div class="text-right mb-4 text-[13pt] ">
+                                        <span id="prev-data">Crateús, 23 de setembro de 2025</span>.
+                                    </div>
+
+                                    <!-- Destinatário -->
+                                    <div class="mb-4 text-[12pt]  leading-snug">
+                                        <div id="prev-tratamento">À Senhora,</div>
+                                        <div id="prev-destinatario" class="font-bold">Maria do Carmo</div>
+                                        <div id="prev-cargo">Presidenta da Associação Comercial e Industrial de Crateús
+                                            - ACIC</div>
+                                        <div id="prev-organizacao">Associação Comercial e Industrial de Crateús</div>
+                                        <div id="prev-rua">Rua Almirante Tamandaré, 741 - São Vicente</div>
+                                        <div id="prev-cep">CEP: 63700-000 Crateús - CE</div>
+                                    </div>
+
+                                    <!-- Assunto -->
+                                    <div class="mb-5 text-[12pt] ">
+                                        Assunto: <span id="prev-assunto"
+                                            class="underline decoration-dotted underline-offset-2">Agendamento de
+                                            Apresentação do Plano de Patrocínio para o FIT 2025</span>
+                                    </div>
+
+                                    <!-- Vocativo -->
+                                    <div class="mb-3 text-[12pt] ">
+                                        <span id="prev-vocativo">Senhora Presidenta,</span>
+                                    </div>
+
+                                    <!-- Corpo -->
+                                    <div id="prev-corpo"
+                                        class="text-[12pt]  text-justify leading-snug flex-1 space-y-3">
+                                        <!-- Preenchido via JS -->
+                                    </div>
+
+                                    <!-- Signatário (Atenciosamente) removido -->
+                                    <div class="mt-8 mb-6 text-[12pt] ">
+                                        <div class="mb-6">Atenciosamente,</div>
+                                    </div>
+
+                                    <!-- Responsável -->
+                                    <div
+                                        class="mt-2 mb-10 text-[12pt]  text-center w-full flex flex-col items-center">
+                                        <div class="border-t border-black w-2/3 pt-1">
+                                            <div id="prev-responsavel" class="font-bold">José Wellington Franco da Silva
+                                            </div>
+                                            <div id="prev-responsavel-cargo">Professor responsável pelo evento</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Rodapé absoluto -->
+                                <div class="of-footer absolute bottom-0 left-0 w-full flex flex-col">
+                                    <div class="px-10 mb-2 text-[8pt] font-sans font-bold leading-tight">
+                                        E-mail: <span
+                                            class="text-blue-600 font-normal underline">fit@crateus.ufc.br</span><br>
+                                        Localização: <span class="font-normal">Avenida Professora Machadinha Lima, S/N,
+                                            Príncipe Imperial, Crateús-CE.</span><br>
+                                        CEP: <span class="font-normal">63708-825</span>
+                                    </div>
+                                    <img src="../assets/img/offices/footer-oficio.png" alt="Footer"
+                                        class="w-full h-auto block" style="margin-bottom: -1px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ════════ MODALS ════════ -->
+
+    <!-- Speaker Modal -->
+    <div id="speaker-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 class="modal-title">Adicionar Palestrante</h3>
+            <form id="speaker-form" class="space-y-4">
+                <div>
+                    <label for="sp-nome" class="field-label accent">Nome *</label>
+                    <input type="text" id="sp-nome" placeholder="Nome completo" class="fit-input" required>
+                </div>
+                <div>
+                    <label for="sp-cargo" class="field-label">Cargo / Função</label>
+                    <input type="text" id="sp-cargo" placeholder="Ex: Professor, Pesquisador..." class="fit-input">
+                </div>
+                <div>
+                    <label for="sp-tema" class="field-label">Tema da Palestra</label>
+                    <input type="text" id="sp-tema" placeholder="Ex: IA Generativa e o Futuro" class="fit-input">
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="field-label accent mb-0">Foto de Perfil</label>
+                        <button type="button" class="btn-toggle-input" id="sp-btn-toggle" data-mode="upload">Usar
+                            URL</button>
+                    </div>
+                    <div class="upload-zone" id="sp-upload-zone">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
+                        <span class="text-xs text-gray-400">Clique ou arraste a foto</span>
+                        <input type="file" id="sp-file-input" accept="image/*" class="hidden">
+                    </div>
+                    <div class="upload-preview" id="sp-upload-preview" style="display:none;">
+                        <img id="sp-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
+                        <button type="button"
+                            class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs"
+                            id="sp-btn-remove-file">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="sp-foto" placeholder="Ex: assets/img/... ou https://..." class="fit-input"
+                        style="display:none;">
+                </div>
+                <div>
+                    <label for="sp-ordem" class="field-label">Ordem de Exibição</label>
+                    <input type="number" id="sp-ordem" value="0" min="0" class="fit-input">
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-secondary btn-cancel">Cancelar</button>
+                    <button type="submit" class="fit-btn-primary btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sponsor Modal -->
+    <div id="sponsor-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 class="modal-title">Adicionar Patrocinador</h3>
+            <form id="sponsor-form" class="space-y-4">
+                <div>
+                    <label for="pat-nome" class="field-label accent">Nome *</label>
+                    <input type="text" id="pat-nome" placeholder="Nome do patrocinador" class="fit-input" required>
+                </div>
+                <div>
+                    <label for="pat-tier" class="field-label accent">Categoria *</label>
+                    <select id="pat-tier" class="fit-input" required>
+                        <option value="diamante">Diamante</option>
+                        <option value="prata">Prata</option>
+                        <option value="midia">Apoio de Mídia</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="field-label accent mb-0">Logotipo</label>
+                        <button type="button" class="btn-toggle-input" id="pat-btn-toggle" data-mode="upload">Usar
+                            URL</button>
+                    </div>
+                    <div class="upload-zone" id="pat-upload-zone">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
+                        <span class="text-xs text-gray-400">Clique ou arraste o logo</span>
+                        <input type="file" id="pat-file-input" accept="image/*" class="hidden">
+                    </div>
+                    <div class="upload-preview" id="pat-upload-preview" style="display:none;">
+                        <img id="pat-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
+                        <button type="button"
+                            class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs"
+                            id="pat-btn-remove-file">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="pat-logo" placeholder="Ex: assets/img/... ou https://..." class="fit-input"
+                        style="display:none;">
+                </div>
+                <div>
+                    <label for="pat-ordem" class="field-label">Ordem de Exibição</label>
+                    <input type="number" id="pat-ordem" value="0" min="0" class="fit-input">
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-secondary btn-cancel">Cancelar</button>
+                    <button type="submit" class="fit-btn-primary btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supabase Config Modal -->
+    <div id="supabase-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 class="modal-title">Configurar Conexão Supabase</h3>
+            <form id="supabase-config-form" class="space-y-4">
+                <div>
+                    <label for="sb-url" class="field-label accent">Supabase URL</label>
+                    <input type="url" id="sb-url" placeholder="https://xxxxxxxxxxxxxx.supabase.co" class="fit-input"
+                        required>
+                </div>
+                <div>
+                    <label for="sb-key" class="field-label accent">Supabase Anon Key</label>
+                    <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." class="fit-input"
+                        required>
+                </div>
+                <div class="flex items-center justify-between gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-danger" id="btn-disconnect-sb">
+                        <i class="fas fa-unlink"></i> Desconectar
+                    </button>
+                    <div class="flex gap-2">
+                        <button type="button" class="fit-btn-secondary" id="btn-cancel-sb">Cancelar</button>
+                        <button type="submit" class="fit-btn-primary btn-save">Conectar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Link Supabase Modal -->
+    <div id="link-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card">
+            <h3 id="link-modal-title" class="modal-title">Adicionar Link (Supabase)</h3>
+            <form id="link-form" class="space-y-4">
+                <div>
+                    <label for="lk-title" class="field-label accent">Título *</label>
+                    <input type="text" id="lk-title" placeholder="Ex: Site Oficial FIT 2026" class="fit-input" required>
+                </div>
+                <div>
+                    <label for="lk-desc" class="field-label">Descrição</label>
+                    <input type="text" id="lk-desc" placeholder="Ex: Acesse o site principal e programação"
+                        class="fit-input">
+                </div>
+                <div>
+                    <label for="lk-url" class="field-label accent">URL de Destino *</label>
+                    <input type="text" id="lk-url" placeholder="Ex: index.html ou https://..." class="fit-input"
+                        required>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label class="field-label accent mb-0">Miniatura / Imagem Lateral</label>
+                        <button type="button" class="btn-toggle-input" id="lk-btn-toggle" data-mode="upload">Usar
+                            URL</button>
+                    </div>
+                    <div class="upload-zone" id="lk-upload-zone">
+                        <i class="fas fa-cloud-upload-alt text-2xl text-gray-400"></i>
+                        <span class="text-xs text-gray-400">Clique ou arraste a miniatura</span>
+                        <input type="file" id="lk-file-input" accept="image/*" class="hidden">
+                    </div>
+                    <div class="upload-preview" id="lk-upload-preview" style="display:none;">
+                        <img id="lk-preview-img" src="" alt="Preview" class="max-h-[100px] object-contain">
+                        <button type="button"
+                            class="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center cursor-pointer text-xs"
+                            id="lk-btn-remove-file">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="lk-thumb" placeholder="Ex: fit_2026_avatar.png ou https://..."
+                        class="fit-input" style="display:none;">
+                </div>
+                <div>
+                    <label for="lk-style" class="field-label accent">Estilo Visual Pastel *</label>
+                    <select id="lk-style" class="fit-input" required>
+                        <option value="link-gamer">Amarelo Pastel (Gamer)</option>
+                        <option value="link-orange">Laranja Pastel (Inscrições)</option>
+                        <option value="link-blue">Azul Pastel (Site)</option>
+                        <option value="link-gray">Cinza Pastel (Secundário)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="lk-order" class="field-label">Ordem de Exibição</label>
+                    <input type="number" id="lk-order" value="0" min="0" class="fit-input">
+                </div>
+                <div class="flex items-center gap-2.5 mt-1">
+                    <input type="checkbox" id="lk-active" checked
+                        class="w-4 h-4 cursor-pointer accent-orange-500 rounded">
+                    <label for="lk-active" class="cursor-pointer text-xs text-gray-500 uppercase tracking-wide">Ativo
+                        (exibir na listagem pública)</label>
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <button type="button" class="fit-btn-secondary btn-cancel" id="btn-cancel-lk">Cancelar</button>
+                    <button type="submit" class="fit-btn-primary btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Oficios List Modal -->
+    <div id="oficios-list-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+        <div class="modal-card w-full max-w-4xl" style="height: 80vh; display: flex; flex-direction: column;">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-file-alt text-orange-500"></i> Ofícios Salvos
+                </h3>
+                <button type="button" class="text-gray-400 hover:text-gray-600 transition-colors btn-cancel">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto min-h-0 bg-gray-50/50 rounded-xl border border-gray-100 p-2">
+                <div class="w-full overflow-x-auto rounded-lg border border-gray-100 bg-white shadow-sm">
+                    <table class="fit-table w-full text-left border-collapse">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Destinatário</th>
+                                <th>Assunto</th>
+                                <th>Data Local</th>
+                                <th class="w-24">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="oficios-table-body">
+                            <!-- JS preenche -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirm-modal"
+        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+        <div class="modal-card" style="max-width: 420px;">
+            <h3 class="modal-title">Confirmar</h3>
+            <p id="confirm-message" class="text-sm text-gray-600 leading-relaxed mb-6"></p>
+            <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                <button type="button" class="fit-btn-secondary" id="btn-confirm-cancel">Cancelar</button>
+                <button type="button" class="fit-btn-danger" id="btn-confirm-ok">
+                    <i class="fas fa-trash"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Partículas suaves -->
+    <script>
+        initParticles('particles-canvas', {
+            colors: ['rgba(255, 95, 23, 0.04)', 'rgba(255, 200, 0, 0.03)', 'rgba(200, 200, 200, 0.03)'],
+            count: 6,
+            maxRadius: 70,
+            minRadius: 30,
+            speedX: 0.3,
+            speedY: 0.3
+        });
+    </script>
+
+    <!-- Admin JS (Módulos) -->
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

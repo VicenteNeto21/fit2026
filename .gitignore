@@ -31,3 +31,7 @@ yarn-error.log*
 
 # Agent state
 .agent/
+
+# Markdown docs
+*.md
+!README.md
