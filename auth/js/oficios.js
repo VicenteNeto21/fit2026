@@ -198,6 +198,21 @@ export function initOficios() {
         });
     }
 
+    // Modal close logic
+    if (oficiosListModal) {
+        const closeBtn = oficiosListModal.querySelector('.btn-cancel');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                oficiosListModal.classList.remove('show');
+            });
+        }
+        oficiosListModal.addEventListener('click', (e) => {
+            if (e.target === oficiosListModal) {
+                oficiosListModal.classList.remove('show');
+            }
+        });
+    }
+
     // Delegação de eventos para botões na tabela de ofícios
     if (oficiosTableBody) {
         oficiosTableBody.addEventListener('click', async (e) => {
