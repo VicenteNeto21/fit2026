@@ -306,11 +306,13 @@
 /* ── 10. Gerador de Ofícios ── */
 .a4-document {
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
+    max-height: 297mm;
     padding: 20mm;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     background: white;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .a4-content {
