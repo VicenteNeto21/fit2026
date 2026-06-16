@@ -1,0 +1,355 @@
+/* ========================================================
+   FIT 2026 — Estilos Dinâmicos e Globais de Administração
+   Foco exclusivo em estados dinâmicos controlados por JavaScript
+   Layout, Cores e Alinhamentos agora usam Tailwind CSS v4
+   ======================================================== */
+
+/* ── 1. Fundo Dinâmico de Partículas ── */
+#particles-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ── 2. Efeito de Corte Diagonal do Cabeçalho Sunset (Login) ── */
+.clip-path-sunset {
+    clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+}
+.clip-path-sunset::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    transform: skewY(-4deg);
+}
+
+/* ── 3. Transição e Exibição de Abas Dinâmicas ── */
+.admin-section {
+    display: none !important;
+}
+.admin-section.active {
+    display: block !important;
+    animation: adminSectionFadeIn 0.3s ease forwards;
+}
+
+@keyframes adminSectionFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── 4. Comportamento Dinâmico de Sobreposição de Modais ── */
+.modal-overlay {
+    display: none !important;
+    transition: background-color 0.3s ease;
+}
+.modal-overlay.show {
+    display: flex !important;
+}
+
+/* ── 5. Componente de Notificação Dinâmica (Toast) ── */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 14px 24px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: #10b981;
+    border-radius: 10px;
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.toast.error {
+    background: #ef4444;
+}
+
+/* ── 6. Loading Overlay da Tabela ── */
+.table-loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    border-radius: inherit;
+    font-size: 1.5rem;
+    color: #FF5F17;
+    backdrop-filter: blur(2px);
+}
+
+/* ── 6b. Search Input ── */
+.search-input {
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fafafa;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    outline: none;
+    color: #1a1a1a;
+}
+.search-input:focus {
+    border-color: #FF5F17;
+    box-shadow: 0 0 0 3px rgba(255, 95, 23, 0.1);
+    background: #fff;
+}
+.search-input::placeholder {
+    color: #9ca3af;
+}
+
+/* ── 7. Área de Upload Interativa ── */
+.upload-zone.drag-active {
+    border-color: #FF5F17 !important;
+    background: rgba(255, 95, 23, 0.08) !important;
+}
+
+/* ── 7. Estados vazios das tabelas ── */
+.empty-state {
+    text-align: center;
+    padding: 40px 16px;
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+.empty-state i {
+    font-size: 1.75rem;
+    display: block;
+    margin-bottom: 10px;
+    color: #d1d5db;
+}
+.empty-state p {
+    margin: 0;
+}
+
+/* ── 8. Responsividade Mobile ── */
+
+@media (max-width: 768px) {
+    .admin-table th,
+    .admin-table td {
+        padding: 10px 10px;
+        font-size: 0.8rem;
+    }
+    .admin-table td:last-child {
+        white-space: nowrap;
+    }
+    .empty-state {
+        padding: 28px 12px;
+    }
+    .toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        text-align: center;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 12px;
+    }
+    .modal-card {
+        padding: 20px;
+    }
+    .admin-table,
+    .admin-table tbody,
+    .admin-table tr {
+        display: block;
+    }
+    .admin-table thead {
+        display: none;
+    }
+    .admin-table tr {
+        margin-bottom: 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 12px;
+        background: #fff;
+    }
+    .admin-table td {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0 !important;
+        border: none !important;
+        font-size: 0.8rem !important;
+        max-width: none !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        font-family: inherit !important;
+        color: #374151 !important;
+    }
+    .admin-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: #6b7280;
+        flex-shrink: 0;
+        margin-right: 8px;
+    }
+    .admin-table td.actions {
+        justify-content: flex-end;
+        gap: 8px;
+        padding-top: 10px;
+        border-top: 1px solid #f3f4f6;
+        margin-top: 6px;
+    }
+    .admin-table td.actions::before {
+        display: none;
+    }
+    .row-btn, .row-btn-edit, .row-btn-delete {
+        padding: 4px 8px;
+        font-size: 0.65rem;
+    }
+    .fit-btn-primary,
+    .fit-btn-secondary,
+    .fit-btn-danger {
+        padding: 8px 14px;
+        font-size: 0.72rem;
+    }
+    .fit-input {
+        padding: 9px 12px;
+        font-size: 0.8rem;
+    }
+    .db-panel {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 12px;
+    }
+    .db-panel .fit-btn-secondary {
+        justify-content: center;
+    }
+    .upload-zone {
+        padding: 16px;
+    }
+    .upload-preview {
+        height: 90px;
+    }
+    .empty-state {
+        padding: 20px 8px;
+        font-size: 0.8rem;
+    }
+    .empty-state i {
+        font-size: 1.4rem;
+    }
+    .overflow-x-auto {
+        overflow: visible;
+    }
+    .bg-blob {
+        display: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-card {
+        padding: 16px;
+    }
+    .modal-title {
+        font-size: 0.8rem;
+    }
+    .admin-table th,
+    .admin-table td {
+        padding: 6px 4px;
+        font-size: 0.7rem;
+    }
+}
+
+/* ── 9. Badges de tier (patrocinadores) e estilo (links) ── */
+.tier-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 1px solid #e5e7eb;
+}
+.tier-badge.diamante {
+    background: #fefce8;
+    color: #a16207;
+    border-color: #fde68a;
+}
+.tier-badge.prata {
+    background: #f8fafc;
+    color: #475569;
+    border-color: #cbd5e1;
+}
+.tier-badge.midia {
+    background: #eff6ff;
+    color: #1e40af;
+    border-color: #bfdbfe;
+}
+
+/* ── 10. Gerador de Ofícios ── */
+.a4-document {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: white;
+    box-sizing: border-box;
+}
+
+.a4-content {
+    /* Deixa espaço no fundo para o rodapé absoluto não encostar no texto */
+    padding-bottom: 20mm;
+}
+
+/* Escalonamento automático no preview para caber na tela */
+.oficio-preview-wrapper {
+    transform: scale(0.65);
+    transform-origin: top center;
+    width: 210mm; /* Mantém a largura A4 original para escalar corretamente */
+}
+
+/* Quando imprimir / gerar PDF, remover bordas, sombras e escalar para 1 */
+.print-ready .oficio-preview-wrapper {
+    transform: none !important;
+}
+.print-ready .a4-document {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important; /* O html2pdf já lida com margem via JS, mas vamos deixar padding aqui para alinhar */
+}
+.print-ready .a4-document {
+    padding: 20mm !important;
+}
+
+@media (max-width: 1280px) {
+    .oficio-preview-wrapper {
+        transform: scale(0.5);
+    }
+}
+@media (max-width: 768px) {
+    .oficio-preview-wrapper {
+        transform: scale(0.4);
+    }
+}
+@media (max-width: 480px) {
+    .oficio-preview-wrapper {
+        transform: scale(0.35);
+    }
+}
