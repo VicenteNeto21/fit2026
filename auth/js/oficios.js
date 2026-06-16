@@ -57,6 +57,24 @@ export function initOficios() {
     // Initial update
     updateOficioPreview();
 
+    const toggleAssinatura = document.getElementById('of-assinatura-toggle');
+    const prevAssinaturaLine = document.getElementById('prev-assinatura-line');
+
+    function updateAssinaturaVisibility() {
+        if (toggleAssinatura && prevAssinaturaLine) {
+            if (toggleAssinatura.checked) {
+                prevAssinaturaLine.classList.add('border-t', 'border-black', 'pt-1');
+            } else {
+                prevAssinaturaLine.classList.remove('border-t', 'border-black', 'pt-1');
+            }
+        }
+    }
+
+    if(toggleAssinatura) {
+        toggleAssinatura.addEventListener('change', updateAssinaturaVisibility);
+        updateAssinaturaVisibility(); // Call initially
+    }
+
     // UI Elements
     const btnGeneratePdf = document.getElementById('btn-generate-pdf');
     const btnSaveOficio = document.getElementById('btn-save-oficio');
