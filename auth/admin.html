@@ -477,6 +477,11 @@
                 </button>
                 <button
                     class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    data-section="section-oficios-salvos" id="tab-oficios-salvos">
+                    <i class="fas fa-archive"></i> Ofícios Salvos
+                </button>
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
                     data-section="section-configuracoes">
                     <i class="fas fa-cog"></i> Configurações
                 </button>
@@ -612,9 +617,6 @@
                 <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
                     <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Gerador de Ofícios</h2>
                     <div class="flex gap-2 max-sm:flex-col w-full sm:w-auto">
-                        <button id="btn-oficios-list" class="fit-btn-secondary max-sm:justify-center w-full sm:w-auto">
-                            <i class="fas fa-list"></i> Salvos
-                        </button>
                         <button id="btn-oficio-novo" class="fit-btn-secondary max-sm:justify-center w-full sm:w-auto">
                             <i class="fas fa-plus"></i> Novo
                         </button>
@@ -824,6 +826,40 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Ofícios Salvos ── -->
+            <div id="section-oficios-salvos" class="admin-section">
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Histórico de Ofícios</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <button id="btn-refresh-oficios" class="fit-btn-secondary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-sync-alt"></i> Atualizar
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Destinatário</th>
+                                    <th>Assunto</th>
+                                    <th>Data Local</th>
+                                    <th class="w-24">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="oficios-table-body">
+                                <tr>
+                                    <td colspan="5" class="text-center py-14 text-gray-400 text-sm">
+                                        Carregando ofícios...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -1056,38 +1092,7 @@
         </div>
     </div>
 
-    <!-- Oficios List Modal -->
-    <div id="oficios-list-modal"
-        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
-        <div class="modal-card w-full max-w-4xl" style="height: 80vh; display: flex; flex-direction: column;">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-                    <i class="fas fa-file-alt text-orange-500"></i> Ofícios Salvos
-                </h3>
-                <button type="button" class="text-gray-400 hover:text-gray-600 transition-colors btn-cancel">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-            </div>
-            <div class="flex-1 overflow-y-auto min-h-0 bg-gray-50/50 rounded-xl border border-gray-100 p-2">
-                <div class="w-full overflow-x-auto rounded-lg border border-gray-100 bg-white shadow-sm">
-                    <table class="fit-table w-full text-left border-collapse">
-                        <thead>
-                            <tr>
-                                <th>Número</th>
-                                <th>Destinatário</th>
-                                <th>Assunto</th>
-                                <th>Data Local</th>
-                                <th class="w-24">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="oficios-table-body">
-                            <!-- JS preenche -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Confirm Modal -->
     <div id="confirm-modal"
