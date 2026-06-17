@@ -15,6 +15,8 @@ const logoutBtn = document.getElementById('logout-btn');
 const supabaseModal = document.getElementById('supabase-modal');
 const supabaseConfigForm = document.getElementById('supabase-config-form');
 
+let isDataLoaded = false;
+
 async function handleSessionTransition(session) {
     if (session) {
         adminWrapper.style.display = 'block';
@@ -26,9 +28,12 @@ async function handleSessionTransition(session) {
             sbStatusText.style.color = '#10b981';
         }
 
-        loadPalestrantes();
-        loadPatrocinadores();
-        loadLinks();
+        if (!isDataLoaded) {
+            loadPalestrantes();
+            loadPatrocinadores();
+            loadLinks();
+            isDataLoaded = true;
+        }
     } else {
         showToast('Sessão expirada. Faça login novamente.', true);
         setTimeout(() => {
@@ -44,7 +49,9 @@ async function listenAuthState() {
     handleSessionTransition(session);
 
     supabaseClient.auth.onAuthStateChange((event, session) => {
-        handleSessionTransition(session);
+        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+            handleSessionTransition(session);
+        }
     });
 }
 
@@ -137,7 +144,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 3. Tenta conectar ao banco
+    // 3. Global modal cancel listener
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-cancel')) {
+            const modal = e.target.closest('.modal-overlay');
+            if (modal) modal.classList.remove('show');
+        }
+    });
+
+    // 4. Tenta conectar ao banco
     const connected = await checkDatabaseConnection();
     if(connected) {
         // Remove a tela de carregamento do corpo da página caso tenhamos escondido no HTML

@@ -22,7 +22,29 @@ export function initOficios() {
         'of-responsavel-cargo': 'prev-responsavel-cargo'
     };
 
-    function updateOficioPreview() {
+    function updateOficioPreview(e) {
+        // Partial update if triggered by an event
+        if (e && e.target && e.target.id && oficiosMap[e.target.id]) {
+            const inputId = e.target.id;
+            const prevId = oficiosMap[inputId];
+            const input = e.target;
+            const prev = document.getElementById(prevId);
+            
+            if (prev) {
+                if (inputId === 'of-corpo') {
+                    prev.innerHTML = input.value.replace(/\n/g, '<br>');
+                } else {
+                    prev.textContent = input.value;
+                }
+                
+                if (inputId === 'of-rua' || inputId === 'of-cep') {
+                    prev.style.display = input.value.trim() ? 'block' : 'none';
+                }
+            }
+            return;
+        }
+
+        // Full update (initial load or load from DB)
         for (const [inputId, prevId] of Object.entries(oficiosMap)) {
             const input = document.getElementById(inputId);
             const prev = document.getElementById(prevId);
@@ -34,13 +56,8 @@ export function initOficios() {
                     prev.textContent = input.value;
                 }
                 
-                // Hide optional fields if empty
                 if (inputId === 'of-rua' || inputId === 'of-cep') {
-                    if (!input.value.trim()) {
-                        prev.style.display = 'none';
-                    } else {
-                        prev.style.display = 'block';
-                    }
+                    prev.style.display = input.value.trim() ? 'block' : 'none';
                 }
             }
         }
@@ -221,7 +238,7 @@ export function initOficios() {
             
             if (loadBtn) {
                 const id = loadBtn.getAttribute('data-id');
-                const oficio = loadedOficios.find(o => o.id === id);
+                const oficio = loadedOficios.find(o => String(o.id) === String(id));
                 if (oficio) {
                     editingOficioId = oficio.id;
                     document.getElementById('of-numero').value = oficio.numero || '';
@@ -253,7 +270,7 @@ export function initOficios() {
                     // Remover da UI
                     e.target.closest('tr').remove();
                     showToast('Ofício excluído com sucesso!');
-                    if (editingOficioId === id) editingOficioId = null;
+                    if (String(editingOficioId) === String(id)) editingOficioId = null;
                 } catch (err) {
                     console.error(err);
                     showToast('Erro ao excluir ofício', true);

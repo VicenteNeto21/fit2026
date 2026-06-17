@@ -12,7 +12,11 @@ export async function checkDatabaseConnection() {
     }
 
     try {
-        supabaseClient = window.supabase.createClient(url, key);
+        supabaseClient = window.supabase.createClient(url, key, {
+            auth: {
+                storage: window.sessionStorage
+            }
+        });
         return true;
     } catch (err) {
         console.error('Erro de inicialização do Supabase:', err);

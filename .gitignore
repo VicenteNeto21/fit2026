@@ -1,7 +1,5 @@
-# Agent config & rules
-.agent/
-
 # OS files
+.DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
@@ -29,9 +27,20 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# Agent state
-.agent/
+# Build outputs
+dist/
+build/
+.next/
 
-# Markdown docs
-*.md
-!README.md
+# Logs
+*.log
+npm-debug.log*
+
+# Local Supabase
+supabase/.temp/
+supabase/.branch/
+
+# Project specific ignores
+.agents/
+*.sql
+MELHORIAS_AUTH.md

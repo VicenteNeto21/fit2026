@@ -23,8 +23,12 @@ export function initLinks() {
         linkForm.addEventListener('submit', handleFormSubmit);
     }
 
+    let searchTimeout;
     if(searchInput) {
-        searchInput.addEventListener('input', (e) => renderLinks(e.target.value));
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => renderLinks(e.target.value), 250);
+        });
     }
 
     // Event Delegation
@@ -60,6 +64,12 @@ export async function loadLinks() {
         if (error) throw error;
 
         loadedLinks = data || [];
+        loadedLinks.sort((a, b) => {
+            if (a.active === b.active) {
+                return (a.order_index || 0) - (b.order_index || 0);
+            }
+            return a.active ? -1 : 1;
+        });
         renderLinks(searchInput ? searchInput.value : '');
     } catch (err) {
         console.error('Erro ao carregar links do Supabase:', err.message);
@@ -113,8 +123,8 @@ function renderLinks(searchTerm = '') {
             <td data-label="Ordem">${link.order_index}</td>
             <td data-label="Status">
                 ${link.active 
-                    ? '<span style="color: #10b981; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-check-circle"></i> Ativo</span>' 
-                    : '<span style="color: #ef4444; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-times-circle"></i> Inativo</span>'
+                    ? '<span style="display: inline-flex; align-items: center; gap: 4px; color: #10b981; font-weight: 600; font-size: 0.8rem; white-space: nowrap;"><i class="fas fa-check-circle"></i> Ativo</span>' 
+                    : '<span style="display: inline-flex; align-items: center; gap: 4px; color: #ef4444; font-weight: 600; font-size: 0.8rem; white-space: nowrap;"><i class="fas fa-times-circle"></i> Inativo</span>'
                 }
             </td>
             <td class="actions" data-label="Ações">
@@ -146,13 +156,13 @@ function openAddModal() {
 }
 
 function openEditModal(id) {
-    const link = loadedLinks.find(l => l.id === id);
+    const link = loadedLinks.find(l => String(l.id) === String(id));
     if (!link) return;
 
     editingLinkId = id;
     document.getElementById('lk-title').value = link.title || '';
     document.getElementById('lk-url').value = link.url || '';
-    document.getElementById('lk-description').value = link.description || '';
+    document.getElementById('lk-desc').value = link.description || '';
     document.getElementById('lk-style').value = link.style_class || 'link-gamer';
     document.getElementById('lk-thumb').value = link.thumbnail_url || '';
     document.getElementById('lk-order').value = link.order_index || 0;
@@ -216,7 +226,7 @@ async function handleFormSubmit(e) {
         const data = {
             title: document.getElementById('lk-title').value.trim(),
             url: document.getElementById('lk-url').value.trim(),
-            description: document.getElementById('lk-description').value.trim() || null,
+            description: document.getElementById('lk-desc').value.trim() || null,
             style_class: document.getElementById('lk-style').value,
             thumbnail_url: thumbUrl,
             order_index: parseInt(document.getElementById('lk-order').value) || 0,

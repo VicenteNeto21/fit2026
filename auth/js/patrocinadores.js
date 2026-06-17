@@ -23,8 +23,12 @@ export function initPatrocinadores() {
         sponsorForm.addEventListener('submit', handleFormSubmit);
     }
 
+    let searchTimeout;
     if(searchInput) {
-        searchInput.addEventListener('input', (e) => renderPatrocinadores(e.target.value));
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => renderPatrocinadores(e.target.value), 250);
+        });
     }
 
     // Event Delegation
@@ -120,7 +124,7 @@ function openAddModal() {
 }
 
 function openEditModal(id) {
-    const sponsor = loadedSponsors.find(s => s.id === id);
+    const sponsor = loadedSponsors.find(s => String(s.id) === String(id));
     if (!sponsor) return;
 
     editingSponsorId = id;
