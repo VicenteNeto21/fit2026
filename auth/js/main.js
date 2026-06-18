@@ -16,6 +16,7 @@ const supabaseModal = document.getElementById('supabase-modal');
 const supabaseConfigForm = document.getElementById('supabase-config-form');
 
 let isDataLoaded = false;
+let currentUserRole = 'admin';
 
 async function handleSessionTransition(session) {
     if (session) {
@@ -28,10 +29,53 @@ async function handleSessionTransition(session) {
             sbStatusText.style.color = '#10b981';
         }
 
-        if (!isDataLoaded) {
+        // Fetch User Role
+        try {
+            const { data, error } = await supabaseClient
+                .from('perfis')
+                .select('role')
+                .eq('id', session.user.id)
+                .single();
+            if (data && data.role) currentUserRole = data.role;
+        } catch(e) {
+            console.warn('Tabela perfis ainda não configurada:', e);
+        }
+
+        // Popula Perfil nas Configurações
+        const myEmail = document.getElementById('my-profile-email');
+        const myRole = document.getElementById('my-profile-role');
+        if (myEmail) myEmail.textContent = session.user.email;
+        if (myRole) {
+            myRole.innerHTML = currentUserRole === 'admin' 
+                ? `<span style="background:#fef3c7; color:#d97706; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:bold;">Administrador</span>` 
+                : `<span style="background:#e0e7ff; color:#4338ca; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:bold;">Apenas Ofícios</span>`;
+        }
+
+        // Apply RBAC
+        const tabPalestrantes = document.querySelector('[data-section="section-palestrantes"]');
+        const tabPatrocinadores = document.querySelector('[data-section="section-patrocinadores"]');
+        const tabLinks = document.querySelector('[data-section="section-links"]');
+        const tabConfig = document.getElementById('tab-configuracoes');
+        const tabUsuarios = document.getElementById('tab-usuarios');
+        
+        if (currentUserRole === 'oficios') {
+            if(tabPalestrantes) tabPalestrantes.style.display = 'none';
+            if(tabPatrocinadores) tabPatrocinadores.style.display = 'none';
+            if(tabLinks) tabLinks.style.display = 'none';
+            if(tabConfig) tabConfig.style.display = 'none';
+            if(tabUsuarios) tabUsuarios.style.display = 'none';
+            // Auto click Oficios
+            document.querySelector('[data-section="section-oficios"]').click();
+        } else if (currentUserRole === 'admin') {
+            if(tabUsuarios) tabUsuarios.style.display = 'flex';
+        }
+
+        if (!isDataLoaded && currentUserRole === 'admin') {
             loadPalestrantes();
             loadPatrocinadores();
             loadLinks();
+            isDataLoaded = true;
+        } else if (!isDataLoaded) {
             isDataLoaded = true;
         }
     } else {

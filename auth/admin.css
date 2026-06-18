@@ -355,3 +355,12 @@
         transform: scale(0.35);
     }
 }
+
+/* ── 11. Ocultar scrollbar mantendo rolagem ── */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
