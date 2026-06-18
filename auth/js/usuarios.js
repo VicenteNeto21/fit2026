@@ -146,5 +146,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.disabled = false;
             }
         });
+
+        // Alternar visualização da senha
+        const btnTogglePass = document.getElementById('btn-toggle-password');
+        if (btnTogglePass) {
+            btnTogglePass.addEventListener('click', () => {
+                const passInput = document.getElementById('new-user-password');
+                const icon = btnTogglePass.querySelector('i');
+                if (passInput.type === 'password') {
+                    passInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        }
     }
 });
