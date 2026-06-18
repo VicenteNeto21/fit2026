@@ -1,5 +1,5 @@
 // auth/js/oficios.js
-import { supabaseClient } from './api.js';
+import { supabaseClient, logAction } from './api.js';
 import { showToast, showConfirmModal } from './ui.js';
 
 let loadedOficios = [];
@@ -142,6 +142,7 @@ export function initOficios() {
                         .eq('id', editingOficioId);
                     if (error) throw error;
                     showToast('Ofício atualizado com sucesso!');
+                    if (typeof logAction === 'function') logAction('EDITOU_OFICIO', `Ofício Nº ${data.numero} foi atualizado.`);
                 } else {
                     const { data: inserted, error } = await supabaseClient
                         .from('oficios')
@@ -152,6 +153,7 @@ export function initOficios() {
                         editingOficioId = inserted[0].id;
                     }
                     showToast('Ofício salvo com sucesso!');
+                    if (typeof logAction === 'function') logAction('CRIOU_OFICIO', `Ofício Nº ${data.numero} foi criado.`);
                 }
             } catch (err) {
                 console.error(err);

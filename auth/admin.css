@@ -317,7 +317,7 @@
 
 .a4-content {
     /* Deixa espaço no fundo para o rodapé absoluto não encostar no texto */
-    padding-bottom: 20mm;
+    padding-bottom: 60mm;
 }
 
 /* Escalonamento automático no preview para caber na tela */
@@ -363,4 +363,81 @@
 }
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+/* --- Custom Select Role --- */
+.custom-select-role {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    min-height: 0;
+    margin: 0;
+    width: 140px;
+    outline: none;
+}
+.custom-select-role:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+}
+.custom-dropdown-container {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+}
+.custom-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    width: 180px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    padding: 6px;
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.custom-dropdown-container.open .custom-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.custom-dropdown-container.open .custom-select-role i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+.custom-dropdown-option {
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.15s ease;
+    margin-bottom: 2px;
+}
+.custom-dropdown-option:last-child {
+    margin-bottom: 0;
+}
+.custom-dropdown-option:hover {
+    background-color: #f8fafc;
+}
+.custom-dropdown-option.active {
+    background-color: #fff7ed;
+}
+.custom-dropdown-container.open .custom-select-role {
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
 }

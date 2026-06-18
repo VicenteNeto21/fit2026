@@ -1,5 +1,5 @@
 // auth/js/main.js
-import { checkDatabaseConnection, supabaseClient } from './api.js';
+import { checkDatabaseConnection, supabaseClient, logAction, logger } from './api.js';
 import { showToast, showConfirmModal } from './ui.js';
 import { initPalestrantes, loadPalestrantes } from './palestrantes.js';
 import { initPatrocinadores, loadPatrocinadores } from './patrocinadores.js';
@@ -29,16 +29,24 @@ async function handleSessionTransition(session) {
             sbStatusText.style.color = '#10b981';
         }
 
-        // Fetch User Role
+        // Fetch User Role and Profile Info
         try {
             const { data, error } = await supabaseClient
                 .from('perfis')
-                .select('role')
+                .select('role, nome, telefone, cargo_evento')
                 .eq('id', session.user.id)
                 .single();
-            if (data && data.role) currentUserRole = data.role;
+            if (data) {
+                if (data.role) currentUserRole = data.role;
+                const inputNome = document.getElementById('my-profile-nome');
+                const inputTelefone = document.getElementById('my-profile-telefone');
+                const inputCargo = document.getElementById('my-profile-cargo');
+                if (inputNome) inputNome.value = data.nome || '';
+                if (inputTelefone) inputTelefone.value = data.telefone || '';
+                if (inputCargo) inputCargo.value = data.cargo_evento || '';
+            }
         } catch(e) {
-            console.warn('Tabela perfis ainda não configurada:', e);
+            logger.warn('Tabela perfis ainda não configurada:', e);
         }
 
         // Popula Perfil nas Configurações
@@ -146,6 +154,7 @@ function initSupabaseConfigModal() {
                 localStorage.removeItem('supabase_url');
                 localStorage.removeItem('supabase_anon_key');
                 supabaseModal.classList.remove('show');
+                logger.success('Supabase conectado com sucesso.', { role: currentUserRole });
                 showToast('Supabase desconectado.');
                 checkDatabaseConnection();
             }
@@ -160,11 +169,54 @@ function initSupabaseConfigModal() {
     }
 }
 
+function initProfileForm() {
+    const formPerfil = document.getElementById('form-meu-perfil');
+    if (!formPerfil) return;
+
+    formPerfil.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btnSalvar = document.getElementById('btn-salvar-perfil');
+        const originalText = btnSalvar.innerHTML;
+        btnSalvar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+        btnSalvar.disabled = true;
+
+        try {
+            const nome = document.getElementById('my-profile-nome').value.trim();
+            const telefone = document.getElementById('my-profile-telefone').value.trim();
+            const cargo = document.getElementById('my-profile-cargo').value.trim();
+
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) throw new Error("Sessão inválida.");
+
+            const { error } = await supabaseClient
+                .from('perfis')
+                .update({ 
+                    nome: nome, 
+                    telefone: telefone, 
+                    cargo_evento: cargo 
+                })
+                .eq('id', session.user.id);
+
+            if (error) throw error;
+
+            showToast('Perfil atualizado com sucesso!');
+            logAction('ATUALIZOU_PERFIL', `O usuário atualizou seu próprio perfil de acesso.`);
+        } catch (error) {
+            logger.error('Erro ao atualizar perfil', error);
+            showToast('Erro ao atualizar perfil: ' + error.message, true);
+        } finally {
+            btnSalvar.innerHTML = originalText;
+            btnSalvar.disabled = false;
+        }
+    });
+}
+
 // Inicialização Principal
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Inicializa dependências de UI locais (Tabs, modais de config)
     initTabs();
     initSupabaseConfigModal();
+    initProfileForm();
     initPalestrantes();
     initPatrocinadores();
     initLinks();
