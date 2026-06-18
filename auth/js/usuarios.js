@@ -54,115 +54,113 @@ async function loadUsuariosList() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const btnRefresh = document.getElementById('btn-refresh-usuarios');
-    const tabUsuarios = document.getElementById('tab-usuarios');
-    const tbody = document.getElementById('usuarios-table-body');
+const btnRefresh = document.getElementById('btn-refresh-usuarios');
+const tabUsuarios = document.getElementById('tab-usuarios');
+const tbody = document.getElementById('usuarios-table-body');
 
-    if (btnRefresh) btnRefresh.addEventListener('click', loadUsuariosList);
-    if (tabUsuarios) tabUsuarios.addEventListener('click', loadUsuariosList);
+if (btnRefresh) btnRefresh.addEventListener('click', loadUsuariosList);
+if (tabUsuarios) tabUsuarios.addEventListener('click', loadUsuariosList);
 
-    if (tbody) {
-        tbody.addEventListener('click', async (e) => {
-            const btn = e.target.closest('.btn-update-role');
-            if (btn) {
-                const id = btn.getAttribute('data-id');
-                const select = document.querySelector(`.role-select[data-id="${id}"]`);
-                if (select) {
-                    const newRole = select.value;
-                    try {
-                        const { error } = await window.supabaseClient
-                            .from('perfis')
-                            .update({ role: newRole })
-                            .eq('id', id);
-                        
-                        if (error) throw error;
-                        
-                        // Inform UI
-                        if(window.showToast) window.showToast('Perfil atualizado com sucesso!');
-                        
-                        // Recarregar a lista para exibir o novo crachá
-                        loadUsuariosList();
-                    } catch (err) {
-                        console.error(err);
-                        if(window.showToast) window.showToast('Erro ao atualizar perfil. Você tem permissão?', true);
-                    }
+if (tbody) {
+    tbody.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.btn-update-role');
+        if (btn) {
+            const id = btn.getAttribute('data-id');
+            const select = document.querySelector(`.role-select[data-id="${id}"]`);
+            if (select) {
+                const newRole = select.value;
+                try {
+                    const { error } = await window.supabaseClient
+                        .from('perfis')
+                        .update({ role: newRole })
+                        .eq('id', id);
+                    
+                    if (error) throw error;
+                    
+                    // Inform UI
+                    if(window.showToast) window.showToast('Perfil atualizado com sucesso!');
+                    
+                    // Recarregar a lista para exibir o novo crachá
+                    loadUsuariosList();
+                } catch (err) {
+                    console.error(err);
+                    if(window.showToast) window.showToast('Erro ao atualizar perfil. Você tem permissão?', true);
                 }
             }
-        });
-    }
-
-    // Cadastro de novo usuário via aba de Configurações
-    const formNovoUsuario = document.getElementById('form-novo-usuario');
-    if (formNovoUsuario) {
-        formNovoUsuario.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const emailInput = document.getElementById('new-user-email');
-            const passInput = document.getElementById('new-user-password');
-            const msgBox = document.getElementById('new-user-message');
-            const btn = document.getElementById('btn-novo-usuario');
-
-            if (!emailInput || !passInput || !msgBox || !window.supabaseClient) return;
-
-            const email = emailInput.value.trim();
-            const password = passInput.value.trim();
-
-            msgBox.className = 'text-xs p-3 rounded-lg mt-2 font-medium';
-            msgBox.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
-            msgBox.classList.remove('hidden');
-            msgBox.style.color = '#d97706'; // warning yellow/orange
-            msgBox.style.backgroundColor = '#fef3c7';
-            msgBox.style.borderColor = '#fde68a';
-            btn.disabled = true;
-
-            try {
-                const { data, error } = await window.supabaseClient.auth.signUp({
-                    email,
-                    password,
-                });
-
-                if (error) {
-                    throw error;
-                }
-
-                msgBox.style.color = '#15803d'; // green
-                msgBox.style.backgroundColor = '#dcfce3';
-                msgBox.style.borderColor = '#bbf7d0';
-                msgBox.innerHTML = '<i class="fas fa-check-circle"></i> Usuário criado com sucesso! (Se ele precisar confirmar e-mail, avise-o).';
-                formNovoUsuario.reset();
-                
-                // Recarrega a tabela de usuários se estivermos na aba
-                loadUsuariosList();
-
-                if(window.showToast) window.showToast('Novo usuário cadastrado!');
-
-            } catch (err) {
-                console.error(err);
-                msgBox.style.color = '#b91c1c'; // red
-                msgBox.style.backgroundColor = '#fee2e2';
-                msgBox.style.borderColor = '#fecaca';
-                msgBox.innerHTML = `<i class="fas fa-exclamation-circle"></i> Erro: ${err.message || 'Falha ao criar usuário.'}`;
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        // Alternar visualização da senha
-        const btnTogglePass = document.getElementById('btn-toggle-password');
-        if (btnTogglePass) {
-            btnTogglePass.addEventListener('click', () => {
-                const passInput = document.getElementById('new-user-password');
-                const icon = btnTogglePass.querySelector('i');
-                if (passInput.type === 'password') {
-                    passInput.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    passInput.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            });
         }
+    });
+}
+
+// Cadastro de novo usuário via aba de Configurações
+const formNovoUsuario = document.getElementById('form-novo-usuario');
+if (formNovoUsuario) {
+    formNovoUsuario.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById('new-user-email');
+        const passInput = document.getElementById('new-user-password');
+        const msgBox = document.getElementById('new-user-message');
+        const btn = document.getElementById('btn-novo-usuario');
+
+        if (!emailInput || !passInput || !msgBox || !window.supabaseClient) return;
+
+        const email = emailInput.value.trim();
+        const password = passInput.value.trim();
+
+        msgBox.className = 'text-xs p-3 rounded-lg mt-2 font-medium';
+        msgBox.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Criando conta...';
+        msgBox.classList.remove('hidden');
+        msgBox.style.color = '#d97706'; // warning yellow/orange
+        msgBox.style.backgroundColor = '#fef3c7';
+        msgBox.style.borderColor = '#fde68a';
+        btn.disabled = true;
+
+        try {
+            const { data, error } = await window.supabaseClient.auth.signUp({
+                email,
+                password,
+            });
+
+            if (error) {
+                throw error;
+            }
+
+            msgBox.style.color = '#15803d'; // green
+            msgBox.style.backgroundColor = '#dcfce3';
+            msgBox.style.borderColor = '#bbf7d0';
+            msgBox.innerHTML = '<i class="fas fa-check-circle"></i> Usuário criado com sucesso! (Se ele precisar confirmar e-mail, avise-o).';
+            formNovoUsuario.reset();
+            
+            // Recarrega a tabela de usuários se estivermos na aba
+            loadUsuariosList();
+
+            if(window.showToast) window.showToast('Novo usuário cadastrado!');
+
+        } catch (err) {
+            console.error(err);
+            msgBox.style.color = '#b91c1c'; // red
+            msgBox.style.backgroundColor = '#fee2e2';
+            msgBox.style.borderColor = '#fecaca';
+            msgBox.innerHTML = `<i class="fas fa-exclamation-circle"></i> Erro: ${err.message || 'Falha ao criar usuário.'}`;
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    // Alternar visualização da senha
+    const btnTogglePass = document.getElementById('btn-toggle-password');
+    if (btnTogglePass) {
+        btnTogglePass.addEventListener('click', () => {
+            const passInput = document.getElementById('new-user-password');
+            const icon = btnTogglePass.querySelector('i');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
     }
-});
+}
