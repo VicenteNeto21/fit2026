@@ -32,7 +32,9 @@ export function initOficios() {
             
             if (prev) {
                 if (inputId === 'of-corpo') {
-                    prev.innerHTML = input.value.replace(/\n/g, '<br>');
+                    let formattedText = input.value.replace(/\n/g, '<br>');
+                    formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+                    prev.innerHTML = formattedText;
                 } else {
                     prev.textContent = input.value;
                 }
@@ -51,7 +53,9 @@ export function initOficios() {
             
             if (input && prev) {
                 if (inputId === 'of-corpo') {
-                    prev.innerHTML = input.value.replace(/\n/g, '<br>');
+                    let formattedText = input.value.replace(/\n/g, '<br>');
+                    formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+                    prev.innerHTML = formattedText;
                 } else {
                     prev.textContent = input.value;
                 }
@@ -209,6 +213,7 @@ export function initOficios() {
                     <td class="actions" data-label="Ações" style="width: 1%">
                         <div style="display: flex; gap: 6px; justify-content: flex-end; align-items: center;">
                             <button class="row-btn row-btn-load" data-id="${oficio.id}" style="color: #0ea5e9; background: #e0f2fe; border-color: #bae6fd; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; margin: 0;"><i class="fas fa-download"></i> Carregar</button>
+                            <button class="row-btn row-btn-duplicate" data-id="${oficio.id}" style="color: #10b981; background: #d1fae5; border-color: #a7f3d0; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; margin: 0;" title="Duplicar"><i class="fas fa-copy"></i> Duplicar</button>
                             <button class="row-btn row-btn-delete" data-id="${oficio.id}" style="margin: 0; padding: 6px 10px;"><i class="fas fa-trash"></i></button>
                         </div>
                     </td>
@@ -233,13 +238,15 @@ export function initOficios() {
     if (oficiosTableBody) {
         oficiosTableBody.addEventListener('click', async (e) => {
             const loadBtn = e.target.closest('.row-btn-load');
+            const duplicateBtn = e.target.closest('.row-btn-duplicate');
             const deleteBtn = e.target.closest('.row-btn-delete');
             
-            if (loadBtn) {
-                const id = loadBtn.getAttribute('data-id');
+            if (loadBtn || duplicateBtn) {
+                const isDuplicate = !!duplicateBtn;
+                const id = (loadBtn || duplicateBtn).getAttribute('data-id');
                 const oficio = loadedOficios.find(o => String(o.id) === String(id));
                 if (oficio) {
-                    editingOficioId = oficio.id;
+                    editingOficioId = isDuplicate ? null : oficio.id;
                     document.getElementById('of-numero').value = oficio.numero || '';
                     document.getElementById('of-data').value = oficio.data_local || '';
                     document.getElementById('of-assunto').value = oficio.assunto || '';
@@ -258,7 +265,7 @@ export function initOficios() {
                     
                     // Switch to the 'Ofícios' tab automatically
                     document.querySelector('[data-section="section-oficios"]').click();
-                    showToast('Ofício carregado para edição');
+                    showToast(isDuplicate ? 'Ofício copiado! Altere os dados e clique em Salvar.' : 'Ofício carregado para edição');
                 }
             } else if (deleteBtn) {
                 const id = deleteBtn.getAttribute('data-id');
