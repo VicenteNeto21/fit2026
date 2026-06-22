@@ -1,0 +1,228 @@
+:root {
+    /* ── Brand Colors ── */
+    --clr-orange: #ff6b35;
+    --clr-pink: #e91e8c;
+    --clr-purple: #8b5cf6;
+    --clr-green: #10b981;
+    --clr-blue: #3b82f6;
+    --clr-white: #ffffff;
+    --clr-orange-rgb: 255, 107, 53;
+
+    /* ── Brand Gradient ── */
+    --gradient-brand: linear-gradient(135deg, #ff6b35, #ff8c42);
+
+    /* ── Backgrounds ── */
+    --bg-base: #0e0a1a;
+    --bg-deep: #08060f;
+    --bg-navy: #021031;
+    --bg-navy-2: #041b52;
+
+    /* ── Glass Surfaces ── */
+    --surface-1: rgba(255, 255, 255, 0.03);
+    --surface-2: rgba(255, 255, 255, 0.04);
+    --surface-3: rgba(255, 255, 255, 0.05);
+    --surface-hover: rgba(255, 255, 255, 0.07);
+
+    /* ── Borders ── */
+    --border-subtle: rgba(255, 255, 255, 0.04);
+    --border-faint: rgba(255, 255, 255, 0.06);
+    --border-light: rgba(255, 255, 255, 0.08);
+    --border-medium: rgba(255, 255, 255, 0.1);
+
+    /* ── Typography ── */
+    --font-base: "Encode Sans", sans-serif;
+    --font-heading: "Sofia Sans", sans-serif;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --text-dim: #52525b;
+
+    /* ── Transitions ── */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+
+    /* ── Border Radius ── */
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 16px;
+    --radius-2xl: 20px;
+    --radius-full: 9999px;
+
+    /* ── Spacing ── */
+    --section-padding: 80px 0;
+
+}
+
+
+/* ===== CADASTRO STARTUP ===== */
+.cadastro-startup {
+    font-family: var(--font-base);
+    padding: 140px 0 80px;
+}
+
+body {
+    background: rgb(8, 27, 53);
+    box-shadow: 0 4px 30px rgba(6, 60, 104, 0.4)
+}
+
+.cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(255, 107, 53, 0.15);
+    border-radius: 12px;
+
+    color: white;
+    font-size: 0.95rem;
+
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+
+    border-color: rgba(255, 107, 53, 0.5);
+
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
+}
+
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.form-submit {
+    margin-top: 12px;
+    text-align: center;
+}
+
+/* ===== CUSTOM SELECT (Substitui Select Nativo Branco) ===== */
+.custom-select-container {
+    position: relative;
+    width: 100%;
+    outline: none;
+}
+.custom-select-container.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.select-selected {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 107, 53, 0.15);
+    border-radius: 12px;
+    color: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.custom-select-container:focus .select-selected,
+.custom-select-container.active .select-selected {
+    outline: none;
+    border-color: rgba(255, 107, 53, 0.5);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
+}
+.select-items {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 99;
+    max-height: 250px;
+    overflow-y: auto;
+    background: #0d162a; /* Fundo escuro */
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.select-hide {
+    display: none;
+}
+.select-item {
+    padding: 12px 16px;
+    color: #f1f1f1;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.select-item:last-child {
+    border-bottom: none;
+}
+.select-item:hover, .select-item.same-as-selected {
+    background: rgba(255, 107, 53, 0.15);
+    color: var(--clr-orange);
+}
+/* Estilo custom scrollbar */
+.select-items::-webkit-scrollbar {
+    width: 6px;
+}
+.select-items::-webkit-scrollbar-track {
+    background: transparent;
+}
+.select-items::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+.select-items::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== CUSTOM FILE UPLOAD ===== */
+.custom-file-upload {
+    position: relative;
+    width: 100%;
+}
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+.file-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px dashed rgba(255, 107, 53, 0.4);
+    border-radius: 12px;
+    color: #a1a1aa;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.file-label:hover {
+    background: rgba(255, 107, 53, 0.08);
+    border-color: rgba(255, 107, 53, 0.8);
+    color: #ffffff;
+}
+.file-label i {
+    font-size: 1.2rem;
+    color: var(--clr-orange);
+}

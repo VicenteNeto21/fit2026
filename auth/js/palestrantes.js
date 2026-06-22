@@ -23,8 +23,12 @@ export function initPalestrantes() {
         speakerForm.addEventListener('submit', handleFormSubmit);
     }
 
+    let searchTimeout;
     if(searchInput) {
-        searchInput.addEventListener('input', (e) => renderPalestrantes(e.target.value));
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => renderPalestrantes(e.target.value), 250);
+        });
     }
 
     // Event Delegation for Edit/Delete buttons
@@ -129,7 +133,7 @@ function openAddModal() {
 }
 
 function openEditModal(id) {
-    const speaker = loadedSpeakers.find(s => s.id === id);
+    const speaker = loadedSpeakers.find(s => String(s.id) === String(id));
     if (!speaker) return;
 
     editingSpeakerId = id;

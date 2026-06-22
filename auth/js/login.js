@@ -80,13 +80,23 @@ if(loginForm) {
                 window.location.href = 'admin.html';
             }, 1200);
         } catch (err) {
-            console.error('Erro de login:', err.message);
+            console.error('Erro de login detalhado:', err);
             
+            let errorMsg = err.message || JSON.stringify(err) || 'Erro desconhecido';
+            if (typeof errorMsg === 'object') {
+                errorMsg = JSON.stringify(errorMsg);
+            }
+            if (errorMsg === '{}') {
+                errorMsg = 'Erro de conexão ou resposta vazia do servidor. Tente novamente.';
+            }
+
             // Tratamento unificado de erros
-            if (err.message.includes('Invalid login credentials')) {
+            if (errorMsg.includes('Invalid login credentials') || errorMsg.includes('Email ou senha')) {
                 loginError.innerHTML = '<strong>Email ou senha incorretos.</strong>';
+            } else if (errorMsg.includes('Email not confirmed')) {
+                loginError.innerHTML = '<strong>E-mail não confirmado. Verifique sua caixa de entrada.</strong>';
             } else {
-                loginError.innerHTML = `<strong>Erro no login:</strong><br><span style="font-size:0.75rem;">${err.message}</span>`;
+                loginError.innerHTML = `<strong>Erro no login:</strong><br><span style="font-size:0.75rem;">${errorMsg}</span>`;
             }
             loginError.classList.add('show');
         } finally {

@@ -118,6 +118,7 @@
         .fit-btn-primary {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             padding: 10px 18px;
             background: linear-gradient(135deg, #FF5F17, #FFC800);
@@ -130,6 +131,8 @@
             transition: transform 0.15s, box-shadow 0.15s;
             letter-spacing: 0.02em;
             text-transform: uppercase;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .fit-btn-primary:hover {
@@ -145,6 +148,7 @@
         .fit-btn-secondary {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             padding: 9px 16px;
             background: #fff;
@@ -157,6 +161,8 @@
             transition: border-color 0.2s, background 0.2s;
             text-transform: uppercase;
             letter-spacing: 0.04em;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .fit-btn-secondary:hover {
@@ -168,6 +174,7 @@
         .fit-btn-danger {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             padding: 9px 16px;
             background: #fef2f2;
@@ -180,6 +187,8 @@
             transition: all 0.2s;
             text-transform: uppercase;
             letter-spacing: 0.04em;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .fit-btn-danger:hover {
@@ -226,6 +235,13 @@
 
         .admin-table td:last-child {
             color: #6b7280;
+        }
+
+        .admin-table td.actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            white-space: nowrap;
         }
 
         /* ── Action buttons nas rows ── */
@@ -438,26 +454,41 @@
             </div>
 
             <!-- Tabs -->
-            <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex gap-0 overflow-x-auto">
+            <div class="max-w-[1200px] mx-auto px-6 max-sm:px-4 flex gap-0 overflow-x-auto hide-scrollbar">
                 <button
-                    class="admin-tab active flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    class="admin-tab active flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer whitespace-nowrap"
                     data-section="section-palestrantes">
                     <i class="fas fa-user"></i> Palestrantes
                 </button>
                 <button
-                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer whitespace-nowrap"
                     data-section="section-patrocinadores">
                     <i class="fas fa-handshake"></i> Patrocinadores
                 </button>
                 <button
-                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer whitespace-nowrap"
                     data-section="section-links">
-                    <i class="fas fa-link"></i> Links Úteis (Supabase)
+                    <i class="fas fa-link"></i> Links Úteis
                 </button>
                 <button
-                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer"
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer whitespace-nowrap"
                     data-section="section-oficios">
                     <i class="fas fa-file-alt"></i> Ofícios
+                </button>
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer whitespace-nowrap"
+                    data-section="section-oficios-salvos" id="tab-oficios-salvos">
+                    <i class="fas fa-archive"></i> Ofícios Salvos
+                </button>
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer whitespace-nowrap"
+                    data-section="section-usuarios" id="tab-usuarios" style="display: none;">
+                    <i class="fas fa-users"></i> Usuários
+                </button>
+                <button
+                    class="admin-tab flex items-center gap-2 max-sm:gap-1 px-5 max-sm:px-3 py-3 text-xs font-semibold text-gray-400 bg-transparent border-b-2 border-transparent cursor-pointer whitespace-nowrap"
+                    data-section="section-configuracoes" id="tab-configuracoes">
+                    <i class="fas fa-cog"></i> Configurações
                 </button>
             </div>
         </header>
@@ -547,21 +578,6 @@
             <!-- ── Links Úteis (Supabase) ── -->
             <div id="section-links" class="admin-section">
 
-                <!-- DB Connection Panel -->
-                <div class="db-panel">
-                    <div>
-                        <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2">
-                            <span id="sb-status-dot"
-                                class="w-2.5 h-2.5 rounded-full bg-red-400 inline-block flex-shrink-0"></span>
-                            Supabase: <span id="sb-status-text" class="text-red-500 font-semibold">Desconectado</span>
-                        </h3>
-                        <p class="text-xs text-gray-400 mt-0.5">Autenticado via banco conectado.</p>
-                    </div>
-                    <button id="btn-config-supabase" class="fit-btn-secondary">
-                        <i class="fas fa-cog"></i> Configurar Banco
-                    </button>
-                </div>
-
                 <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
                     <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Links Úteis</h2>
                     <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
@@ -606,9 +622,6 @@
                 <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
                     <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Gerador de Ofícios</h2>
                     <div class="flex gap-2 max-sm:flex-col w-full sm:w-auto">
-                        <button id="btn-oficios-list" class="fit-btn-secondary max-sm:justify-center w-full sm:w-auto">
-                            <i class="fas fa-list"></i> Salvos
-                        </button>
                         <button id="btn-oficio-novo" class="fit-btn-secondary max-sm:justify-center w-full sm:w-auto">
                             <i class="fas fa-plus"></i> Novo
                         </button>
@@ -655,22 +668,20 @@
                                         value="À Senhora," required>
                                 </div>
                                 <div>
-                                    <label for="of-destinatario" class="field-label accent">Nome do Destinatário
-                                        *</label>
+                                    <label for="of-destinatario" class="field-label accent">Nome do Destinatário</label>
                                     <input type="text" id="of-destinatario" placeholder="Nome completo"
-                                        class="fit-input" value="Maria do Carmo" required>
+                                        class="fit-input" value="Maria do Carmo">
                                 </div>
                                 <div>
-                                    <label for="of-cargo" class="field-label accent">Cargo / Título *</label>
+                                    <label for="of-cargo" class="field-label accent">Cargo / Título</label>
                                     <input type="text" id="of-cargo" placeholder="Presidenta da Associação..."
                                         class="fit-input"
-                                        value="Presidenta da Associação Comercial e Industrial de Crateús - ACIC"
-                                        required>
+                                        value="Presidenta da Associação Comercial e Industrial de Crateús - ACIC">
                                 </div>
                                 <div>
-                                    <label for="of-organizacao" class="field-label accent">Organização *</label>
+                                    <label for="of-organizacao" class="field-label accent">Organização</label>
                                     <input type="text" id="of-organizacao" placeholder="Nome da instituição"
-                                        class="fit-input" value="Associação Comercial e Industrial de Crateús" required>
+                                        class="fit-input" value="Associação Comercial e Industrial de Crateús">
                                 </div>
                             </div>
 
@@ -707,6 +718,10 @@
 3. Solicitamos a gentileza de confirmar a disponibilidade da banda e, se possível, o encaminhamento dos contatos necessários para alinhamentos técnicos e logísticos.
 
 4. Desde já, agradecemos a atenção e colocamo-nos à disposição para quaisquer esclarecimentos, por meio dos contatos: (88) 3691-9701 ou fit@crateus.ufc.br.</textarea>
+                                <p class="text-[0.75rem] text-gray-500 mt-2"><i
+                                        class="fas fa-info-circle mr-1"></i>Dica: Para colocar uma palavra em
+                                    <b>negrito</b>, envolva-a com dois asteriscos. Ex: **esta palavra**.
+                                </p>
                             </div>
 
                             <hr class="border-gray-100">
@@ -744,11 +759,11 @@
                                 style="font-family: 'Encode Sans', sans-serif;">
                                 <div class="a4-content flex flex-col h-full">
                                     <!-- Cabeçalho -->
-                                    <div class="of-header flex justify-between items-start mb-6 pb-2">
+                                    <div class="of-header flex justify-between items-start mb-4">
                                         <img src="../assets/img/offices/logo-fit-oficio.png" alt="FIT"
-                                            class="h-24 object-contain">
+                                            class="h-16 object-contain">
                                         <img src="../assets/img/offices/ufc-logo-oficio.png" alt="UFC"
-                                            class="h-24 object-contain">
+                                            class="h-16 object-contain">
                                     </div>
 
                                     <!-- Número -->
@@ -757,12 +772,12 @@
                                     </div>
 
                                     <!-- Data -->
-                                    <div class="text-right mb-4 text-[13pt] ">
+                                    <div class="text-right mb-2 text-[13pt] ">
                                         <span id="prev-data">Crateús, 23 de setembro de 2025</span>.
                                     </div>
 
                                     <!-- Destinatário -->
-                                    <div class="mb-4 text-[12pt]  leading-snug">
+                                    <div class="mb-2 text-[12pt]  leading-snug">
                                         <div id="prev-tratamento">À Senhora,</div>
                                         <div id="prev-destinatario" class="font-bold">Maria do Carmo</div>
                                         <div id="prev-cargo">Presidenta da Associação Comercial e Industrial de Crateús
@@ -773,14 +788,13 @@
                                     </div>
 
                                     <!-- Assunto -->
-                                    <div class="mb-5 text-[12pt] ">
-                                        Assunto: <span id="prev-assunto"
-                                            class="underline decoration-dotted underline-offset-2">Agendamento de
+                                    <div class="mb-3 text-[12pt] ">
+                                        <b>Assunto:</b> <span id="prev-assunto" class="font-bold">Agendamento de
                                             Apresentação do Plano de Patrocínio para o FIT 2025</span>
                                     </div>
 
                                     <!-- Vocativo -->
-                                    <div class="mb-3 text-[12pt] ">
+                                    <div class="mb-2 text-[12pt] ">
                                         <span id="prev-vocativo">Senhora Presidenta,</span>
                                     </div>
 
@@ -791,13 +805,13 @@
                                     </div>
 
                                     <!-- Signatário (Atenciosamente) removido -->
-                                    <div class="mt-8 mb-6 text-[12pt] ">
-                                        <div class="mb-6">Atenciosamente,</div>
+                                    <div class="mt-4 mb-2 text-[12pt] ">
+                                        <div>Atenciosamente,</div>
                                     </div>
 
                                     <!-- Responsável -->
                                     <div id="prev-assinatura-block"
-                                        class="mt-2 mb-10 text-[12pt]  text-center w-full flex flex-col items-center">
+                                        class="mt-16 mb-4 text-[12pt]  text-center w-full flex flex-col items-center">
                                         <div id="prev-assinatura-line" class="border-t border-black w-2/3 pt-1">
                                             <div id="prev-responsavel" class="font-bold">José Wellington Franco da Silva
                                             </div>
@@ -819,6 +833,181 @@
                                         class="w-full h-auto block relative z-0" style="margin-bottom: -1px;">
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Ofícios Salvos ── -->
+            <div id="section-oficios-salvos" class="admin-section">
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Histórico de Ofícios</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <button id="btn-refresh-oficios" class="fit-btn-secondary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-sync-alt"></i> Atualizar
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Destinatário</th>
+                                    <th>Assunto</th>
+                                    <th>Data Local</th>
+                                    <th class="w-24">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="oficios-table-body">
+                                <tr>
+                                    <td colspan="5" class="text-center py-14 text-gray-400 text-sm">
+                                        Carregando ofícios...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Usuários ── -->
+            <div id="section-usuarios" class="admin-section">
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Gerenciamento de Usuários</h2>
+                    <div class="flex items-center gap-3 max-sm:flex-col max-sm:w-full">
+                        <button id="btn-refresh-usuarios" class="fit-btn-secondary max-sm:justify-center max-sm:w-full">
+                            <i class="fas fa-sync-alt"></i> Atualizar
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative">
+                    <div class="overflow-x-auto">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Telefone</th>
+                                    <th>Cargo (Evento)</th>
+                                    <th>Nível / Perfil</th>
+                                    <th>Criado em</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usuarios-table-body">
+                                <tr>
+                                    <td colspan="7" class="text-center py-14 text-gray-400 text-sm">
+                                        Carregando usuários...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Configurações ── -->
+            <div id="section-configuracoes" class="admin-section">
+                <div class="flex max-sm:flex-col items-center justify-between gap-4 mb-5 max-sm:items-stretch">
+                    <h2 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Configurações do Sistema</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Coluna 1: Perfil e Banco de Dados -->
+                    <div class="space-y-6">
+
+                        <!-- Meu Perfil -->
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 relative overflow-hidden">
+                            <h3 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2"><i
+                                    class="fas fa-id-badge text-orange-500"></i> Meu Perfil</h3>
+                            <form id="form-meu-perfil" class="space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="col-span-2">
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">E-mail de Acesso (Login)</label>
+                                        <div id="my-profile-email" class="text-sm font-medium text-gray-900 bg-gray-50 px-3 py-2.5 rounded-lg border border-gray-200">Carregando...</div>
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label for="my-profile-nome" class="block text-xs font-semibold text-gray-600 mb-1.5">Nome Completo</label>
+                                        <input type="text" id="my-profile-nome" class="fit-input" placeholder="Seu nome">
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-1">
+                                        <label for="my-profile-telefone" class="block text-xs font-semibold text-gray-600 mb-1.5">Telefone / WhatsApp</label>
+                                        <input type="text" id="my-profile-telefone" class="fit-input" placeholder="(00) 00000-0000">
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label for="my-profile-cargo" class="block text-xs font-semibold text-gray-600 mb-1.5">Cargo ou Função no FIT</label>
+                                        <input type="text" id="my-profile-cargo" class="fit-input" placeholder="Ex: Coordenação Geral">
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Nível de Permissão no Sistema</label>
+                                        <div id="my-profile-role" class="text-sm font-medium text-gray-900 bg-gray-50 px-3 py-2.5 rounded-lg border border-gray-200 flex items-center gap-2">Carregando...</div>
+                                    </div>
+                                </div>
+                                <button type="submit" id="btn-salvar-perfil" class="fit-btn-primary w-full mt-2 flex justify-center items-center gap-2">
+                                    <i class="fas fa-save"></i> Salvar Alterações
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Configuração Supabase -->
+                        <div class="db-panel">
+                            <div>
+                                <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2">
+                                    <span id="sb-status-dot"
+                                        class="w-2.5 h-2.5 rounded-full bg-red-400 inline-block flex-shrink-0"></span>
+                                    Supabase: <span id="sb-status-text"
+                                        class="text-red-500 font-semibold">Desconectado</span>
+                                </h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Autenticado via banco conectado.</p>
+                            </div>
+                            <button id="btn-config-supabase" class="fit-btn-secondary">
+                                <i class="fas fa-cog"></i> Configurar
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Coluna 2: Criar Usuário -->
+                    <div>
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                            <h3 class="text-sm font-bold text-gray-800 mb-2 flex items-center gap-2"><i
+                                    class="fas fa-user-plus text-orange-500"></i> Cadastrar Novo Usuário</h3>
+                            <p class="text-xs text-gray-500 mb-5 leading-relaxed">Crie acesso para um membro da equipe.
+                                Novos usuários entram com permissão limitada (Ofícios) por padrão. O sistema <b
+                                    class="text-orange-500">pode exigir que você faça login novamente</b> após concluir
+                                o cadastro por motivos de segurança.</p>
+
+                            <form id="form-novo-usuario" class="space-y-4">
+                                <div>
+                                    <label for="new-user-email"
+                                        class="block text-xs font-semibold text-gray-600 mb-1.5">E-mail</label>
+                                    <input type="email" id="new-user-email" placeholder="email@exemplo.com"
+                                        class="fit-input" required>
+                                </div>
+                                <div>
+                                    <label for="new-user-password"
+                                        class="block text-xs font-semibold text-gray-600 mb-1.5">Senha
+                                        Provisória</label>
+                                    <div class="relative">
+                                        <input type="password" id="new-user-password"
+                                            placeholder="Mínimo de 6 caracteres" minlength="6" class="fit-input pr-10"
+                                            required>
+                                        <button type="button" id="btn-toggle-password"
+                                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="new-user-message" class="hidden text-xs p-3 rounded-lg mt-2 font-medium"></div>
+
+                                <button type="submit" id="btn-novo-usuario"
+                                    class="fit-btn-primary w-full mt-2 flex justify-center items-center gap-2">
+                                    <i class="fas fa-check"></i> Cadastrar Usuário
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -1031,38 +1220,7 @@
         </div>
     </div>
 
-    <!-- Oficios List Modal -->
-    <div id="oficios-list-modal"
-        class="modal-overlay fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
-        <div class="modal-card w-full max-w-4xl" style="height: 80vh; display: flex; flex-direction: column;">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-                    <i class="fas fa-file-alt text-orange-500"></i> Ofícios Salvos
-                </h3>
-                <button type="button" class="text-gray-400 hover:text-gray-600 transition-colors btn-cancel">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-            </div>
-            <div class="flex-1 overflow-y-auto min-h-0 bg-gray-50/50 rounded-xl border border-gray-100 p-2">
-                <div class="w-full overflow-x-auto rounded-lg border border-gray-100 bg-white shadow-sm">
-                    <table class="fit-table w-full text-left border-collapse">
-                        <thead>
-                            <tr>
-                                <th>Número</th>
-                                <th>Destinatário</th>
-                                <th>Assunto</th>
-                                <th>Data Local</th>
-                                <th class="w-24">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="oficios-table-body">
-                            <!-- JS preenche -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Confirm Modal -->
     <div id="confirm-modal"
@@ -1096,6 +1254,7 @@
 
     <!-- Admin JS (Módulos) -->
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/usuarios.js"></script>
 </body>
 
 </html>

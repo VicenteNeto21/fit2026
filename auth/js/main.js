@@ -1,5 +1,5 @@
 // auth/js/main.js
-import { checkDatabaseConnection, supabaseClient } from './api.js';
+import { checkDatabaseConnection, supabaseClient, logAction, logger } from './api.js';
 import { showToast, showConfirmModal } from './ui.js';
 import { initPalestrantes, loadPalestrantes } from './palestrantes.js';
 import { initPatrocinadores, loadPatrocinadores } from './patrocinadores.js';
@@ -15,6 +15,9 @@ const logoutBtn = document.getElementById('logout-btn');
 const supabaseModal = document.getElementById('supabase-modal');
 const supabaseConfigForm = document.getElementById('supabase-config-form');
 
+let isDataLoaded = false;
+let currentUserRole = 'admin';
+
 async function handleSessionTransition(session) {
     if (session) {
         adminWrapper.style.display = 'block';
@@ -26,9 +29,63 @@ async function handleSessionTransition(session) {
             sbStatusText.style.color = '#10b981';
         }
 
-        loadPalestrantes();
-        loadPatrocinadores();
-        loadLinks();
+        // Fetch User Role and Profile Info
+        try {
+            const { data, error } = await supabaseClient
+                .from('perfis')
+                .select('role, nome, telefone, cargo_evento')
+                .eq('id', session.user.id)
+                .single();
+            if (data) {
+                if (data.role) currentUserRole = data.role;
+                const inputNome = document.getElementById('my-profile-nome');
+                const inputTelefone = document.getElementById('my-profile-telefone');
+                const inputCargo = document.getElementById('my-profile-cargo');
+                if (inputNome) inputNome.value = data.nome || '';
+                if (inputTelefone) inputTelefone.value = data.telefone || '';
+                if (inputCargo) inputCargo.value = data.cargo_evento || '';
+            }
+        } catch(e) {
+            logger.warn('Tabela perfis ainda não configurada:', e);
+        }
+
+        // Popula Perfil nas Configurações
+        const myEmail = document.getElementById('my-profile-email');
+        const myRole = document.getElementById('my-profile-role');
+        if (myEmail) myEmail.textContent = session.user.email;
+        if (myRole) {
+            myRole.innerHTML = currentUserRole === 'admin' 
+                ? `<span style="background:#fef3c7; color:#d97706; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:bold;">Administrador</span>` 
+                : `<span style="background:#e0e7ff; color:#4338ca; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:bold;">Apenas Ofícios</span>`;
+        }
+
+        // Apply RBAC
+        const tabPalestrantes = document.querySelector('[data-section="section-palestrantes"]');
+        const tabPatrocinadores = document.querySelector('[data-section="section-patrocinadores"]');
+        const tabLinks = document.querySelector('[data-section="section-links"]');
+        const tabConfig = document.getElementById('tab-configuracoes');
+        const tabUsuarios = document.getElementById('tab-usuarios');
+        
+        if (currentUserRole === 'oficios') {
+            if(tabPalestrantes) tabPalestrantes.style.display = 'none';
+            if(tabPatrocinadores) tabPatrocinadores.style.display = 'none';
+            if(tabLinks) tabLinks.style.display = 'none';
+            if(tabConfig) tabConfig.style.display = 'none';
+            if(tabUsuarios) tabUsuarios.style.display = 'none';
+            // Auto click Oficios
+            document.querySelector('[data-section="section-oficios"]').click();
+        } else if (currentUserRole === 'admin') {
+            if(tabUsuarios) tabUsuarios.style.display = 'flex';
+        }
+
+        if (!isDataLoaded && currentUserRole === 'admin') {
+            loadPalestrantes();
+            loadPatrocinadores();
+            loadLinks();
+            isDataLoaded = true;
+        } else if (!isDataLoaded) {
+            isDataLoaded = true;
+        }
     } else {
         showToast('Sessão expirada. Faça login novamente.', true);
         setTimeout(() => {
@@ -44,7 +101,9 @@ async function listenAuthState() {
     handleSessionTransition(session);
 
     supabaseClient.auth.onAuthStateChange((event, session) => {
-        handleSessionTransition(session);
+        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+            handleSessionTransition(session);
+        }
     });
 }
 
@@ -95,6 +154,7 @@ function initSupabaseConfigModal() {
                 localStorage.removeItem('supabase_url');
                 localStorage.removeItem('supabase_anon_key');
                 supabaseModal.classList.remove('show');
+                logger.success('Supabase conectado com sucesso.', { role: currentUserRole });
                 showToast('Supabase desconectado.');
                 checkDatabaseConnection();
             }
@@ -109,11 +169,54 @@ function initSupabaseConfigModal() {
     }
 }
 
+function initProfileForm() {
+    const formPerfil = document.getElementById('form-meu-perfil');
+    if (!formPerfil) return;
+
+    formPerfil.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btnSalvar = document.getElementById('btn-salvar-perfil');
+        const originalText = btnSalvar.innerHTML;
+        btnSalvar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+        btnSalvar.disabled = true;
+
+        try {
+            const nome = document.getElementById('my-profile-nome').value.trim();
+            const telefone = document.getElementById('my-profile-telefone').value.trim();
+            const cargo = document.getElementById('my-profile-cargo').value.trim();
+
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) throw new Error("Sessão inválida.");
+
+            const { error } = await supabaseClient
+                .from('perfis')
+                .update({ 
+                    nome: nome, 
+                    telefone: telefone, 
+                    cargo_evento: cargo 
+                })
+                .eq('id', session.user.id);
+
+            if (error) throw error;
+
+            showToast('Perfil atualizado com sucesso!');
+            logAction('ATUALIZOU_PERFIL', `O usuário atualizou seu próprio perfil de acesso.`);
+        } catch (error) {
+            logger.error('Erro ao atualizar perfil', error);
+            showToast('Erro ao atualizar perfil: ' + error.message, true);
+        } finally {
+            btnSalvar.innerHTML = originalText;
+            btnSalvar.disabled = false;
+        }
+    });
+}
+
 // Inicialização Principal
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Inicializa dependências de UI locais (Tabs, modais de config)
     initTabs();
     initSupabaseConfigModal();
+    initProfileForm();
     initPalestrantes();
     initPatrocinadores();
     initLinks();
@@ -137,7 +240,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 3. Tenta conectar ao banco
+    // 3. Global modal cancel listener
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-cancel')) {
+            const modal = e.target.closest('.modal-overlay');
+            if (modal) modal.classList.remove('show');
+        }
+    });
+
+    // 4. Tenta conectar ao banco
     const connected = await checkDatabaseConnection();
     if(connected) {
         // Remove a tela de carregamento do corpo da página caso tenhamos escondido no HTML
