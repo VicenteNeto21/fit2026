@@ -1,13 +1,13 @@
 Criar tela de formulário:
 ## cadastro-startup.html
-    - nome startup
-    - responsavel da startup
-    - descrição da startup
-    - email da startup ou responsavel
-    - whatsapp
-    - logo da startup
-    - cidade da startup (aqui é um option com selecao de cidades, pega uma api)
-    - Button de Enviar
+- nome startup
+- responsavel da startup
+- descrição da startup
+- email da startup ou responsavel
+- whatsapp
+- logo da startup
+- cidade da startup (aqui é um option com selecao de cidades, pega uma api)
+- Button de Enviar
 
 > Restrição: Seguir o padrão de cores do site (o fundo e o que esta depois do header), manter a navbar e o footer.
 

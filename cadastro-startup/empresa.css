@@ -1,0 +1,63 @@
+
+/* ===== CADASTRO STARTUP ===== */
+.cadastro-startup {
+    padding: 140px 0 80px;
+}
+body {
+    background: rgb(8, 27, 53);
+    box-shadow: 0 4px 30px rgba(6, 60, 104, 0.4)
+}
+
+.cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(255, 107, 53, 0.15);
+    border-radius: 12px;
+
+    color: white;
+    font-size: 0.95rem;
+
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+
+    border-color: rgba(255, 107, 53, 0.5);
+
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
+}
+
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.form-submit {
+    margin-top: 12px;
+    text-align: center;
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Startup</title>
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- CSS do projeto -->
+    <link rel="stylesheet" href="empresa.css">
+</head>
+
+<body>
+    <!-- HEADER -->
+
+      <!-- ============ HEADER ============ -->
+  <header id="header" aria-label="Cabeçalho principal">
+    <div class="container nav-container">
+      <a href="#inicio" class="nav-logo" aria-label="Ir para o início">
+        <img src="../assets/img/fit.cima.png" alt="FIT 2026" class="logo-img">
+      </a>
+      <nav class="nav-menu" aria-label="Menu principal">
+        <ul class="nav-links" id="nav-links">
+         <li>
+          <a href="#cadastro">Cadastrar Startup</a>
+         </li>
+        </ul>
+      </nav>
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    </nav>
+            <button id="mobile-menu-btn"
+                class="mobile-menu-btn"
+                aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    <main>
+        <section id="cadastro" class="cadastro-startup">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        Cadastro de Startup
+                    </h1>
+                    <p class="section-desc">
+                        Preencha as informações abaixo para cadastrar sua startup.
+                    </p>
+                </div>
+                <div class="section-card">
+                    <form class="cadastro-form">
+                        <div class="form-group">
+                            <label for="startup">Nome da Startup</label>
+                            <input type="text" id="startup" name="startup" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="responsavel">Responsável pela Startup</label>
+                            <input type="text" id="responsavel" name="responsavel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">Descrição da Startup</label>
+                            <textarea id="descricao" name="descricao"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail da Startup ou Responsável</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="logo">Logo da Startup</label>
+                            <input type="file" id="logo" name="logo">
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade">Cidade da Startup</label>
+                            <select id="cidade" name="cidade">
+                                <option value="">Selecione uma cidade</option>
+                            </select>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-primary">
+                                Enviar Cadastro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+  </header>
+    <!--
+    <header id="header">
+        <div class="container nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="../assets/img/fit.cima.png" alt="Logo do FIT">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li>
+                        <a href="#cadastro">Cadastrar Startup</a>
+                    </li>
+                </ul>
+            </nav>
+            <button id="mobile-menu-btn"
+                class="mobile-menu-btn"
+                aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    <main>
+        <section id="cadastro" class="cadastro-startup">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">
+                        Cadastro de Startup
+                    </h1>
+                    <p class="section-desc">
+                        Preencha as informações abaixo para cadastrar sua startup.
+                    </p>
+                </div>
+                <div class="section-card">
+                    <form class="cadastro-form">
+                        <div class="form-group">
+                            <label for="startup">Nome da Startup</label>
+                            <input type="text" id="startup" name="startup" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="responsavel">Responsável pela Startup</label>
+                            <input type="text" id="responsavel" name="responsavel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">Descrição da Startup</label>
+                            <textarea id="descricao" name="descricao"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail da Startup ou Responsável</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="logo">Logo da Startup</label>
+                            <input type="file" id="logo" name="logo">
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade">Cidade da Startup</label>
+                            <select id="cidade" name="cidade">
+                                <option value="">Selecione uma cidade</option>
+                            </select>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-primary">
+                                Enviar Cadastro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main> 
+    -->
+
+    <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Sobre o FIT</h3>
+          <p>
+            O Fórum de Inovação e Tecnologia (FIT) é o maior evento
+            universitário de tecnologia do Sertão de Crateús, promovendo a
+            inovação e o empreendedorismo.
+          </p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/fitcrateus/" target="_blank" aria-label="Instagram do FIT"><i
+                class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Contato</h3>
+          <p>
+            <i class="fas fa-map-marker-alt"></i> Av. Professora Machadinha
+            Lima, S/N, Crateús-CE
+          </p>
+          <p><i class="fas fa-phone"></i> (88) 3691-9700</p>
+          <p><i class="fas fa-envelope"></i> fit@crateus.ufc.br</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 | Núcleo de Comunicação do FIT —
+          <a href="https://linktr.ee/vicente.neto" target="_blank">Vicente Neto</a>
+          /
+          <a href="https://linktr.ee/geciaragomes01" target="_blank">Geciara Gomes</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
