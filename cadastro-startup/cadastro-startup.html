@@ -1,121 +1,84 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Startup</title>
 
-    <!-- Fonte -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        fit: {
+                            bg: '#0e0a1a',
+                            indigo: '#1a0533',
+                            teal: '#0d2b3e',
+                            orange: '#ff6b35',
+                            pink: '#e91e8c',
+                            purple: '#8b5cf6',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
     <!-- CSS do projeto -->
     <link rel="stylesheet" href="empresa.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
-    <!-- HEADER -->
-
-      <!-- ============ HEADER ============ -->
-  <header id="header" aria-label="Cabeçalho principal">
-    <div class="container nav-container">
-      <a href="#inicio" class="nav-logo" aria-label="Ir para o início">
-        <img src="../assets/img/fit.cima.png" alt="FIT 2026" class="logo-img">
-      </a>
-      <nav class="nav-menu" aria-label="Menu principal">
-        <ul class="nav-links" id="nav-links">
-         <li>
-          <a href="#cadastro">Cadastrar Startup</a>
-         </li>
-        </ul>
-      </nav>
-      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-    </nav>
-            <button id="mobile-menu-btn"
-                class="mobile-menu-btn"
-                aria-label="Abrir menu">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </header>
-    <main>
-        <section id="cadastro" class="cadastro-startup">
-            <div class="container">
-                <div class="section-header">
-                    <h1 class="section-title">
-                        Cadastro de Startup
-                    </h1>
-                    <p class="section-desc">
-                        Preencha as informações abaixo para cadastrar sua startup.
-                    </p>
-                </div>
-                <div class="section-card">
-                    <form class="cadastro-form">
-                        <div class="form-group">
-                            <label for="startup">Nome da Startup</label>
-                            <input type="text" id="startup" name="startup" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="responsavel">Responsável pela Startup</label>
-                            <input type="text" id="responsavel" name="responsavel" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="descricao">Descrição da Startup</label>
-                            <textarea id="descricao" name="descricao"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">E-mail da Startup ou Responsável</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="whatsapp">WhatsApp</label>
-                            <input type="tel" id="whatsapp" name="whatsapp" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="logo">Logo da Startup</label>
-                            <input type="file" id="logo" name="logo">
-                        </div>
-                        <div class="form-group">
-                            <label for="cidade">Cidade da Startup</label>
-                            <select id="cidade" name="cidade">
-                                <option value="">Selecione uma cidade</option>
-                            </select>
-                        </div>
-                        <div class="form-submit">
-                            <button type="submit" class="btn btn-primary">
-                                Enviar Cadastro
-                            </button>
-                        </div>
-                    </form>
-                </div>
-  </header>
-    <!--
-    <header id="header">
+    <!-- ============ HEADER ============ -->
+    <header id="header" aria-label="Cabeçalho principal">
         <div class="container nav-container">
-            <a href="index.html" class="nav-logo">
-                <img src="../assets/img/fit.cima.png" alt="Logo do FIT">
+            <a href="#inicio" class="nav-logo" aria-label="Ir para o início">
+                <img src="../assets/img/fit.cima.png" alt="FIT 2026" class="logo-img">
             </a>
-            <nav class="nav-menu">
-                <ul class="nav-links">
-                    <li>
-                        <a href="#cadastro">Cadastrar Startup</a>
-                    </li>
+            <nav class="nav-menu" aria-label="Menu principal">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="../index.html">Início</a></li>
+                    <li><a href="../index.html">Programação</a></li>
+                    <li><a href="../index.html">Palestrantes</a></li>
+                    <li><a href="../index.html">Patrocinadores</a></li>
+                    <li><a href="../index.html">Corrida FIT</a></li>
+                    <li><a href="../index.html">O Evento</a></li>
                 </ul>
             </nav>
-            <button id="mobile-menu-btn"
-                class="mobile-menu-btn"
-                aria-label="Abrir menu">
+            <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#programacao">Programação</a></li>
+                <li><a href="#palestrantes">Palestrantes</a></li>
+                <li><a href="#patrocinadores">Patrocinadores</a></li>
+                <li><a href="#corrida">Corrida FIT</a></li>
+                <li><a href="#evento">O Evento</a></li>
+                <li><a href="#" class="btn-inscricao-mobile" target="_blank"><i class="fas fa-edit"></i> Inscreva-se</a>
+                </li>
+            </ul>
+        </div>
     </header>
+
     <main>
         <section id="cadastro" class="cadastro-startup">
             <div class="container">
@@ -127,36 +90,49 @@
                         Preencha as informações abaixo para cadastrar sua startup.
                     </p>
                 </div>
+
                 <div class="section-card">
                     <form class="cadastro-form">
                         <div class="form-group">
                             <label for="startup">Nome da Startup</label>
-                            <input type="text" id="startup" name="startup" required>
+                            <input type="text" id="startup" name="startup" placeholder="Ex: Fit Tech Solutions" required>
                         </div>
                         <div class="form-group">
                             <label for="responsavel">Responsável pela Startup</label>
-                            <input type="text" id="responsavel" name="responsavel" required>
+                            <input type="text" id="responsavel" name="responsavel" placeholder="Ex: João da Silva" required>
                         </div>
                         <div class="form-group">
                             <label for="descricao">Descrição da Startup</label>
-                            <textarea id="descricao" name="descricao"></textarea>
+                            <textarea id="descricao" name="descricao" placeholder="Conte-nos um pouco sobre a sua solução e objetivos..."></textarea>
                         </div>
                         <div class="form-group">
                             <label for="email">E-mail da Startup ou Responsável</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" placeholder="Ex: contato@fittech.com.br" required>
                         </div>
                         <div class="form-group">
                             <label for="whatsapp">WhatsApp</label>
-                            <input type="tel" id="whatsapp" name="whatsapp" required>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" maxlength="15" required>
                         </div>
                         <div class="form-group">
-                            <label for="logo">Logo da Startup</label>
-                            <input type="file" id="logo" name="logo">
+                            <label>Logo da Startup</label>
+                            <div class="custom-file-upload">
+                                <label for="logo" class="file-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span id="file-name">Clique para escolher a logo...</span>
+                                </label>
+                                <input type="file" id="logo" name="logo" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado da Startup</label>
+                            <select id="estado" name="estado" required>
+                                <option value="">Selecione um estado</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="cidade">Cidade da Startup</label>
-                            <select id="cidade" name="cidade">
-                                <option value="">Selecione uma cidade</option>
+                            <select id="cidade" name="cidade" required disabled>
+                                <option value="">Selecione um estado primeiro</option>
                             </select>
                         </div>
                         <div class="form-submit">
@@ -168,44 +144,242 @@
                 </div>
             </div>
         </section>
-    </main> 
-    -->
+    </main>
 
     <!-- ============ FOOTER ============ -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h3>Sobre o FIT</h3>
-          <p>
-            O Fórum de Inovação e Tecnologia (FIT) é o maior evento
-            universitário de tecnologia do Sertão de Crateús, promovendo a
-            inovação e o empreendedorismo.
-          </p>
-          <div class="footer-social">
-            <a href="https://www.instagram.com/fitcrateus/" target="_blank" aria-label="Instagram do FIT"><i
-                class="fab fa-instagram"></i></a>
-          </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Sobre o FIT</h3>
+                    <p>
+                        O Fórum de Inovação e Tecnologia (FIT) é o maior evento
+                        universitário de tecnologia do Sertão de Crateús, promovendo a
+                        inovação e o empreendedorismo.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/fitcrateus/" target="_blank" aria-label="Instagram do FIT"><i
+                                class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Contato</h3>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> Av. Professora Machadinha
+                        Lima, S/N, Crateús-CE
+                    </p>
+                    <p><i class="fas fa-phone"></i> (88) 3691-9700</p>
+                    <p><i class="fas fa-envelope"></i> fit@crateus.ufc.br</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    &copy; 2026 | Núcleo de Comunicação do FIT —
+                    <a href="https://linktr.ee/vicente.neto" target="_blank">Vicente Neto</a>
+                    /
+                    <a href="https://linktr.ee/geciaragomes01" target="_blank">Geciara Gomes</a>
+                </p>
+            </div>
         </div>
-        <div class="footer-col">
-          <h3>Contato</h3>
-          <p>
-            <i class="fas fa-map-marker-alt"></i> Av. Professora Machadinha
-            Lima, S/N, Crateús-CE
-          </p>
-          <p><i class="fas fa-phone"></i> (88) 3691-9700</p>
-          <p><i class="fas fa-envelope"></i> fit@crateus.ufc.br</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>
-          &copy; 2026 | Núcleo de Comunicação do FIT —
-          <a href="https://linktr.ee/vicente.neto" target="_blank">Vicente Neto</a>
-          /
-          <a href="https://linktr.ee/geciaragomes01" target="_blank">Geciara Gomes</a>
-        </p>
-      </div>
-    </div>
-  </footer>
+    </footer>
+    
+    <script>
+        function setupCustomSelect(selectId) {
+            const selectEl = document.getElementById(selectId);
+            if (!selectEl) return;
+            
+            // Remove dropdown customizado existente para recriar
+            if (selectEl.nextElementSibling && selectEl.nextElementSibling.classList.contains('custom-select-container')) {
+                selectEl.nextElementSibling.remove();
+            }
+
+            // Esconde o select nativo
+            selectEl.style.display = 'none';
+
+            // Cria o container do select customizado
+            const wrapper = document.createElement('div');
+            wrapper.className = 'custom-select-container';
+            if (selectEl.disabled) wrapper.classList.add('disabled');
+
+            // Cria a parte visível (selecionada)
+            const selectedDiv = document.createElement('div');
+            selectedDiv.className = 'select-selected';
+            
+            const selectedText = document.createElement('span');
+            selectedText.textContent = selectEl.options[selectEl.selectedIndex]?.textContent || 'Selecione...';
+            
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-chevron-down';
+
+            selectedDiv.appendChild(selectedText);
+            selectedDiv.appendChild(icon);
+            wrapper.appendChild(selectedDiv);
+
+            // Cria a lista de opções (dropdown)
+            const itemsDiv = document.createElement('div');
+            itemsDiv.className = 'select-items select-hide';
+
+            Array.from(selectEl.options).forEach((option, index) => {
+                if (index === 0 && option.value === "") return; // Pula o placeholder
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'select-item';
+                itemDiv.textContent = option.textContent;
+                
+                itemDiv.addEventListener('click', function(e) {
+                    // Atualiza o select nativo
+                    selectEl.selectedIndex = index;
+                    selectedText.textContent = this.textContent;
+                    
+                    // Atualiza estilos de seleção
+                    const sameAsSelected = itemsDiv.querySelectorAll('.same-as-selected');
+                    sameAsSelected.forEach(el => el.classList.remove('same-as-selected'));
+                    this.classList.add('same-as-selected');
+                    
+                    // Dispara evento change nativo
+                    const event = new Event('change', { bubbles: true });
+                    selectEl.dispatchEvent(event);
+                    
+                    // Fecha o dropdown
+                    selectedDiv.click();
+                });
+                
+                itemsDiv.appendChild(itemDiv);
+            });
+
+            wrapper.appendChild(itemsDiv);
+            // Insere logo após o select nativo
+            selectEl.parentNode.insertBefore(wrapper, selectEl.nextSibling);
+
+            // Abre/fecha o dropdown
+            selectedDiv.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeAllSelect(this);
+                itemsDiv.classList.toggle('select-hide');
+                wrapper.classList.toggle('active');
+            });
+        }
+
+        function closeAllSelect(exceptEl) {
+            const items = document.querySelectorAll('.select-items');
+            const selects = document.querySelectorAll('.custom-select-container');
+            
+            items.forEach(item => {
+                if (exceptEl !== item.previousElementSibling) {
+                    item.classList.add('select-hide');
+                }
+            });
+            
+            selects.forEach(select => {
+                if (exceptEl !== select.firstElementChild) {
+                    select.classList.remove('active');
+                }
+            });
+        }
+
+        // Fecha selects se clicar fora
+        document.addEventListener('click', closeAllSelect);
+
+        // Custom File Upload
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.getElementById('logo');
+            const fileName = document.getElementById('file-name');
+            
+            if (fileInput && fileName) {
+                fileInput.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        fileName.textContent = this.files[0].name;
+                        fileName.style.color = 'var(--clr-orange)';
+                    } else {
+                        fileName.textContent = 'Clique para escolher a logo...';
+                        fileName.style.color = '';
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const estadoSelect = document.getElementById('estado');
+            const cidadeSelect = document.getElementById('cidade');
+            
+            // Inicializa custom selects com valores vazios
+            setupCustomSelect('estado');
+            setupCustomSelect('cidade');
+            
+            // 1. Carrega Estados
+            fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+                .then(response => response.json())
+                .then(estados => {
+                    estados.sort((a, b) => a.nome.localeCompare(b.nome));
+                    estados.forEach(estado => {
+                        const option = document.createElement('option');
+                        option.value = estado.sigla;
+                        option.textContent = `${estado.nome} (${estado.sigla})`;
+                        estadoSelect.appendChild(option);
+                    });
+                    // Recria o custom select após adicionar options
+                    setupCustomSelect('estado');
+                })
+                .catch(error => console.error('Erro ao carregar estados:', error));
+
+            // 2. Quando estado mudar, busca cidades
+            estadoSelect.addEventListener('change', (e) => {
+                const uf = e.target.value;
+                
+                // Reset visual e lógico
+                cidadeSelect.innerHTML = '<option value="">Carregando...</option>';
+                cidadeSelect.disabled = true;
+                setupCustomSelect('cidade'); // Atualiza UI para 'Carregando...'
+                
+                if (!uf) {
+                    cidadeSelect.innerHTML = '<option value="">Selecione um estado primeiro</option>';
+                    setupCustomSelect('cidade');
+                    return;
+                }
+                
+                fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${uf}/municipios`)
+                    .then(response => response.json())
+                    .then(cidades => {
+                        cidadeSelect.innerHTML = '<option value="">Selecione uma cidade</option>';
+                        cidades.sort((a, b) => a.nome.localeCompare(b.nome));
+                        
+                        cidades.forEach(cidade => {
+                            const option = document.createElement('option');
+                            option.value = cidade.nome;
+                            option.textContent = cidade.nome;
+                            cidadeSelect.appendChild(option);
+                        });
+                        
+                        cidadeSelect.disabled = false;
+                        // Recria dropdown com os novos dados
+                        setupCustomSelect('cidade');
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar cidades:', error);
+                        cidadeSelect.innerHTML = '<option value="">Erro ao carregar cidades</option>';
+                        setupCustomSelect('cidade');
+                    });
+            });
+
+            // Máscara para o WhatsApp
+            const whatsappInput = document.getElementById('whatsapp');
+            if (whatsappInput) {
+                whatsappInput.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, ''); // Remove tudo o que não for número
+                    if (value.length > 11) value = value.slice(0, 11); // Limita a 11 dígitos
+                    
+                    // Aplica a máscara: (99) 99999-9999
+                    if (value.length > 2) {
+                        value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+                    }
+                    if (value.length > 10) {
+                        value = `${value.slice(0, 10)}-${value.slice(10)}`;
+                    }
+                    e.target.value = value;
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>
