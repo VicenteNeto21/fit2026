@@ -1,4 +1,4 @@
-    <script>
+
         function setupCustomSelect(selectId) {
             const selectEl = document.getElementById(selectId);
             if (!selectEl) return;
@@ -194,4 +194,3 @@
                 });
             }
         });
-    </script> 
